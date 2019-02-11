@@ -10,37 +10,45 @@ create table users
     email varchar(255) not null,
     firstName varchar(255) not null,
     lastName varchar(255) not null,
-    gender char(1) in ("f","m") not null,
-    foreign key(personID) references persons(personID) not null
+    gender char(1) check(gender in ("f","m")),
+    personID varchar(255) not null,
+    foreign key(personID) references persons(personID)
 );
 
 create table persons
 (
     personID varchar(255) not null primary key,
-    foreign key(descendant) references users(username) not null,
+    descendant varchar(255) not null,
     firstName varchar(255) not null,
     lastName varchar(255) not null,
-    gender char(1) in ("f","m") not null,
+    gender char(1) check(gender in ("f","m")),
+    father varchar(255),
+    mother varchar(255),
+    spouse varchar(255),
+    foreign key(descendant) references users(username),
     foreign key(father) references persons(personID),
     foreign key(mother) references persons(personID),
-    foreign key(spouse) references persons(personID),
+    foreign key(spouse) references persons(personID)
 );
 
 create table events
 (
     eventID varchar(255) not null primary key,
-    foreign key(descendant) references users(username) not null,
-    foreign key(person) references persons(personID) not null,
+    descendant varchar(255) not null,
+    person varchar(255) not null,
     latitude real not null,
     longitude real not null,
     country varchar(255) not null,
     city varchar(255) not null,
     eventType varchar(255) not null,
-    year integer not null
+    year integer not null,
+    foreign key(descendant) references users(username),
+    foreign key(person) references persons(personID)
 );
 
 create table authTokens
 (
     authToken varchar(255) not null primary key,
+    username varchar(255) not null,
     foreign key(username) references users(username)
 );

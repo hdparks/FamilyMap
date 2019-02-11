@@ -1,4 +1,6 @@
-package services;
+package service;
+
+import service.response.FillResponse;
 
 /**
  * Populates the server's database with generated data for the specified username.

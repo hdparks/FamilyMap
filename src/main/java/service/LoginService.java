@@ -1,4 +1,7 @@
-package services;
+package service;
+
+import service.request.LoginRequest;
+import service.response.LoginResponse;
 
 /**
  * Logs in the user and returns an auth token

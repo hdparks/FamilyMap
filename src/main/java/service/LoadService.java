@@ -1,4 +1,6 @@
-package services;
+package service;
+
+import service.request.LoadRequest;
 
 /**
  * Clears all data from database, just like clear, then loads the posted data.
