@@ -2,6 +2,9 @@ package service.response;
 
 import domain.Person;
 
+/**
+ * represents a response to a request made to the /person or /person/personID endpoint
+ */
 public class PersonResponse extends Response{
     public Person person;
 
@@ -21,4 +24,5 @@ public class PersonResponse extends Response{
     public PersonResponse(String errorMessage){
         super(errorMessage,false);
     }
+
 }

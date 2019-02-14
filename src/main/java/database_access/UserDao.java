@@ -3,7 +3,7 @@ package database_access;
 import domain.User;
 
 /**
- * UserDao contains all user-related database operations
+ * a class for interfacing with User data
  */
 public class UserDao {
 

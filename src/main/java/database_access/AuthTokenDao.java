@@ -3,8 +3,15 @@ package database_access;
 import domain.AuthToken;
 import domain.User;
 
+/**
+ * a class for interfacing with AuthToken data
+ */
 public class AuthTokenDao {
 
+    /**
+     * Clears the AuthToken table
+     * @throws DataAccessException if the operation fails
+     */
     void clear() throws DataAccessException{
 
     }
@@ -21,11 +28,11 @@ public class AuthTokenDao {
 
     /**
      * Generates a new AuthToken, storing it in the database, corresponding to user
-     * @param user the User object who is requesting a nesw AuthToken
+     * @param user the User object who is requesting a new AuthToken
      * @return token the new AuthToken
      * @throws DataAccessException if the operation fails
      */
     AuthToken createAuthToken(User user) throws DataAccessException{
-        return null;
+        return new AuthToken(user);
     }
 }

@@ -1,6 +1,7 @@
 package service;
 
-import service.response.FillResponse;
+import service.request.FillRequest;
+import service.response.Response;
 
 /**
  * Populates the server's database with generated data for the specified username.
@@ -10,15 +11,15 @@ import service.response.FillResponse;
  * The optional 'generations' parameter lets the caller specify the number of generations of ancestors to be generated,
  * and must be a non-negative integer, {default = 4}.
  */
-public class FillService {
+public class FillService implements Service<FillRequest> {
 
     /**
-     * Parse the (username, generations) input,
-     * @param username
-     * @param generations
-     * @return
+     * Handle the incoming FillRequest
+     * @param req a request object representing a request to the /fill endpoint
+     * @return a valid FillResponse if successful, a generic error Response if not
      */
-    public FillResponse fill(String username, int generations){
+    @Override
+    public Response handleRequest(FillRequest req) {
         return null;
     }
 }

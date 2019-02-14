@@ -3,7 +3,7 @@ package service;
 import service.response.Response;
 
 /**
- * Deletes ALL data from the database, including user accounts, auth tokens, and person and event data.
+ * Deletes ALL data, including user accounts, auth tokens, person, and event data.
  */
 public class ClearService {
 

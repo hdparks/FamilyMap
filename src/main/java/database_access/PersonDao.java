@@ -4,6 +4,9 @@ import domain.Person;
 import domain.User;
 import java.util.List;
 
+/**
+ * a class for interfacing with Person data
+ */
 public class PersonDao {
 
     /**

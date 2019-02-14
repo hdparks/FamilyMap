@@ -1,7 +1,7 @@
 package service.response;
 
 /**
- * LoginResponse
+ * represents a response to a request to the /login endpoint
  */
 public class LoginResponse extends Response{
     public String authToken;
