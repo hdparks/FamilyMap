@@ -4,7 +4,7 @@ import service.request.PersonIDRequest;
 import service.response.Response;
 
 /**
- * Generates JSON data in response to a request to /person/personID
+ * Returns the single Person object with the specified ID.
  */
 public class PersonIDService implements Service<PersonIDRequest> {
 

@@ -2,24 +2,30 @@ package service.response;
 
 import domain.Person;
 
+import java.util.List;
+
 /**
- * represents a response to a request made to the /person or /person/personID endpoint
+ * represents a response to a request made to the /person endpoint
  */
 public class PersonResponse extends Response{
-    public Person person;
+
+    /**
+     * A list of Person objects
+     */
+    public List<Person> persons;
 
     /**
      * Creates a successful PersonResponse object
-     * @param person the person object which will be returned
+     * @param persons the Person objects which will be returned
      */
-    public PersonResponse(Person person){
+    public PersonResponse(List<Person> persons){
         super(true);
-        this.person = person;
+        this.persons = persons;
     }
 
     /**
      * Creates a failing PersonResponse object with a description of what failed
-     * @param errorMessage a message detailing how the Person/ID service failed
+     * @param errorMessage a message detailing how the Person service failed
      */
     public PersonResponse(String errorMessage){
         super(errorMessage,false);

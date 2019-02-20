@@ -4,7 +4,9 @@ import service.request.PersonRequest;
 import service.response.Response;
 
 /**
- * Generates JSON data in response to a request to /person
+ * Returns ALL family members of the current user.
+ *
+ * The current user is determined from the provided auth token.
  */
 public class PersonService implements Service<PersonRequest> {
 

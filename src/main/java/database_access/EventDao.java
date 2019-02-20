@@ -17,6 +17,25 @@ public class EventDao {
 
     }
 
+
+    /**
+     * Adds new Event data
+     * @param event the Event object to be saved
+     * @throws DataAccessException if the operation fails
+     */
+    void add(Event event) throws DataAccessException{
+
+    }
+
+    /**
+     * Deletes the matching event if found, throws exception if not found
+     * @param event the event to be deleted
+     * @throws DataAccessException if operation fails, ie if the event is not found
+     */
+    void delete(Event event) throws DataAccessException{
+
+    }
+
     /**
      * Returns a list of all Event objects related to the given personID
      * @param personID the personID of the Person whose events are returned

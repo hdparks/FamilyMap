@@ -33,4 +33,13 @@ public class RegisterRequest implements Request{
      * "f" or "m"
      */
     String gender;
+
+    RegisterRequest(String userName, String password, String email, String firstName, String lastName, String gender){
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+    }
 }

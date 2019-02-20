@@ -2,6 +2,8 @@ package database_access;
 
 import domain.Person;
 import domain.User;
+
+import javax.xml.crypto.Data;
 import java.util.List;
 
 /**
@@ -10,10 +12,29 @@ import java.util.List;
 public class PersonDao {
 
     /**
-     * Clears the Persons table
+     * Clears all Person data
      * @throws DataAccessException if the operation fails
      */
     void clear() throws DataAccessException{
+
+    }
+
+
+    /**
+     * Adds a Person
+     * @param person the Person to add
+     * @throws DataAccessException if operation fails
+     */
+    void add(Person person) throws DataAccessException{
+
+    }
+
+    /**
+     * Deletes the given Person
+     * @param person the Person to delete
+     * @throws DataAccessException if the operation fails, ie. the Person is not found
+     */
+    void delete(Person person) throws DataAccessException{
 
     }
 

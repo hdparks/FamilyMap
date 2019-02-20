@@ -17,17 +17,26 @@ public class UserDao {
     }
 
     /**
-     * Insert a new user into the table
+     * Adds a User
      *
-     * @param user an instance of domain.user
+     * @param user the User to be added
      * @throws DataAccessException if operation fails
      */
-    void createUser(User user) throws DataAccessException{
+    void add(User user) throws DataAccessException{
 
     }
 
     /**
-     * Retrieves a user from the database which has the given username
+     * Deletes a User
+     * @param user the User to delete
+     * @throws DataAccessException if operation fails, ie. User is not found
+     */
+    void delete(User user) throws DataAccessException{
+
+    }
+
+    /**
+     * Retrieves a user which has the given username
      * @param username the username of the desired User entity
      * @return User an object representing the user with the given username. Null if not found.
      * @throws DataAccessException if operation fails
@@ -35,9 +44,5 @@ public class UserDao {
     User getUserByName(String username) throws DataAccessException{
         return null;
     }
-
-
-
-
 
 }

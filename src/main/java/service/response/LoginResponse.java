@@ -4,8 +4,19 @@ package service.response;
  * represents a response to a request to the /login endpoint
  */
 public class LoginResponse extends Response{
+    /**
+     * Non-empty String
+     */
     public String authToken;
+
+    /**
+     * Non-empty String
+     */
     public String userName;
+
+    /**
+     * Non-empty String
+     */
     public String personID;
 
     /**
