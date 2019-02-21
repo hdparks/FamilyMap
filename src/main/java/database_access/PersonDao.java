@@ -1,21 +1,14 @@
 package database_access;
 
 import domain.Person;
-import domain.User;
 
-import javax.xml.crypto.Data;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 /**
  * a class for interfacing with Person data
  */
 public class PersonDao {
-
-    private Person person.fatherID != null;
 
     /**
      * Clears all Person data
@@ -49,22 +42,41 @@ public class PersonDao {
 
             PreparedStatement stmt = connection.prepareStatement(sql);
 
-            stmt.
+            stmt.setString(1, person.personID);
+            stmt.setString(2, person.descendant);
+            stmt.setString(3, person.firstName);
+            stmt.setString(4, person.lastName);
+            stmt.setString(5, person.gender);
+
+            int next = 6;
+            if (person.fatherID != null){ stmt.setString(next, person.fatherID); next += 1; }
+            if (person.motherID != null){ stmt.setString(next, person.motherID); next += 1; }
+            if (person.spouseID != null){ stmt.setString(next, person.spouseID); next += 1; }
+
+            stmt.execute();
 
         } catch(SQLException ex){
             throw new DataAccessException(ex.getMessage());
         }
 
-        return null;
+        return person.personID;
     }
 
     /**
      * Deletes the given Person
-     * @param person the Person to delete
+     * @param personID the Id of the Person to delete
      * @throws DataAccessException if the operation fails, ie. the Person is not found
      */
-    void delete(Person person) throws DataAccessException{
+    void deletePersonByID(String personID) throws DataAccessException{
+        try(Connection connection = DriverManager.getConnection(DataAccessObject.dbPath)){
 
+            PreparedStatement stmt = connection.prepareStatement("DELETE FROM persons WHERE personID = ?");
+            stmt.setString(1,personID);
+            stmt.execute();
+
+        } catch (SQLException ex){
+            throw new DataAccessException(ex.getMessage());
+        }
     }
 
     /**
@@ -74,6 +86,27 @@ public class PersonDao {
      * @throws DataAccessException if the operation fails
      */
     Person getPersonByID(String id) throws DataAccessException {
+        try (Connection connection = DriverManager.getConnection(DataAccessObject.dbPath)){
+            String sql = "SELECT personID, descendant, firstName, lastName, gender, fatherID, motherID, spouseID FROM persons";
+
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            String personID = rs.getString(1);
+            String descendant = rs.getString(2);
+            String firstName = rs.getString(3);
+            String lastName = rs.getString(4);
+            String gender = rs.getString(5);
+            String fatherID = rs.getString(6);
+            String motherID = rs.getString(7);
+            String spouseID = rs.getString(8);
+
+            Person person = new Person(personID, descendant, firstName, lastName, gender, fatherID, motherID, spouseID);
+
+        }catch (SQLException ex){
+            throw new DataAccessException(ex.getMessage());
+        }
+
         return null;
     }
 

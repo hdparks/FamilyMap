@@ -10,6 +10,10 @@ public class Person {
      */
     private static int idTracker = 0;
 
+    public Person(String personID, String descendant, String firstName, String lastName, String gender, String fatherID, String motherID, String spouseID) {
+
+    }
+
     /**
      * Returns a unique PersonID (String)
      * @return a unique PersonID
