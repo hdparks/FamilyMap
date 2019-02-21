@@ -4,43 +4,59 @@ package domain;
  * Represents a person
  */
 public class Person {
+
+    /**
+     * Allows for generation of unique Person ID's from 1 to MAXINTEGER.
+     */
+    private static int idTracker = 0;
+
+    /**
+     * Returns a unique PersonID (String)
+     * @return a unique PersonID
+     */
+    static String assignID(){
+        Person.idTracker += 1;
+        return String.valueOf(Person.idTracker);
+    }
+
     /**
      * Unique identifier for this person (non-empty string)
      */
-    String personID;
+    public String personID;
 
     /**
-     *  User (Username) to which this person belongs
+     *  User (userName) to which this person belongs
      */
-    String descendant;
+    public String descendant;
 
     /**
      * Person’s first name (non-empty string)
      */
-    String firstName;
+    public String firstName;
 
     /**
      * Person’s last name (non-empty string)
      */
-    String lastName;
+    public String lastName;
 
     /**
      * Person’s gender (string: "f" or "m")
      */
-    String gender;
+    public String gender;
 
     /**
      * ID of person’s father (possibly null)
      */
-    String fatherID;
+    public String fatherID;
 
     /**
      * ID of person’s mother (possibly null)
      */
-    String motherID;
+    public String motherID;
 
     /**
      *  ID of person’s spouse (possibly null)
      */
-    String spouseID;
+    public String spouseID;
+
 }

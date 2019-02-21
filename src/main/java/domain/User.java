@@ -39,4 +39,14 @@ public class User {
      * Unique personID assigned to this User's generated Person object
      */
     public String personID;
+
+    User(String userName, String password, String email, String firstName, String lastName, String gender, String personID){
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.personID = personID;
+    }
 }

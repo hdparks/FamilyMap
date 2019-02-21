@@ -2,10 +2,18 @@ package database_access;
 
 import domain.User;
 
+import java.io.File;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 /**
  * a class for interfacing with User data
  */
 public class UserDao {
+
+
 
     /**
      * Delete all users from the "users" table
@@ -14,6 +22,12 @@ public class UserDao {
      */
     void clear() throws DataAccessException {
 
+        try(Connection connection = DriverManager.getConnection(DataAccessObject.dbPath)){
+            PreparedStatement stmt = connection.prepareStatement("DELETE FROM users");
+            stmt.execute();
+        } catch (SQLException ex){
+            throw new DataAccessException(ex.getMessage());
+        }
     }
 
     /**
@@ -23,6 +37,14 @@ public class UserDao {
      * @throws DataAccessException if operation fails
      */
     void add(User user) throws DataAccessException{
+        try(Connection connection = DriverManager.getConnection(DataAccessObject.dbPath)){
+            PreparedStatement stmt = connection.prepareStatement(
+                    "insert users " +
+                        "set userName = ?, password = ?, email = ?, firstName = ?, lastName = ?, gender = ?, personID = ?"
+            );
+        }catch(SQLException ex){
+            throw new DataAccessException(ex.getMessage());
+        }
 
     }
 
