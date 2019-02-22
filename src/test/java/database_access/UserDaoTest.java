@@ -92,7 +92,8 @@ public class UserDaoTest {
         assertEquals(user, result);
     }
 
-    @Test void getUserByNonexistentUsernameFails() throws Exception {
+    @Test
+    public void getUserByNonexistentUsernameFails() throws Exception {
         //  Database starts empty, so any query should return a null User value
 
         UserDao userDao = new UserDao(db.openConnection());

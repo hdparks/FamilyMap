@@ -44,9 +44,37 @@ public class PersonDaoTest {
     }
 
     @Test
+    public void getPersonByIDPass() throws Exception {
+        //  We will compare the result we get with the person we expect
+        Person result = null;
+
+        //  First we fill the person table with some person data from db/dbfiller.txt
+        db.fillDatabase();
+
+        //  In db/dbfiller.txt, we see there is a Person which matches our prepared person instance.
+        //  so we query a PersonDao object for that person.personID
+
+        PersonDao pDao = new PersonDao(db.openConnection());
+        result = pDao.getPersonByID(person.personID);
+        db.closeConnection(true);
+        //  We want the result to be the same as the generated person object
+        assertEquals(result,person);
+    }
+
+    @Test
+    public void getPersonByNonexistentIDFails() throws Exception {
+        //  If a Person with the given ID is not found, the PersonDao returns a null pointer
+        PersonDao personDao = new PersonDao(db.openConnection());
+        Person result = personDao.getPersonByID("Give_Me_A_Fake_ID.mp3");
+        assertNull(result);
+    }
+
+    @Test
     public void addPerson() throws Exception {
-        //  We will compare this resulting person object from the database
-        //  to our original person object to see if insertion worked.
+        //  This test adds a Person object to the database,
+        //  then compares the person object it pulls back from the database
+        //  to the original person object to check if insertion worked on all fields.
+
         Person result = null;
 
         //  Just to be sure its cleared.
@@ -82,31 +110,6 @@ public class PersonDaoTest {
         }
     }
 
-    @Test
-    public void getPersonByIDPass() throws Exception {
-        //  We will compare the result we get with the person we expect
-        Person result = null;
-
-        //  First we fill the person table with some person data from db/dbfiller.txt
-        db.fillDatabase();
-
-        //  In db/dbfiller.txt, we see there is a Person which matches our prepared person instance.
-        //  so we query a PersonDao object for that person.personID
-
-        PersonDao pDao = new PersonDao(db.openConnection());
-        result = pDao.getPersonByID(person.personID);
-        db.closeConnection(true);
-        //  We want the result to be the same as the generated person object
-        assertEquals(result,person);
-    }
-
-    @Test
-    public void getPersonByNonexistentIDFails() throws Exception {
-        //  If a Person with the given ID is not found, the PersonDao returns a null pointer
-        PersonDao personDao = new PersonDao(db.openConnection());
-        Person result = personDao.getPersonByID("Give_Me_A_Fake_ID.mp3");
-        assertNull(result);
-    }
 
     @Test
     public void clearFullTable() throws Exception{
@@ -136,7 +139,6 @@ public class PersonDaoTest {
 
         //  If no exceptions were thrown, calling clear on an empty table worked.
     }
-
 
 
     @Test
