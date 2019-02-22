@@ -21,12 +21,7 @@ public class UserDao {
      */
     void clear() throws DataAccessException {
 
-        try(Connection connection = DriverManager.getConnection(Database.dbPath)){
-            PreparedStatement stmt = connection.prepareStatement("DELETE FROM users");
-            stmt.execute();
-        } catch (SQLException ex){
-            throw new DataAccessException(ex.getMessage());
-        }
+
     }
 
     /**
@@ -36,14 +31,6 @@ public class UserDao {
      * @throws DataAccessException if operation fails
      */
     void add(User user) throws DataAccessException{
-        try(Connection connection = DriverManager.getConnection(Database.dbPath)){
-            PreparedStatement stmt = connection.prepareStatement(
-                    "insert users " +
-                        "set userName = ?, password = ?, email = ?, firstName = ?, lastName = ?, gender = ?, personID = ?"
-            );
-        }catch(SQLException ex){
-            throw new DataAccessException(ex.getMessage());
-        }
 
     }
 

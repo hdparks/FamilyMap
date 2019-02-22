@@ -22,20 +22,20 @@ create table persons
     firstName varchar(255) not null,
     lastName varchar(255) not null,
     gender char(1) check(gender in ("f","m")),
-    father varchar(255),
-    mother varchar(255),
-    spouse varchar(255),
+    fatherID varchar(255),
+    motherID varchar(255),
+    spouseID varchar(255),
     foreign key(descendant) references users(username),
-    foreign key(father) references persons(personID),
-    foreign key(mother) references persons(personID),
-    foreign key(spouse) references persons(personID)
+    foreign key(fatherID) references persons(personID),
+    foreign key(motherID) references persons(personID),
+    foreign key(spouseID) references persons(personID)
 );
 
 create table events
 (
     eventID varchar(255) not null primary key,
     descendant varchar(255) not null,
-    person varchar(255) not null,
+    personID varchar(255) not null,
     latitude real not null,
     longitude real not null,
     country varchar(255) not null,
@@ -43,7 +43,7 @@ create table events
     eventType varchar(255) not null,
     year integer not null,
     foreign key(descendant) references users(username),
-    foreign key(person) references persons(personID)
+    foreign key(personID) references persons(personID)
 );
 
 create table authTokens

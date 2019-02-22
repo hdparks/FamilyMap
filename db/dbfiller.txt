@@ -1,0 +1,5 @@
+INSERT INTO users (userName, password, email, firstName, lastName, gender, personID)
+            VALUES ('user', 'pass', 'email', 'first', 'last', 'f','100');
+
+INSERT INTO persons (personID, descendant, firstName, lastName, gender, fatherID, motherID, spouseID)
+            VALUES ('100', 'user', 'first','last','f',null,null,null)

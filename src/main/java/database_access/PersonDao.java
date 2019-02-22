@@ -11,19 +11,25 @@ import java.util.List;
  */
 public class PersonDao {
 
+    Connection conn;
+
+    /**
+     * Connects a PersonDAO object to a Database object
+     * @param conn a database connection
+     */
+    PersonDao(Connection conn){
+        this.conn = conn;
+    }
+
     /**
      * Clears all Person data
      * @throws DataAccessException if the operation fails
      */
-    void clear() throws DataAccessException{
-        try(Connection connection = DriverManager.getConnection(Database.dbPath)){
-
-            connection.prepareStatement("DELETE FROM persons").execute();
-
-        }catch(SQLException ex){
-
-            throw new DataAccessException(ex.getMessage());
-
+    public void clear() throws DataAccessException{
+        try(PreparedStatement stmt = conn.prepareStatement("DELETE FROM persons")) {
+            stmt.executeUpdate();
+        } catch (SQLException ex){
+            throw new DataAccessException("Error occurred while clearing table from database");
         }
     }
 
@@ -31,36 +37,28 @@ public class PersonDao {
     /**
      * Adds a Person to the database. Generates and returns a new personID.
      * @param person the Person to add
-     * @return the personID of the newly generated Person object
      * @throws DataAccessException if operation fails
      */
-    String add(Person person) throws DataAccessException{
-        try(Connection connection = DriverManager.getConnection(Database.dbPath)){
-            String sql = "INSERT INTO persons set personID = ?, descendant = ?, firstName = ?, lastName = ?, gender = ?";
-            if (person.fatherID != null) sql += " fatherID = ?";
-            if (person.motherID != null) sql += " motherID = ?";
-            if (person.spouseID != null) sql += " spouseID = ?";
+    void add(Person person) throws DataAccessException{
+        String sql = "INSERT INTO persons (personID, descendant, firstName, lastName, gender, fatherID, motherID, spouseID)" +
+                "VALUES (?,?,?,?,?,?,?,?)";
+        try{
 
-            PreparedStatement stmt = connection.prepareStatement(sql);
-
+            PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, person.personID);
             stmt.setString(2, person.descendant);
             stmt.setString(3, person.firstName);
             stmt.setString(4, person.lastName);
             stmt.setString(5, person.gender);
+            stmt.setString(6, person.fatherID);
+            stmt.setString(7, person.motherID);
+            stmt.setString(8, person.spouseID);
+            stmt.executeUpdate();
 
-            int next = 6;
-            if (person.fatherID != null){ stmt.setString(next, person.fatherID); next += 1; }
-            if (person.motherID != null){ stmt.setString(next, person.motherID); next += 1; }
-            if (person.spouseID != null){ stmt.setString(next, person.spouseID); next += 1; }
-
-            stmt.execute();
-
-        } catch(SQLException ex){
-            throw new DataAccessException(ex.getMessage());
+         } catch(SQLException ex){
+            throw new DataAccessException("Error encountered while adding Person into the database:\n"+ex.getMessage());
         }
 
-        return person.personID;
     }
 
     /**
@@ -69,14 +67,12 @@ public class PersonDao {
      * @throws DataAccessException if the operation fails, ie. the Person is not found
      */
     void deletePersonByID(String personID) throws DataAccessException{
-        try(Connection connection = DriverManager.getConnection(Database.dbPath)){
-
-            PreparedStatement stmt = connection.prepareStatement("DELETE FROM persons WHERE personID = ?");
+        try(PreparedStatement stmt = conn.prepareStatement("DELETE FROM persons WHERE personID = ?")){
             stmt.setString(1,personID);
             stmt.execute();
-
         } catch (SQLException ex){
-            throw new DataAccessException(ex.getMessage());
+            ex.printStackTrace();
+            throw new DataAccessException("Error encountered while deleting Person");
         }
     }
 
@@ -88,11 +84,14 @@ public class PersonDao {
      */
     Person getPersonByID(String id) throws DataAccessException {
         Person person = null;
-        try (Connection connection = DriverManager.getConnection(Database.dbPath)){
-            String sql = "SELECT personID, descendant, firstName, lastName, gender, fatherID, motherID, spouseID FROM persons";
+        String sql = "SELECT * FROM persons WHERE PersonID = ?";
+        try {
 
-            PreparedStatement stmt = connection.prepareStatement(sql);
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1,id);
             ResultSet rs = stmt.executeQuery();
+
+            rs.next();
 
             String personID = rs.getString(1);
             String descendant = rs.getString(2);
@@ -105,8 +104,9 @@ public class PersonDao {
 
             person = new Person(personID, descendant, firstName, lastName, gender, fatherID, motherID, spouseID);
 
-        }catch (SQLException ex){
-            throw new DataAccessException(ex.getMessage());
+        } catch (SQLException ex){
+            ex.printStackTrace();
+            throw new DataAccessException("Error occurred in PersonDao getPersonByID");
         }
 
         return person;
@@ -119,13 +119,12 @@ public class PersonDao {
      * @throws DataAccessException if the operation fails
      */
     List<Person> getPersonListByUser(String username) throws DataAccessException{
+
         List<Person> list = new ArrayList<Person>();
+        String sql = "SELECT personID, descendant, firstName, lastName, gender, fatherID, motherID, spouseID FROM persons";
 
-        try (Connection connection = DriverManager.getConnection(Database.dbPath)){
-            String sql = "SELECT personID, descendant, firstName, lastName, gender, fatherID, motherID, spouseID FROM persons";
-
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            ResultSet rs = stmt.executeQuery();
+        try (PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()){
 
             while (rs.next()){
 
@@ -139,13 +138,14 @@ public class PersonDao {
                 String spouseID = rs.getString(8);
 
                 list.add(new Person(personID, descendant, firstName, lastName, gender, fatherID, motherID, spouseID));
-
             }
 
+            return list;
+
         } catch (SQLException ex){
-            throw new DataAccessException(ex.getMessage());
+            ex.printStackTrace();
+            throw new DataAccessException("Error encountered while finding Person list");
         }
 
-        return list;
     }
 }

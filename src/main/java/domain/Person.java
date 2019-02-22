@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Objects;
+
 /**
  * Represents a person
  */
@@ -135,4 +137,23 @@ public class Person {
      */
     public String spouseID;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return personID.equals(person.personID) &&
+                descendant.equals(person.descendant) &&
+                firstName.equals(person.firstName) &&
+                lastName.equals(person.lastName) &&
+                gender.equals(person.gender) &&
+                Objects.equals(fatherID, person.fatherID) &&
+                Objects.equals(motherID, person.motherID) &&
+                Objects.equals(spouseID, person.spouseID);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(personID, descendant, firstName, lastName, gender, fatherID, motherID, spouseID);
+    }
 }

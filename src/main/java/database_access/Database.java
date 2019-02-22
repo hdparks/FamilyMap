@@ -3,10 +3,9 @@ package database_access;
 import javax.xml.crypto.Data;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Database {
@@ -20,6 +19,10 @@ public class Database {
         } catch (ClassNotFoundException e){
             e.printStackTrace();
         }
+    }
+
+    public boolean hasOpenConnection(){
+        return conn != null;
     }
 
     public Connection openConnection() throws DataAccessException{
@@ -43,6 +46,7 @@ public class Database {
             if(commit){
                 // commit the changes to the database
                 conn.commit();
+
             } else {
                 // roll back
                 conn.rollback();
@@ -61,23 +65,58 @@ public class Database {
 
         openConnection();
 
-        try(Statement stmt = conn.createStatement(); Scanner scin = new Scanner(new File("main/java/database_access/dbschema.txt"))){
-            // Read in database instructions
-            String sql = scin.useDelimiter("//Z").next();
+        List<String> sql = new ArrayList<>();
+        try(Scanner scin = new Scanner(new File("db/dbschema.txt"))){
+            scin.useDelimiter(";");
+            while(scin.hasNext()){
+                sql.add(scin.next());
+            }
+        } catch (FileNotFoundException ex){
+            ex.printStackTrace();
+            closeConnection(false);
+            throw new DataAccessException("Could not locate database construction file");
+        }
+
+        try{
+
             // Execute instructions
-            stmt.executeUpdate(sql);
+
+            for (String s : sql){
+                PreparedStatement stmt = this.conn.prepareStatement(s);
+                stmt.executeUpdate();
+                stmt.close();
+            }
+
             // Commit the successful operation
             closeConnection(true);
 
-        } catch (FileNotFoundException ex){
-            ex.printStackTrace();
-            throw new DataAccessException("Could not locate database construction file");
         } catch (SQLException ex){
-            ex.printStackTrace();
             throw new DataAccessException("SQL Error encountered while creating tables");
         } catch (DataAccessException ex){
+            ex.printStackTrace();
             closeConnection(false);
             throw ex;
+        }
+    }final
+
+    public void clearTables() throws DataAccessException{
+
+        openConnection();
+
+        try{
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate("DELETE FROM users");
+            stmt.executeUpdate("DELETE FROM persons");
+            stmt.executeUpdate("DELETE FROM events");
+            stmt.executeUpdate("DELETE FROM authTokens");
+
+            closeConnection(true);
+        } catch(DataAccessException ex){
+            closeConnection(false);
+            throw ex;
+        } catch(SQLException ex){
+            closeConnection(false);
+            throw new DataAccessException("SQL error in clearing tables: \n" + ex.getMessage());
         }
     }
 }
