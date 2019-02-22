@@ -39,7 +39,7 @@ public class UserDao {
      * @param user the User to be added
      * @throws DataAccessException if operation fails
      */
-    void add(User user) throws DataAccessException{
+    public void add(User user) throws DataAccessException{
         String sql = "INSERT INTO users (userName, password, email, firstName, lastName, gender, personID) " +
                 "VALUES (?,?,?,?,?,?,?)";
         try {
@@ -64,7 +64,7 @@ public class UserDao {
      * @param userName username of the User to deleteUserByUsername
      * @throws DataAccessException if operation fails, ie. User is not found
      */
-    void deleteUserByUsername(String userName) throws DataAccessException{
+    public void deleteUserByUsername(String userName) throws DataAccessException{
         try{
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM users WHERE username = ?");
             stmt.setString(1,userName);
@@ -80,7 +80,7 @@ public class UserDao {
      * @return User an object representing the user with the given username. Null if not found.
      * @throws DataAccessException if operation fails
      */
-    User getUserByName(String username) throws DataAccessException{
+    public User getUserByName(String username) throws DataAccessException{
         User user = null;
         String sql = "SELECT * FROM users WHERE userName = ?";
 

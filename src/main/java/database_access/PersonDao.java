@@ -17,7 +17,7 @@ public class PersonDao {
      * Connects a PersonDAO object to a Database object
      * @param conn a database connection
      */
-    PersonDao(Connection conn){
+    public PersonDao(Connection conn){
         this.conn = conn;
     }
 
@@ -39,7 +39,7 @@ public class PersonDao {
      * @param person the Person to add
      * @throws DataAccessException if operation fails
      */
-    void add(Person person) throws DataAccessException{
+    public void add(Person person) throws DataAccessException{
         String sql = "INSERT INTO persons (personID, descendant, firstName, lastName, gender, fatherID, motherID, spouseID)" +
                 "VALUES (?,?,?,?,?,?,?,?)";
         try{
@@ -67,7 +67,7 @@ public class PersonDao {
      * @param personID the Id of the Person to deleteUserByUsername
      * @throws DataAccessException if the operation fails, ie. the Person is not found
      */
-    void deletePersonByID(String personID) throws DataAccessException{
+    public void deletePersonByID(String personID) throws DataAccessException{
         try{
             PreparedStatement stmt = conn.prepareStatement("DELETE FROM persons WHERE personID = ?");
             stmt.setString(1,personID);
@@ -83,7 +83,7 @@ public class PersonDao {
      * @return Person a Person object
      * @throws DataAccessException if the operation fails
      */
-    Person getPersonByID(String id) throws DataAccessException {
+    public Person getPersonByID(String id) throws DataAccessException {
         Person person = null;
         String sql = "SELECT * FROM persons WHERE PersonID = ?";
         try {
@@ -119,7 +119,7 @@ public class PersonDao {
      * @return a List of Person objects
      * @throws DataAccessException if the operation fails
      */
-    List<Person> getPersonListByUser(String username) throws DataAccessException{
+    public List<Person> getPersonListByUser(String username) throws DataAccessException{
 
         List<Person> list = new ArrayList<Person>();
         String sql = "SELECT personID, descendant, firstName, lastName, gender, fatherID, motherID, spouseID FROM persons";

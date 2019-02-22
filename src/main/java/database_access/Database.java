@@ -8,7 +8,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * a class which represents the Database itself.
+ *
+ * Used by other classes in database_access package to generate and handle connections to the database.
+ */
 public class Database {
+
+    /**
+     * A Connection object
+     */
     private Connection conn;
 
     static {
@@ -21,10 +30,19 @@ public class Database {
         }
     }
 
+    /**
+     *
+     * @return whether or not the Database has an open connection.
+     */
     public boolean hasOpenConnection(){
         return conn != null;
     }
 
+    /**
+     * Opens a new connection via this Database object
+     * @return a new Connection object
+     * @throws DataAccessException if operation fails
+     */
     public Connection openConnection() throws DataAccessException{
         if (hasOpenConnection()){
             throw new DataAccessException("A previous connection has not been closed. Close previous connection.");
@@ -44,6 +62,11 @@ public class Database {
         return conn;
     }
 
+    /**
+     * Closes the current Connection object, with option to commit or rollback the connection
+     * @param commit Whether or not to commit (vs rollback) the effects of the connection
+     * @throws DataAccessException if operation fails
+     */
     public void closeConnection(boolean commit) throws DataAccessException{
         try {
             if(commit){
@@ -63,7 +86,10 @@ public class Database {
         }
     }
 
-
+    /**
+     * Reads in the table data from db/dbschema.txt file, populates Database with given data
+     * @throws DataAccessException if operation fails
+     */
     public void createTables() throws  DataAccessException{
 
         openConnection();
@@ -102,6 +128,10 @@ public class Database {
         }
     }
 
+    /**
+     * Clears all data from all tables
+     * @throws DataAccessException if operation fails
+     */
     public void clearTables() throws DataAccessException{
 
         openConnection();
@@ -123,6 +153,10 @@ public class Database {
         }
     }
 
+    /**
+     * Fills Database with data defined in db/dbfiller.txt file
+     * @throws DataAccessException if operation fails
+     */
     public void fillDatabase() throws DataAccessException{
 
         openConnection();
