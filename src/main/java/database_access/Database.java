@@ -26,6 +26,9 @@ public class Database {
     }
 
     public Connection openConnection() throws DataAccessException{
+        if (hasOpenConnection()){
+            throw new DataAccessException("A previous connection has not been closed. Close previous connection.");
+        }
         try {
             final String CONNECTION_URL = "jdbc:sqlite:db" + File.separator + "familymapdatabase.sqlite";
 
@@ -97,7 +100,7 @@ public class Database {
             closeConnection(false);
             throw ex;
         }
-    }final
+    }
 
     public void clearTables() throws DataAccessException{
 
@@ -118,5 +121,45 @@ public class Database {
             closeConnection(false);
             throw new DataAccessException("SQL error in clearing tables: \n" + ex.getMessage());
         }
+    }
+
+    public void fillDatabase() throws DataAccessException{
+
+        openConnection();
+
+        List<String> sql = new ArrayList<>();
+        try(Scanner scin = new Scanner(new File("db/dbfiller.txt"))){
+            scin.useDelimiter(";");
+            while(scin.hasNext()){
+                sql.add(scin.next());
+            }
+        } catch (FileNotFoundException ex){
+            ex.printStackTrace();
+            closeConnection(false);
+            throw new DataAccessException("Could not locate database filler file");
+        }
+
+        try{
+
+            // Execute instructions
+
+            for (String s : sql){
+                PreparedStatement stmt = this.conn.prepareStatement(s);
+                stmt.executeUpdate();
+                stmt.close();
+            }
+
+            // Commit the successful operation
+            closeConnection(true);
+
+        } catch (SQLException ex){
+            throw new DataAccessException("SQL Error encountered while filling tables");
+        } catch (DataAccessException ex){
+            ex.printStackTrace();
+            closeConnection(false);
+            throw ex;
+        }
+
+
     }
 }

@@ -4,11 +4,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.File;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.Scanner;
+import java.sql.SQLException;
 
 import static org.junit.Assert.*;
 
@@ -35,6 +33,22 @@ public class DatabaseTest {
         assert(!conn.isClosed());
         db.closeConnection(true);
         conn = null;
+    }
+
+    public class DatabaseTestExcpetion extends Exception{
+
+    }
+
+    @Test(expected = DatabaseTestExcpetion.class)
+    public void openTwoConnections() throws Exception {
+        try{
+            db.openConnection();
+            db.openConnection();
+        } catch (DataAccessException ex){
+            if (ex.getMessage().equals("A previous connection has not been closed. Close previous connection.")){
+                throw new DatabaseTestExcpetion();
+            }
+        }
     }
 
     @Test
@@ -101,5 +115,25 @@ public class DatabaseTest {
         rs = conn.prepareStatement("SELECT * FROM authTokens").executeQuery();
         assertFalse(rs.next());
 
+    }
+
+    @Test
+    public void fillDatabase() throws Exception {
+        //  Set up, push stuff into database
+        db.createTables();
+        db.fillDatabase();
+
+        Connection conn = db.openConnection();
+
+        ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM users");
+        assert(rs.next());
+        rs = conn.createStatement().executeQuery("SELECT * FROM persons");
+        assert(rs.next());
+        rs = conn.createStatement().executeQuery("SELECT * FROM events");
+        assert(rs.next());
+        rs = conn.createStatement().executeQuery("SELECT * FROM authTokens");
+        assert(rs.next());
+
+        db.closeConnection(true);
     }
 }

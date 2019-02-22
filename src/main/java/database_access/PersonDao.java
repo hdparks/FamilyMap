@@ -53,8 +53,9 @@ public class PersonDao {
             stmt.setString(6, person.fatherID);
             stmt.setString(7, person.motherID);
             stmt.setString(8, person.spouseID);
-            stmt.executeUpdate();
 
+            stmt.executeUpdate();
+            stmt.close();
          } catch(SQLException ex){
             throw new DataAccessException("Error encountered while adding Person into the database:\n"+ex.getMessage());
         }
@@ -63,16 +64,16 @@ public class PersonDao {
 
     /**
      * Deletes the given Person
-     * @param personID the Id of the Person to delete
+     * @param personID the Id of the Person to deleteUserByUsername
      * @throws DataAccessException if the operation fails, ie. the Person is not found
      */
     void deletePersonByID(String personID) throws DataAccessException{
-        try(PreparedStatement stmt = conn.prepareStatement("DELETE FROM persons WHERE personID = ?")){
+        try{
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM persons WHERE personID = ?");
             stmt.setString(1,personID);
-            stmt.execute();
+            stmt.executeUpdate();
         } catch (SQLException ex){
-            ex.printStackTrace();
-            throw new DataAccessException("Error encountered while deleting Person");
+            throw new DataAccessException("Error while deleting Person:\n"+ex.getMessage());
         }
     }
 
@@ -91,22 +92,22 @@ public class PersonDao {
             stmt.setString(1,id);
             ResultSet rs = stmt.executeQuery();
 
-            rs.next();
+            if(rs.next()){
+                String personID = rs.getString(1);
+                String descendant = rs.getString(2);
+                String firstName = rs.getString(3);
+                String lastName = rs.getString(4);
+                String gender = rs.getString(5);
+                String fatherID = rs.getString(6);
+                String motherID = rs.getString(7);
+                String spouseID = rs.getString(8);
 
-            String personID = rs.getString(1);
-            String descendant = rs.getString(2);
-            String firstName = rs.getString(3);
-            String lastName = rs.getString(4);
-            String gender = rs.getString(5);
-            String fatherID = rs.getString(6);
-            String motherID = rs.getString(7);
-            String spouseID = rs.getString(8);
-
-            person = new Person(personID, descendant, firstName, lastName, gender, fatherID, motherID, spouseID);
-
+                person = new Person(personID, descendant, firstName, lastName, gender, fatherID, motherID, spouseID);
+            }
+            //  If result set is empty, there is no such person
+            //  So we return a null Person object
         } catch (SQLException ex){
-            ex.printStackTrace();
-            throw new DataAccessException("Error occurred in PersonDao getPersonByID");
+            throw new DataAccessException("Error occurred in PersonDao getPersonByID\n"+ex.getMessage());
         }
 
         return person;
