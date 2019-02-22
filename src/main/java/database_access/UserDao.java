@@ -2,7 +2,6 @@ package database_access;
 
 import domain.User;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -22,7 +21,7 @@ public class UserDao {
      */
     void clear() throws DataAccessException {
 
-        try(Connection connection = DriverManager.getConnection(DataAccessObject.dbPath)){
+        try(Connection connection = DriverManager.getConnection(Database.dbPath)){
             PreparedStatement stmt = connection.prepareStatement("DELETE FROM users");
             stmt.execute();
         } catch (SQLException ex){
@@ -37,7 +36,7 @@ public class UserDao {
      * @throws DataAccessException if operation fails
      */
     void add(User user) throws DataAccessException{
-        try(Connection connection = DriverManager.getConnection(DataAccessObject.dbPath)){
+        try(Connection connection = DriverManager.getConnection(Database.dbPath)){
             PreparedStatement stmt = connection.prepareStatement(
                     "insert users " +
                         "set userName = ?, password = ?, email = ?, firstName = ?, lastName = ?, gender = ?, personID = ?"

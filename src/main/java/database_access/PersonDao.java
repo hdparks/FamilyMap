@@ -3,6 +3,7 @@ package database_access;
 import domain.Person;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ public class PersonDao {
      * @throws DataAccessException if the operation fails
      */
     void clear() throws DataAccessException{
-        try(Connection connection = DriverManager.getConnection(DataAccessObject.dbPath)){
+        try(Connection connection = DriverManager.getConnection(Database.dbPath)){
 
             connection.prepareStatement("DELETE FROM persons").execute();
 
@@ -34,7 +35,7 @@ public class PersonDao {
      * @throws DataAccessException if operation fails
      */
     String add(Person person) throws DataAccessException{
-        try(Connection connection = DriverManager.getConnection(DataAccessObject.dbPath)){
+        try(Connection connection = DriverManager.getConnection(Database.dbPath)){
             String sql = "INSERT INTO persons set personID = ?, descendant = ?, firstName = ?, lastName = ?, gender = ?";
             if (person.fatherID != null) sql += " fatherID = ?";
             if (person.motherID != null) sql += " motherID = ?";
@@ -68,7 +69,7 @@ public class PersonDao {
      * @throws DataAccessException if the operation fails, ie. the Person is not found
      */
     void deletePersonByID(String personID) throws DataAccessException{
-        try(Connection connection = DriverManager.getConnection(DataAccessObject.dbPath)){
+        try(Connection connection = DriverManager.getConnection(Database.dbPath)){
 
             PreparedStatement stmt = connection.prepareStatement("DELETE FROM persons WHERE personID = ?");
             stmt.setString(1,personID);
@@ -86,7 +87,8 @@ public class PersonDao {
      * @throws DataAccessException if the operation fails
      */
     Person getPersonByID(String id) throws DataAccessException {
-        try (Connection connection = DriverManager.getConnection(DataAccessObject.dbPath)){
+        Person person = null;
+        try (Connection connection = DriverManager.getConnection(Database.dbPath)){
             String sql = "SELECT personID, descendant, firstName, lastName, gender, fatherID, motherID, spouseID FROM persons";
 
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -101,13 +103,13 @@ public class PersonDao {
             String motherID = rs.getString(7);
             String spouseID = rs.getString(8);
 
-            Person person = new Person(personID, descendant, firstName, lastName, gender, fatherID, motherID, spouseID);
+            person = new Person(personID, descendant, firstName, lastName, gender, fatherID, motherID, spouseID);
 
         }catch (SQLException ex){
             throw new DataAccessException(ex.getMessage());
         }
 
-        return null;
+        return person;
     }
 
     /**
@@ -117,6 +119,33 @@ public class PersonDao {
      * @throws DataAccessException if the operation fails
      */
     List<Person> getPersonListByUser(String username) throws DataAccessException{
-        return null;
+        List<Person> list = new ArrayList<Person>();
+
+        try (Connection connection = DriverManager.getConnection(Database.dbPath)){
+            String sql = "SELECT personID, descendant, firstName, lastName, gender, fatherID, motherID, spouseID FROM persons";
+
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()){
+
+                String personID = rs.getString(1);
+                String descendant = rs.getString(2);
+                String firstName = rs.getString(3);
+                String lastName = rs.getString(4);
+                String gender = rs.getString(5);
+                String fatherID = rs.getString(6);
+                String motherID = rs.getString(7);
+                String spouseID = rs.getString(8);
+
+                list.add(new Person(personID, descendant, firstName, lastName, gender, fatherID, motherID, spouseID));
+
+            }
+
+        } catch (SQLException ex){
+            throw new DataAccessException(ex.getMessage());
+        }
+
+        return list;
     }
 }
