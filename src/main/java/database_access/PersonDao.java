@@ -77,6 +77,16 @@ public class PersonDao {
         }
     }
 
+    public void deletePersonsByDescendant(String descendant) throws DataAccessException{
+        try{
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM persons WHERE descendant = ?");
+            stmt.setString(1,descendant);
+            stmt.executeUpdate();
+        } catch (SQLException ex){
+            throw new DataAccessException("Error while deleting Persons:\n"+ex.getMessage());
+        }
+    }
+
     /**
      * Returns an instance of domain.Person representing the person with the given ID.
      * @param id the personID of the person in question

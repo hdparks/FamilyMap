@@ -168,4 +168,22 @@ public class PersonDaoTest {
         db.closeConnection(true);
     }
 
+    @Test
+    public void deletePersonsByDescendant() throws Exception{
+        //  Put a Person object in the persons table
+        db.fillDatabase();
+
+        //  Delete the person with descendant "user" (matches person.descendant)
+        PersonDao personDao = new PersonDao(db.openConnection());
+        personDao.deletePersonsByDescendant(person.descendant);
+        db.closeConnection(true);
+
+        //  Ensure the person with desce is no longer there
+        Connection conn = db.openConnection();
+        ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM persons WHERE descendant = 'user'");
+        assertFalse(rs.next());
+        db.closeConnection(true);
+
+    }
+
 }
