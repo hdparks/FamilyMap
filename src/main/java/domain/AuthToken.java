@@ -7,12 +7,12 @@ public class AuthToken {
     /**
      * The generated authorization token for the associated user
      */
-    String authToken;
+    public String authToken;
 
     /**
      * The username the token is assigned to
      */
-    String userName;
+    public String userName;
 
 
     /**

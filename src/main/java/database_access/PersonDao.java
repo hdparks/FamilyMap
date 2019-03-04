@@ -5,13 +5,18 @@ import domain.Person;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * a class for interfacing with Person data
  */
 public class PersonDao {
 
+    private static Logger logger = Logger.getLogger("PersonDao");
+
     Connection conn;
+
 
     /**
      * Connects a PersonDAO object to a Database object
@@ -29,6 +34,7 @@ public class PersonDao {
         try(PreparedStatement stmt = conn.prepareStatement("DELETE FROM persons")) {
             stmt.executeUpdate();
         } catch (SQLException ex){
+            logger.log(Level.SEVERE,ex.getMessage());
             throw new DataAccessException("Error occurred while clearing table from database");
         }
     }
@@ -57,7 +63,8 @@ public class PersonDao {
             stmt.executeUpdate();
             stmt.close();
          } catch(SQLException ex){
-            throw new DataAccessException("Error encountered while adding Person into the database:\n"+ex.getMessage());
+            logger.log(Level.SEVERE,ex.getMessage());
+            throw new DataAccessException("Error encountered while creating Person data");
         }
 
     }
@@ -73,7 +80,8 @@ public class PersonDao {
             stmt.setString(1,personID);
             stmt.executeUpdate();
         } catch (SQLException ex){
-            throw new DataAccessException("Error while deleting Person:\n"+ex.getMessage());
+            logger.log(Level.SEVERE,ex.getMessage());
+            throw new DataAccessException("Error deleting Person data");
         }
     }
 
@@ -83,7 +91,8 @@ public class PersonDao {
             stmt.setString(1,descendant);
             stmt.executeUpdate();
         } catch (SQLException ex){
-            throw new DataAccessException("Error while deleting Persons:\n"+ex.getMessage());
+            logger.log(Level.SEVERE,ex.getMessage());
+            throw new DataAccessException("Error deleting Persons");
         }
     }
 
@@ -117,7 +126,8 @@ public class PersonDao {
             //  If result set is empty, there is no such person
             //  So we return a null Person object
         } catch (SQLException ex){
-            throw new DataAccessException("Error occurred in PersonDao getPersonByID\n"+ex.getMessage());
+            logger.log(Level.SEVERE,ex.getMessage());
+            throw new DataAccessException("Error occurred in PersonDao getPersonByID");
         }
 
         return person;
@@ -154,8 +164,8 @@ public class PersonDao {
             return list;
 
         } catch (SQLException ex){
-            ex.printStackTrace();
-            throw new DataAccessException("Error encountered while finding Person list");
+            logger.log(Level.SEVERE,ex.getMessage());
+            throw new DataAccessException("Error encountered while finding list of Persons");
         }
 
     }

@@ -58,11 +58,11 @@ var pathtoroot = "../";loadScripts(document, 'script');</script>
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../service/PersonService.html" title="class in service"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../service/Service.html" title="interface in service"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../services/PersonService.html" title="class in services"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../services/Service.html" title="interface in services"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
-<li><a href="../index.html?service/RegisterService.html" target="_top">Frames</a></li>
+<li><a href="../index.html?services/RegisterService.html" target="_top">Frames</a></li>
 <li><a href="RegisterService.html" target="_top">No&nbsp;Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_top">
@@ -116,7 +116,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </script>
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="../service/package-summary.html">service</a></div>
+<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="../services/package-summary.html">services</a></div>
 <h2 title="Class RegisterService" class="title">Class RegisterService</h2>
 </div>
 <div class="contentContainer">
@@ -124,7 +124,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li>service.RegisterService</li>
+<li>services.RegisterService</li>
 </ul>
 </li>
 </ul>
@@ -133,12 +133,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="../service/Service.html" title="interface in service">Service</a>&lt;<a href="../service/request/RegisterRequest.html" title="class in service.request">RegisterRequest</a>&gt;</code></dd>
+<dd><code><a href="../services/Service.html" title="interface in services">Service</a>&lt;<a href="../services/request/RegisterRequest.html" title="class in services.request">RegisterRequest</a>&gt;</code></dd>
 </dl>
 <hr>
 <pre>public class <span class="typeNameLabel">RegisterService</span>
 extends java.lang.Object
-implements <a href="../service/Service.html" title="interface in service">Service</a>&lt;<a href="../service/request/RegisterRequest.html" title="class in service.request">RegisterRequest</a>&gt;</pre>
+implements <a href="../services/Service.html" title="interface in services">Service</a>&lt;<a href="../services/request/RegisterRequest.html" title="class in services.request">RegisterRequest</a>&gt;</pre>
 <div class="block">Creates a new user account, generates 4 generations of ancestor data,
  logs the user in, and returns an auth token</div>
 </li>
@@ -160,7 +160,7 @@ implements <a href="../service/Service.html" title="interface in service">Servic
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="../service/RegisterService.html#RegisterService--">RegisterService</a></span>()</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="../services/RegisterService.html#RegisterService--">RegisterService</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -180,8 +180,8 @@ implements <a href="../service/Service.html" title="interface in service">Servic
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="../service/response/Response.html" title="class in service.response">Response</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../service/RegisterService.html#handleRequest-service.request.RegisterRequest-">handleRequest</a></span>&#8203;(<a href="../service/request/RegisterRequest.html" title="class in service.request">RegisterRequest</a>&nbsp;req)</code></th>
+<td class="colFirst"><code><a href="../services/response/Response.html" title="class in services.response">Response</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../services/RegisterService.html#handleRequest-services.request.RegisterRequest-">handleRequest</a></span>&#8203;(<a href="../services/request/RegisterRequest.html" title="class in services.request">RegisterRequest</a>&nbsp;req)</code></th>
 <td class="colLast">
 <div class="block">Registers a new user based on the http post request
  Returns a response indicating the success/failure of the operation</div>
@@ -226,22 +226,22 @@ implements <a href="../service/Service.html" title="interface in service">Servic
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="handleRequest-service.request.RegisterRequest-">
+<a name="handleRequest-services.request.RegisterRequest-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>handleRequest</h4>
-<pre>public&nbsp;<a href="../service/response/Response.html" title="class in service.response">Response</a>&nbsp;handleRequest&#8203;(<a href="../service/request/RegisterRequest.html" title="class in service.request">RegisterRequest</a>&nbsp;req)</pre>
+<pre>public&nbsp;<a href="../services/response/Response.html" title="class in services.response">Response</a>&nbsp;handleRequest&#8203;(<a href="../services/request/RegisterRequest.html" title="class in services.request">RegisterRequest</a>&nbsp;req)</pre>
 <div class="block">Registers a new user based on the http post request
  Returns a response indicating the success/failure of the operation</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../service/Service.html#handleRequest-T-">handleRequest</a></code>&nbsp;in interface&nbsp;<code><a href="../service/Service.html" title="interface in service">Service</a>&lt;<a href="../service/request/RegisterRequest.html" title="class in service.request">RegisterRequest</a>&gt;</code></dd>
+<dd><code><a href="../services/Service.html#handleRequest-T-">handleRequest</a></code>&nbsp;in interface&nbsp;<code><a href="../services/Service.html" title="interface in services">Service</a>&lt;<a href="../services/request/RegisterRequest.html" title="class in services.request">RegisterRequest</a>&gt;</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>req</code> - A valid RegisterRequest object</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>res a valid RegisterResponse instance if successful, a Response instance if service failed</dd>
+<dd>res a valid RegisterResponse instance if successful, a Response instance if services failed</dd>
 </dl>
 </li>
 </ul>
@@ -272,11 +272,11 @@ implements <a href="../service/Service.html" title="interface in service">Servic
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../service/PersonService.html" title="class in service"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../service/Service.html" title="interface in service"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../services/PersonService.html" title="class in services"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../services/Service.html" title="interface in services"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
-<li><a href="../index.html?service/RegisterService.html" target="_top">Frames</a></li>
+<li><a href="../index.html?services/RegisterService.html" target="_top">Frames</a></li>
 <li><a href="RegisterService.html" target="_top">No&nbsp;Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_bottom">

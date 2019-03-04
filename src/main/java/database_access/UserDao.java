@@ -4,11 +4,15 @@ import domain.User;
 
 import javax.xml.crypto.Data;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * a class for interfacing with User data
  */
 public class UserDao {
+
+    private static Logger logger = Logger.getLogger("UserDao");
 
     Connection conn;
 
@@ -21,7 +25,7 @@ public class UserDao {
 
 
     /**
-     * Delete all users from the "users" table
+     * Clears the users table
      *
      * @throws DataAccessException if operation fails
      */
@@ -29,6 +33,7 @@ public class UserDao {
         try {
            conn.createStatement().executeUpdate("DELETE FROM users");
         } catch (SQLException ex){
+            logger.log(Level.SEVERE,ex.getMessage());
             throw new DataAccessException("Error occurred while clearing users table");
         }
     }
@@ -55,7 +60,8 @@ public class UserDao {
             stmt.executeUpdate();
             stmt.close();
         } catch(SQLException ex){
-            throw new DataAccessException("Error while adding User: /n"+ex.getMessage());
+            logger.log(Level.SEVERE,ex.getMessage());
+            throw new DataAccessException("Error while creating User");
         }
     }
 
@@ -70,7 +76,8 @@ public class UserDao {
             stmt.setString(1,userName);
             stmt.executeUpdate();
         } catch (SQLException ex) {
-            throw new DataAccessException("Error encountered while deleting User:\n"+ex.getMessage());
+            logger.log(Level.SEVERE,ex.getMessage());
+            throw new DataAccessException("Error encountered while deleting User");
         }
     }
 
@@ -102,7 +109,8 @@ public class UserDao {
             }
 
         } catch (SQLException ex){
-            throw new DataAccessException("Error getting User from database:\n"+ex.getMessage());
+            logger.log(Level.SEVERE,ex.getMessage());
+            throw new DataAccessException("Error getting User from database");
         }
         //  If ResultSet is empty, returns a null user object.
         return user;

@@ -4,18 +4,40 @@ import domain.AuthToken;
 import domain.User;
 
 import javax.xml.crypto.Data;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * a class for interfacing with AuthToken data
  */
 public class AuthTokenDao {
 
+    private static Logger logger  = Logger.getLogger("AuthTokenDao");
+
+    Connection conn;
+
+
+    /**
+     * Connects an AuthTokenDao object to the Database object
+     * @param conn a database connection
+     */
+    AuthTokenDao(Connection conn){ this.conn = conn; }
+
     /**
      * Clears the AuthToken table
      * @throws DataAccessException if the operation fails
      */
     public void clear() throws DataAccessException{
-
+        try {
+            conn.createStatement().executeUpdate("DELETE FROM authTokens");
+        } catch (SQLException ex){
+            logger.log(Level.SEVERE,ex.getMessage());
+            throw new DataAccessException("Error occurred while clearing Authentication Token data");
+        }
     }
 
     /**
@@ -24,7 +46,14 @@ public class AuthTokenDao {
      * @throws DataAccessException if the operation fails
      */
     public void add(AuthToken authToken) throws DataAccessException{
-
+        String sql = "INSERT INTO authTokens (authToken, userName)";
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1,authToken.authToken);
+        } catch (SQLException ex){
+            logger.log(Level.SEVERE,ex.getMessage());
+            throw new DataAccessException("Error adding AuthToken");
+        }
     }
 
     /**
@@ -32,18 +61,39 @@ public class AuthTokenDao {
      * @param authToken the AuthToken to be deleted
      * @throws DataAccessException if the operation fails, ie. the given AuthToken is not found
      */
-    public void delete(AuthToken authToken) throws DataAccessException{
-
+    public void deleteByToken(String authToken) throws DataAccessException{
+        try {
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM authTokens WHERE authToken = ?");
+            stmt.setString(1,authToken);
+            stmt.executeUpdate();
+        } catch (SQLException ex){
+            logger.log(Level.SEVERE, ex.getMessage());
+            throw new DataAccessException("Error deleting Authentication Token");
+        }
     }
 
     /**
      * Returns the User object linked to the given AuthToken.
-     * @param auth the supplied AuthToken object
-     * @return userName of the User associated with the given AuthToken
+     * @param auth the supplied AuthToken string
+     * @return userName of the User associated with the given AuthToken, null if no such token is found
      * @throws DataAccessException if the operation fails
      */
-    public String getUserByAuthToken(AuthToken auth) throws DataAccessException{
-        return null;
-    }
+    public String getUsernameByAuthToken(String auth) throws DataAccessException{
+        String sql = "SELECT username FROM authToken WHERE authToken = ?";
+        String userName = null;
 
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1,auth);
+            ResultSet rs = stmt.executeQuery();
+
+            if(rs.next()){
+                userName = rs.getString(1);
+            }
+            return userName;
+        } catch (SQLException ex){
+            logger.log(Level.SEVERE, ex.getMessage());
+            throw new DataAccessException("Error fetching User data from given Authentication Token");
+        }
+    }
 }

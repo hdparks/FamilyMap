@@ -1,5 +1,5 @@
 database_access
 domain
-service
-service.request
-service.response
+services
+services.request
+services.response

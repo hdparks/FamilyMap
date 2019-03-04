@@ -7,45 +7,57 @@ public class Event {
     /**
      * Unique identifier for this event (non-empty string)
      */
-    String eventID;
+    public String eventID;
 
     /**
      * User (Username) to which this person belongs
      */
-    String descendant;
+    public String descendant;
 
     /**
      * ID of person to which this event belongs
      */
-    String personID;
+    public String personID;
 
     /**
      * Latitude of event’s location
      */
-    String latitude;
+    public String latitude;
 
     /**
      *  Longitude of event’s location
      */
-    String longitude;
+    public String longitude;
 
     /**
      * Country in which event occurred
      */
-    String country;
+    public String country;
 
     /**
      * City in which event occurred
      */
-    String city;
+    public String city;
 
     /**
      * Type of event (birth, baptism, christening, marriage, death, etc.)
      */
-    String eventType;
+    public String eventType;
 
     /**
      * Year in which event occurred
      */
-    String year;
+    public int year;
+
+    public Event(String eventID, String descendant, String personID, String latitude, String longitude, String country, String city, String eventType, int year){
+        this.eventID = eventID;
+        this.descendant = descendant;
+        this.personID = personID;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.country = country;
+        this.city = city;
+        this.eventType = eventType;
+        this.year = year;
+    }
 }
