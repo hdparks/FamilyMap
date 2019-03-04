@@ -1,18 +1,16 @@
 package services;
 
-import services.response.Response;
+import requests.ClearRequest;
+import responses.ClearResponse;
+import responses.Response;
 
 /**
  * Deletes ALL data, including user accounts, auth tokens, person, and event data.
  */
-public class ClearService {
-
-    /**
-     * Calls clear on all database_access classes, clearing each table in the database
-     *
-     * @return res A ClearResponse object
-     */
-    Response clear(){
+public class ClearService implements Service<ClearRequest, ClearResponse>{
+    
+    @Override
+    public ClearResponse handleRequest(ClearRequest req) {
         return null;
     }
 }

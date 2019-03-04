@@ -1,12 +1,13 @@
 package services;
 
-import services.request.LoginRequest;
-import services.response.Response;
+import requests.LoginRequest;
+import responses.LoginResponse;
+import responses.Response;
 
 /**
  * Logs in the user and returns an auth token
  */
-public class LoginService implements Service<LoginRequest>{
+public class LoginService implements Service<LoginRequest,LoginResponse>{
 
     /**
      * Calls functions to log user in, constructs and returns LoginResponse object
@@ -15,7 +16,7 @@ public class LoginService implements Service<LoginRequest>{
      * @return res A LoginResponse object if successful, a failing Response if services fails
      */
     @Override
-    public Response handleRequest(LoginRequest req) {
+    public LoginResponse handleRequest(LoginRequest req) {
         return null;
     }
 }

@@ -133,12 +133,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="../services/Service.html" title="interface in services">Service</a>&lt;<a href="../services/request/EventRequest.html" title="class in services.request">EventRequest</a>&gt;</code></dd>
+<dd><code><a href="../services/Service.html" title="interface in services">Service</a>&lt;<a href="../services/requests/EventRequest.html" title="class in requests">EventRequest</a>&gt;</code></dd>
 </dl>
 <hr>
 <pre>public class <span class="typeNameLabel">EventService</span>
 extends java.lang.Object
-implements <a href="../services/Service.html" title="interface in services">Service</a>&lt;<a href="../services/request/EventRequest.html" title="class in services.request">EventRequest</a>&gt;</pre>
+implements <a href="../services/Service.html" title="interface in services">Service</a>&lt;<a href="../services/requests/EventRequest.html" title="class in requests">EventRequest</a>&gt;</pre>
 <div class="block">Returns ALL events for ALL family members of the current user.
 
  The current user is determined from the provided auth token</div>
@@ -181,10 +181,10 @@ implements <a href="../services/Service.html" title="interface in services">Serv
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="../services/response/Response.html" title="class in services.response">Response</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../services/EventService.html#handleRequest-services.request.EventRequest-">handleRequest</a></span>&#8203;(<a href="../services/request/EventRequest.html" title="class in services.request">EventRequest</a>&nbsp;req)</code></th>
+<td class="colFirst"><code><a href="../services/responses/Response.html" title="class in responses">Response</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../services/EventService.html#handleRequest-requests.EventRequest-">handleRequest</a></span>&#8203;(<a href="../services/requests/EventRequest.html" title="class in requests">EventRequest</a>&nbsp;req)</code></th>
 <td class="colLast">
-<div class="block">Handles the request made to the /event endpoint</div>
+<div class="block">Handles the requests made to the /event endpoint</div>
 </td>
 </tr>
 </table>
@@ -226,17 +226,17 @@ implements <a href="../services/Service.html" title="interface in services">Serv
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="handleRequest-services.request.EventRequest-">
+<a name="handleRequest-requests.EventRequest-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>handleRequest</h4>
-<pre>public&nbsp;<a href="../services/response/Response.html" title="class in services.response">Response</a>&nbsp;handleRequest&#8203;(<a href="../services/request/EventRequest.html" title="class in services.request">EventRequest</a>&nbsp;req)</pre>
-<div class="block">Handles the request made to the /event endpoint</div>
+<pre>public&nbsp;<a href="../services/responses/Response.html" title="class in responses">Response</a>&nbsp;handleRequest&#8203;(<a href="../services/requests/EventRequest.html" title="class in requests">EventRequest</a>&nbsp;req)</pre>
+<div class="block">Handles the requests made to the /event endpoint</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../services/Service.html#handleRequest-T-">handleRequest</a></code>&nbsp;in interface&nbsp;<code><a href="../services/Service.html" title="interface in services">Service</a>&lt;<a href="../services/request/EventRequest.html" title="class in services.request">EventRequest</a>&gt;</code></dd>
+<dd><code><a href="../services/Service.html#handleRequest-T-">handleRequest</a></code>&nbsp;in interface&nbsp;<code><a href="../services/Service.html" title="interface in services">Service</a>&lt;<a href="../services/requests/EventRequest.html" title="class in requests">EventRequest</a>&gt;</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>req</code> - an EventRequest object</dd>
 <dt><span class="returnLabel">Returns:</span></dt>

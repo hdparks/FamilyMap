@@ -1,7 +1,7 @@
 package services;
 
-import services.response.Response;
+import responses.Response;
 
-public interface Service<T> {
-    Response handleRequest(T req);
+public interface Service<T,U> {
+    U handleRequest(T req);
 }
