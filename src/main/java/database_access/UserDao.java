@@ -20,7 +20,7 @@ public class UserDao {
      * Connects a UserDao object to the Database object
      * @param conn a database connection
      */
-    UserDao(Connection conn) { this.conn = conn; }
+    public UserDao(Connection conn) { this.conn = conn; }
 
 
 

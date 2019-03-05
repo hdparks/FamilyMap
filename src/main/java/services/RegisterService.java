@@ -2,11 +2,14 @@ package services;
 
 import database_access.DataAccessException;
 import database_access.Database;
+import database_access.UserDao;
+import domain.Generator;
 import domain.Person;
 import domain.User;
 import requests.RegisterRequest;
 import responses.RegisterResponse;
 
+import java.io.FileNotFoundException;
 import java.util.logging.Logger;
 
 /**
@@ -54,8 +57,13 @@ public class RegisterService implements Service<RegisterRequest,RegisterResponse
                     req.getGender(),
                     personID);
 
+            //  Add the User
+            UserDao userDao = new UserDao(db.openConnection());
+            userDao.add(user);
+            db.closeConnection(true);
 
             //  Generate 4 generations of data
+            new Generator().generateGenerations(user, 4);
 
 
 
@@ -64,7 +72,7 @@ public class RegisterService implements Service<RegisterRequest,RegisterResponse
             //  Return new authToken
 
 
-        } catch (DataAccessException ex){
+        } catch (DataAccessException | FileNotFoundException ex){
             logger.severe(ex.getMessage());
             //  Create failing RegisterResponse
             RegisterResponse res = new RegisterResponse(ex.getMessage());
