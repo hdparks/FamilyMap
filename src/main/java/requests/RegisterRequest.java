@@ -3,7 +3,7 @@ package requests;
 /**
  * Represents a requests made to the /user/register endpoint
  */
-public class RegisterRequest implements Request{
+public class RegisterRequest implements IRequest {
     /**
      * Non-empty string
      */

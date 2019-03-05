@@ -3,7 +3,7 @@ package requests;
 /**
  * Represents a requests to the /event endpoint
  */
-public class EventRequest implements Request {
+public class EventRequest implements IRequest {
     /**
      * Non-empty string
      */

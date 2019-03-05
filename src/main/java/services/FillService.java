@@ -2,7 +2,6 @@ package services;
 
 import requests.FillRequest;
 import responses.FillResponse;
-import responses.Response;
 
 /**
  * Populates the server's database with generated data for the specified username.

@@ -2,7 +2,6 @@ package services;
 
 import requests.PersonRequest;
 import responses.PersonResponse;
-import responses.Response;
 
 /**
  * Returns ALL family members of the current user.

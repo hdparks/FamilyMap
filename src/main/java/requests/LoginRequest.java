@@ -3,7 +3,7 @@ package requests;
 /**
  * Represents a requests made to the /user/login endpoint
  */
-public class LoginRequest implements Request{
+public class LoginRequest implements IRequest {
 
     /**
      * Non-empty string

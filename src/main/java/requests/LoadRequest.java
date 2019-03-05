@@ -3,7 +3,7 @@ package requests;
 /**
  * Represents a requests made to the /load endpoint
  */
-public class LoadRequest implements Request {
+public class LoadRequest implements IRequest {
     /**
      * A JSON array of User-object-friendly data (to be GSON-ed into User object)
      */

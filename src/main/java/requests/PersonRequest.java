@@ -3,7 +3,7 @@ package requests;
 /**
  * Represents a requests to the /person endpoint
  */
-public class PersonRequest implements Request{
+public class PersonRequest implements IRequest {
     /**
      * The authToken of the current user
      */

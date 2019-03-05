@@ -3,7 +3,7 @@ package requests;
 /**
  * Represents a requests made to the /person/[personID] endpoint
  */
-public class PersonIDRequest implements Request{
+public class PersonIDRequest implements IRequest {
     /**
      * The authToken of the current user
      */
@@ -15,7 +15,7 @@ public class PersonIDRequest implements Request{
     public String personID;
 
     /**
-     * Create a PersonID Request
+     * Create a PersonID IRequest
      * @param authToken the authToken of the current User
      * @param personID the ID of the person in question
      */

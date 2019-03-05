@@ -2,7 +2,6 @@ package services;
 
 import requests.LoginRequest;
 import responses.LoginResponse;
-import responses.Response;
 
 /**
  * Logs in the user and returns an auth token

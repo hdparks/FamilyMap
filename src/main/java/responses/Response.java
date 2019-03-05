@@ -4,7 +4,7 @@ package responses;
  * The generic Response class. Has a boolean field corresponding to success/failure
  * Also as optional message field, usually describing the error on failure
  */
-public class Response {
+public class Response implements IResponse {
 
     public String message;
     public boolean success;

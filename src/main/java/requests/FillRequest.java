@@ -3,7 +3,7 @@ package requests;
 /**
  * Represents a requests made to the /fill API endpoint
  */
-public class FillRequest implements Request {
+public class FillRequest implements IRequest {
     /**
      * The username of the User whose generations are to be filled
      */

@@ -35,7 +35,7 @@ public class AuthToken {
     /**
      * Generates an authToken object with the given auth string.
      * This object can then be used by AuthTokenDao to access the associated userName
-     * @param authToken the authorization token, passed in via Request object
+     * @param authToken the authorization token, passed in via IRequest object
      */
     public AuthToken(String authToken){
         this.authToken = authToken;

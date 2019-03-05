@@ -2,7 +2,6 @@ package services;
 
 import requests.EventIDRequest;
 import responses.EventIDResponse;
-import responses.Response;
 
 /**
  * Returns a single Event object with the specified ID

@@ -20,7 +20,7 @@ public class RegisterService implements Service<RegisterRequest,RegisterResponse
      */
     @Override
     public RegisterResponse handleRequest(RegisterRequest req) {
-        return null;
+        
 
     }
 

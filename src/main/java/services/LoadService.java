@@ -2,7 +2,6 @@ package services;
 
 import requests.LoadRequest;
 import responses.LoadResponse;
-import responses.Response;
 
 /**
  * Clears all data from database, just like clear, then loads the posted data.

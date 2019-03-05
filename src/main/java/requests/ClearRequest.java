@@ -1,4 +1,4 @@
 package requests;
 
-public class ClearRequest implements Request {
+public class ClearRequest implements IRequest {
 }

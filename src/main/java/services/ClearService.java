@@ -2,7 +2,6 @@ package services;
 
 import requests.ClearRequest;
 import responses.ClearResponse;
-import responses.Response;
 
 /**
  * Deletes ALL data, including user accounts, auth tokens, person, and event data.
