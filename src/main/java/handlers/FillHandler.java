@@ -12,7 +12,7 @@ public class FillHandler extends THandler{
 
 
     public FillHandler() {
-        super(FillRequest.class, FillResponse.class, logger );
+        super(FillRequest.class, FillResponse.class, logger,"POST",false );
         this.service = new FillService();
     }
 }

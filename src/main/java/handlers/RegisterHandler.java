@@ -11,7 +11,7 @@ public class RegisterHandler extends THandler {
     private static Logger logger = Logger.getLogger("RegisterHandler");
 
     public RegisterHandler(){
-        super(RegisterRequest.class, RegisterResponse.class, logger);
+        super(RegisterRequest.class, RegisterResponse.class, logger, "POST",false);
         this.service = new RegisterService();
     }
 

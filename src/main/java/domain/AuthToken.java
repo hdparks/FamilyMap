@@ -1,9 +1,16 @@
 package domain;
 
+import java.util.UUID;
+
 /**
  * Represents an authorization token
  */
 public class AuthToken {
+
+    public static String generateToken(){
+        return UUID.randomUUID().toString();
+    }
+
     /**
      * The generated authorization token for the associated user
      */

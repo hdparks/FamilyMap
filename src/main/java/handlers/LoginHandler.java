@@ -11,7 +11,7 @@ public class LoginHandler extends THandler{
     private static Logger logger = Logger.getLogger("LoginHandler");
 
     public LoginHandler() {
-        super(LoginRequest.class,LoginResponse.class, logger);
+        super(LoginRequest.class,LoginResponse.class, logger, "POST",false);
         this.service = new LoginService();
     }
 }

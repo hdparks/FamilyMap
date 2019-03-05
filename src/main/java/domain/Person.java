@@ -8,17 +8,17 @@ import java.util.Objects;
 public class Person {
 
     /**
-     * Allows for generation of unique Person ID's from 1 to MAXINTEGER.
+     * A counter that allows for unique PersonID's
      */
-    private static int idTracker = 0;
+    private static int counterID = 0;
 
     /**
-     * Returns a unique PersonID (String)
+     * Assigns a unique PersonID value each time it is called.
      * @return a unique PersonID
      */
-    static String assignID(){
-        Person.idTracker += 1;
-        return String.valueOf(Person.idTracker);
+    public static String getNewPersonID(){
+        counterID += 1;
+        return Integer.toString(counterID);
     }
 
 

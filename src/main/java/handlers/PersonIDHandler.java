@@ -18,7 +18,7 @@ public class PersonIDHandler extends THandler{
 
 
     public PersonIDHandler() {
-        super(PersonIDRequest.class, PersonIDResponse.class, logger);
+        super(PersonIDRequest.class, PersonIDResponse.class, logger, "GET",true);
         this.service = new PersonIDService();
     }
 }

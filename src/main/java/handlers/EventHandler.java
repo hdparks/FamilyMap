@@ -11,7 +11,7 @@ public class EventHandler extends THandler {
     private static Logger logger = Logger.getLogger("EventHandler");
 
     EventHandler() {
-        super(EventRequest.class, EventResponse.class, logger);
+        super(EventRequest.class, EventResponse.class, logger,"GET",true);
         this.service = new EventService();
     }
 }

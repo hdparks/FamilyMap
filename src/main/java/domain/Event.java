@@ -4,6 +4,22 @@ package domain;
  * Represents an event
  */
 public class Event {
+
+    /**
+     * A counter that allows for unique PersonID's
+     */
+    private static int counterID = 0;
+
+    /**
+     * Assigns a unique PersonID value each time it is called.
+     * @return a unique PersonID
+     */
+    public static String getNewEventID(){
+        counterID += 1;
+        return Integer.toString(counterID);
+    }
+
+
     /**
      * Unique identifier for this event (non-empty string)
      */

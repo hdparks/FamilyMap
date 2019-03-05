@@ -25,7 +25,7 @@ public class AuthTokenDao {
      * Connects an AuthTokenDao object to the Database object
      * @param conn a database connection
      */
-    AuthTokenDao(Connection conn){ this.conn = conn; }
+    public AuthTokenDao(Connection conn){ this.conn = conn; }
 
     /**
      * Clears the AuthToken table

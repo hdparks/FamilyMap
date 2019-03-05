@@ -12,7 +12,7 @@ public class PersonHandler extends THandler{
 
 
     PersonHandler() {
-        super(PersonRequest.class, PersonResponse.class, logger);
+        super(PersonRequest.class, PersonResponse.class, logger,"GET",true );
         this.service = new PersonService();
     }
 }
