@@ -20,7 +20,7 @@ public class FillService implements Service<FillRequest, FillResponse> {
      * @return a valid FillResponse if successful, a generic error Response if not
      */
     @Override
-    public FillResponse handleRequest(FillRequest req) throws DataAccessException {
+    public FillResponse serveResponse(FillRequest req) throws DataAccessException {
         return null;
     }
 }

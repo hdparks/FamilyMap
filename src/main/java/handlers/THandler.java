@@ -51,7 +51,7 @@ public class THandler<Req,Res> implements HttpHandler {
                     Req req = JSONUtilities.createRequestInstance(exchange.getRequestBody(), this.reqClass);
 
                     //  Pass the request to the RegisterService to get the response data
-                    Res res = this.service.handleRequest(req);
+                    Res res = this.service.serveResponse(req);
 
                     //  Write to the response object
                     ExchangeUtilities.writeResponseToHttpExchange(res,exchange);

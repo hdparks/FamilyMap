@@ -9,7 +9,7 @@ import responses.ClearResponse;
 public class ClearService implements Service<ClearRequest, ClearResponse>{
     
     @Override
-    public ClearResponse handleRequest(ClearRequest req) {
+    public ClearResponse serveResponse(ClearRequest req) {
         return null;
     }
 }

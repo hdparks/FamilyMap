@@ -30,9 +30,10 @@ public class PersonService implements Service<PersonRequest, PersonResponse> {
      * @return res a valid PersonResponse object if successful, a failing Response object if services fails
      */
     @Override
-    public PersonResponse handleRequest(PersonRequest req) throws DataAccessException {
+    public PersonResponse serveResponse(PersonRequest req) throws DataAccessException {
         //  Spin up database connection
         Connection conn = db.openConnection();
+
         try{
             //  Get authString from request
             String authString = req.authToken;
@@ -53,6 +54,10 @@ public class PersonService implements Service<PersonRequest, PersonResponse> {
             db.closeConnection(false);
 
             throw ex;
+
+        } finally {
+            //  Default to rolling back
+            db.closeConnection(false);
         }
     }
 }

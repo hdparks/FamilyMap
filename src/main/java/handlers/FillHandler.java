@@ -48,7 +48,7 @@ public class FillHandler implements HttpHandler {
 
                 FillRequest req = new FillRequest(username, generations);
 
-                FillResponse res = fillService.handleRequest(req);
+                FillResponse res = fillService.serveResponse(req);
 
 
                 //  Ready the JSON response body

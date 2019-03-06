@@ -15,7 +15,7 @@ public class LoginService implements Service<LoginRequest,LoginResponse>{
      * @return res A LoginResponse object if successful, a failing Response if services fails
      */
     @Override
-    public LoginResponse handleRequest(LoginRequest req) {
+    public LoginResponse serveResponse(LoginRequest req) {
         return null;
     }
 }

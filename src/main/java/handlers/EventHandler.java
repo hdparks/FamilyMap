@@ -5,15 +5,12 @@ import com.sun.net.httpserver.HttpHandler;
 import database_access.DataAccessException;
 import requests.EventIDRequest;
 import requests.EventRequest;
-import responses.EventIDResponse;
-import responses.EventResponse;
 import responses.Response;
 import services.EventIDService;
 import services.EventService;
 import services.HttpRequestException;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.util.logging.Logger;
 
@@ -48,7 +45,7 @@ public class EventHandler implements HttpHandler {
                         //  EventService
                         EventRequest req = new EventRequest(authString);
 
-                        res = eventService.handleRequest(req);
+                        res = eventService.serveResponse(req);
 
                     } else {
                         //  EventIDService
@@ -57,7 +54,7 @@ public class EventHandler implements HttpHandler {
 
                         EventIDRequest req = new EventIDRequest(authString, eventID);
 
-                        res = eventIDService.handleRequest(req);
+                        res = eventIDService.serveResponse(req);
 
                     }
 

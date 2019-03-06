@@ -1,12 +1,28 @@
 package services;
 
+import database_access.AuthTokenDao;
+import database_access.DataAccessException;
+import database_access.Database;
+import database_access.PersonDao;
+import domain.Person;
 import requests.PersonIDRequest;
 import responses.PersonIDResponse;
+import responses.PersonResponse;
+
+import java.sql.Connection;
 
 /**
  * Returns the single Person object with the specified ID.
  */
 public class PersonIDService implements Service<PersonIDRequest, PersonIDResponse> {
+
+    private 
+
+    Database db;
+
+    public PersonIDService(){
+        db = new Database();
+    }
 
     /**
      * Returns a responses instance with the info of a person (or persons)
@@ -14,7 +30,29 @@ public class PersonIDService implements Service<PersonIDRequest, PersonIDRespons
      * @return res a valid PersonIDResponse object if successful, a failing Response object if services fails
      */
     @Override
-    public PersonIDResponse handleRequest(PersonIDRequest req) {
-        return null;
+    public PersonIDResponse serveResponse(PersonIDRequest req) throws DataAccessException {
+
+        Connection conn = db.openConnection();
+
+        try{
+            //  Get requested Person from personID
+            Person person = new PersonDao(conn).getPersonByID(req.personID);
+
+            //  Ensure person belongs to user
+            if(new AuthTokenDao(conn).getUsernameByAuthToken(req.authToken)
+                    .equals(person.descendant)){
+
+                db.closeConnection(true);
+                return new PersonIDResponse(person);
+
+            } else{
+                //  Person does not belong to user
+                throw new DataAccessException("Person does not belong to current User");
+            }
+        } catch (DataAccessException ex){
+            db.closeConnection(false);
+
+        }
+
     }
 }

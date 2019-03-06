@@ -14,7 +14,7 @@ public class LoadService implements Service<LoadRequest, LoadResponse>{
      * @return res successful Response success, failing Response object on failure
      */
     @Override
-    public LoadResponse handleRequest(LoadRequest req) {
+    public LoadResponse serveResponse(LoadRequest req) {
         return null;
     }
 }

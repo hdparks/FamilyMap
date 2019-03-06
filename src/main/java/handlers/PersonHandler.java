@@ -47,7 +47,7 @@ public class PersonHandler implements HttpHandler {
                         String authString = exchange.getRequestHeaders().getFirst("Authentication");
                         PersonRequest req = new PersonRequest(authString);
 
-                        res = personService.handleRequest(req);
+                        res = personService.serveResponse(req);
 
                     } else {
                         //  PersonIDService
@@ -56,7 +56,7 @@ public class PersonHandler implements HttpHandler {
                         String authString = exchange.getRequestHeaders().getFirst("Authentication");
                         PersonIDRequest req = new PersonIDRequest(authString, personID);
 
-                        res = personIDService.handleRequest(req);
+                        res = personIDService.serveResponse(req);
                     }
 
                     //  Write to the response object

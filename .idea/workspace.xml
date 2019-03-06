@@ -8,53 +8,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0a5cc4dd-9241-44bb-8fe9-6cfcde4d6443" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/handlers/ExchangeUtilities.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/services/HttpRequestException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/handlers/JSONUtilitiesTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/FamilyMapServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FamilyMapServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/database_access/AuthTokenDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/database_access/AuthTokenDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/database_access/Database.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/database_access/Database.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/database_access/UserDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/database_access/UserDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/domain/AuthToken.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/domain/AuthToken.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/domain/Event.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/domain/Event.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/domain/Person.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/domain/Person.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/handlers/ClearHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/handlers/ClearHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/handlers/EventHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/handlers/EventHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/handlers/EventIDHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/handlers/EventIDHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/handlers/FillHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/handlers/FillHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/handlers/LoadHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/handlers/LoadHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/handlers/LoginHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/handlers/LoginHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/handlers/PersonHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/handlers/PersonHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/handlers/RegisterHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/handlers/RegisterHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/services/ClearService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/services/ClearService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/services/EventIDService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/services/EventIDService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/services/EventService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/services/EventService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/services/FillService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/services/FillService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/services/LoadService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/services/LoadService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/services/LoginService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/services/LoginService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/services/PersonIDService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/services/PersonIDService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/services/PersonService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/services/PersonService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/services/RegisterService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/services/RegisterService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/services/Service.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/services/Service.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/classes/service/RegisterServiceTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/classes/service/response/LoginResponseTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FamilyMapServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FamilyMapServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database_access/PersonDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database_access/PersonDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/handlers/AuthenticationHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/handlers/AuthUtilities.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/handlers/EventHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/handlers/EventHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/handlers/FileRequestHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/handlers/FileRequestHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/handlers/FillHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/handlers/FillHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/handlers/JSONHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/handlers/JSONUtilities.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/handlers/PersonHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/handlers/PersonHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/handlers/PersonIDHandler.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/handlers/THandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/handlers/THandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/requests/EventIDRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/requests/EventIDRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/requests/EventRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/requests/EventRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/requests/PersonRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/requests/PersonRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/responses/EventIDResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/responses/EventIDResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/responses/PersonIDResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/responses/PersonIDResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/responses/PersonResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/responses/PersonResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/services/ClearService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/ClearService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/services/EventIDService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/EventIDService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/services/EventService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/EventService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/services/FillService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/FillService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/services/LoadService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/LoadService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/services/LoginService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/LoginService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/services/PersonIDService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/PersonIDService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/services/PersonService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/PersonService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/services/RegisterService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/RegisterService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/services/Service.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/Service.java" afterDir="false" />
@@ -75,11 +41,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/services/PersonService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="322">
-              <caret line="54" selection-start-line="54" selection-end-line="54" />
+            <state relative-caret-position="254">
+              <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="54" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#415#416#0" expanded="true" />
@@ -89,11 +55,45 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/services/PersonIDService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="51">
+              <caret line="18" column="12" selection-start-line="18" selection-start-column="12" selection-end-line="18" selection-end-column="12" />
+              <folding>
+                <element signature="e#324#325#0" expanded="true" />
+                <element signature="e#355#356#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/responses/PersonIDResponse.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="22" column="11" selection-start-line="22" selection-start-column="11" selection-end-line="22" selection-end-column="11" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/services/Service.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="6" column="19" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="19" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/responses/PersonResponse.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret lean-forward="true" />
+            <state relative-caret-position="340">
+              <caret line="22" column="18" selection-start-line="22" selection-start-column="18" selection-end-line="22" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -144,14 +144,12 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/Server.java" />
         <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/familymapserver/json/eventid.json" />
         <option value="$PROJECT_DIR$/src/main/java/handlers/request/EventIDRequest.java" />
         <option value="$PROJECT_DIR$/src/main/java/handlers/IHandler.java" />
         <option value="$PROJECT_DIR$/src/main/java/handlers/Handler.java" />
         <option value="$PROJECT_DIR$/src/main/java/handlers/JSONHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/services/PersonIDService.java" />
         <option value="$PROJECT_DIR$/src/main/java/services/LoginService.java" />
         <option value="$PROJECT_DIR$/src/main/java/responses/LoadResponse.java" />
         <option value="$PROJECT_DIR$/src/main/java/services/LoadService.java" />
@@ -178,7 +176,6 @@
         <option value="$PROJECT_DIR$/src/main/java/handlers/PersonIDHandler.java" />
         <option value="$PROJECT_DIR$/src/main/java/FamilyMapServer.java" />
         <option value="$PROJECT_DIR$/src/main/java/handlers/AuthenticationHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/services/Service.java" />
         <option value="$PROJECT_DIR$/src/main/java/services/FillService.java" />
         <option value="$PROJECT_DIR$/src/main/java/services/HttpRequestException.java" />
         <option value="$PROJECT_DIR$/src/main/java/handlers/ExchangeUtilities.java" />
@@ -193,8 +190,11 @@
         <option value="$PROJECT_DIR$/src/main/java/requests/PersonRequest.java" />
         <option value="$PROJECT_DIR$/src/main/java/services/RegisterService.java" />
         <option value="$PROJECT_DIR$/src/main/java/database_access/PersonDao.java" />
-        <option value="$PROJECT_DIR$/src/main/java/responses/PersonResponse.java" />
+        <option value="$PROJECT_DIR$/src/main/java/services/Service.java" />
         <option value="$PROJECT_DIR$/src/main/java/services/PersonService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/responses/PersonResponse.java" />
+        <option value="$PROJECT_DIR$/src/main/java/responses/PersonIDResponse.java" />
+        <option value="$PROJECT_DIR$/src/main/java/services/PersonIDService.java" />
       </list>
     </option>
   </component>
@@ -214,9 +214,8 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-7" />
-    <option name="width" value="1021" />
-    <option name="height" value="1167" />
+    <option name="width" value="683" />
+    <option name="height" value="728" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -390,7 +389,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1551895657458" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1551900503788" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/java/handlers" />
@@ -601,7 +600,7 @@
     <option name="totallyTimeSpent" value="1385000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="0" y="0" width="683" height="728" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.25" />
@@ -610,10 +609,10 @@
       <window_info id="Capture Tool" order="3" />
       <window_info id="UI Designer" order="4" />
       <window_info id="Favorites" order="5" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="6" visible="true" weight="0.1913767" />
+      <window_info active="true" content_ui="combo" id="Project" order="6" visible="true" weight="0.22632423" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32569557" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.22749591" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.23361345" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -674,24 +673,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/services/LoginService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/responses/LoadResponse.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
-          <folding>
-            <element signature="e#121#122#0" expanded="true" />
-            <element signature="e#160#161#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/services/LoadService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -944,16 +925,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/services/Service.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="53" selection-start-line="6" selection-start-column="53" selection-end-line="6" selection-end-column="53" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/responses/Response.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -1109,21 +1080,49 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/responses/PersonResponse.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/services/Service.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret lean-forward="true" />
+        <state relative-caret-position="102">
+          <caret line="6" column="19" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/services/PersonService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="54" selection-start-line="54" selection-end-line="54" />
+        <state relative-caret-position="254">
+          <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="54" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#415#416#0" expanded="true" />
             <element signature="e#449#450#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/responses/PersonResponse.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="22" column="18" selection-start-line="22" selection-start-column="18" selection-end-line="22" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/responses/PersonIDResponse.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="22" column="11" selection-start-line="22" selection-start-column="11" selection-end-line="22" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/services/PersonIDService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="18" column="12" selection-start-line="18" selection-start-column="12" selection-end-line="18" selection-end-column="12" />
+          <folding>
+            <element signature="e#324#325#0" expanded="true" />
+            <element signature="e#355#356#0" expanded="true" />
           </folding>
         </state>
       </provider>

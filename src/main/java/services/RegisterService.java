@@ -33,7 +33,7 @@ public class RegisterService implements Service<RegisterRequest,RegisterResponse
      *
      */
     @Override
-    public RegisterResponse handleRequest(RegisterRequest req) throws DataAccessException{
+    public RegisterResponse serveResponse(RegisterRequest req) throws DataAccessException{
         Database db = new Database();
         try{
             //  Spin up Database connection

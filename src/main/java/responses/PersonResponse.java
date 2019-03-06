@@ -12,7 +12,7 @@ public class PersonResponse extends Response{
     /**
      * A list of Person objects
      */
-    public Person[] persons;
+    public Person[] data;
 
     /**
      * Creates a successful PersonResponse object
@@ -20,7 +20,7 @@ public class PersonResponse extends Response{
      */
     public PersonResponse(Person[] persons){
         super(true);
-        this.persons = persons;
+        this.data = persons;
     }
 
     /**

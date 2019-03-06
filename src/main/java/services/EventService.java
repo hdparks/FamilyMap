@@ -16,7 +16,7 @@ public class EventService implements Service<EventRequest, EventResponse> {
      * @return a valid EventResponse object if successful, a failing one if not.
      */
     @Override
-    public EventResponse handleRequest(EventRequest req) {
+    public EventResponse serveResponse(EventRequest req) {
         return null;
     }
 }

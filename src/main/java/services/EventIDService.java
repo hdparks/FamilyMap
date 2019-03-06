@@ -14,7 +14,7 @@ public class EventIDService implements Service<EventIDRequest, EventIDResponse> 
      * @return a EventIDResponse object
      */
     @Override
-    public EventIDResponse handleRequest(EventIDRequest req) {
+    public EventIDResponse serveResponse(EventIDRequest req) {
         return null;
     }
 }
