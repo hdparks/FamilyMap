@@ -35,7 +35,7 @@ public class DatabaseTest {
         conn = null;
     }
 
-    public class DatabaseTestExcpetion extends Exception{
+    class DatabaseTestExcpetion extends Exception{
 
     }
 

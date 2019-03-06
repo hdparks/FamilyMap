@@ -7,21 +7,6 @@ import java.util.Objects;
  */
 public class Person {
 
-    /**
-     * A counter that allows for unique PersonID's
-     */
-    private static int counterID = 0;
-
-    /**
-     * Assigns a unique PersonID value each time it is called.
-     * @return a unique PersonID
-     */
-    public static String getNewPersonID(){
-        counterID += 1;
-        return Integer.toString(counterID);
-    }
-
-
     public String getPersonID() {
         return personID;
     }
@@ -86,8 +71,40 @@ public class Person {
         this.spouseID = spouseID;
     }
 
+    /**
+     * Since the database automatically generates the personID, this method
+     * should only be used when retrieving a person FROM the database.
+     * @param personID id
+     * @param descendant username
+     * @param firstName name
+     * @param lastName name
+     * @param gender m/f
+     * @param fatherID id
+     * @param motherID id
+     * @param spouseID id
+     */
     public Person(String personID, String descendant, String firstName, String lastName, String gender, String fatherID, String motherID, String spouseID) {
         this.personID = personID;
+        this.descendant = descendant;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.fatherID = fatherID;
+        this.motherID = motherID;
+        this.spouseID = spouseID;
+    }
+
+    /**
+     * This one is used when creating new persons
+     * @param descendant username
+     * @param firstName name
+     * @param lastName name
+     * @param gender m/f
+     * @param fatherID id
+     * @param motherID id
+     * @param spouseID id
+     */
+    public Person(String descendant, String firstName, String lastName, String gender, String fatherID, String motherID, String spouseID) {
         this.descendant = descendant;
         this.firstName = firstName;
         this.lastName = lastName;

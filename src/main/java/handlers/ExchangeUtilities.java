@@ -3,11 +3,9 @@ package handlers;
 import com.sun.net.httpserver.HttpExchange;
 import responses.Response;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.HttpURLConnection;
+import java.nio.file.Files;
 
 public class ExchangeUtilities {
 
@@ -17,14 +15,18 @@ public class ExchangeUtilities {
 
         //  Write the JSON to the response body
         OutputStream responseBody = exchange.getResponseBody();
-        writeString(jsonRes, responseBody);
+        writeStringToOutputStream(jsonRes, responseBody);
     }
 
-    public static void writeString(String str, OutputStream os) throws IOException {
+    public static void writeStringToOutputStream(String str, OutputStream os) throws IOException {
         OutputStreamWriter sw = new OutputStreamWriter(os);
         BufferedWriter bw = new BufferedWriter(sw);
         bw.write(str);
         bw.flush();
+    }
+
+    public static void writeFileToOutputStream(File file, OutputStream os) throws IOException {
+        Files.copy(file.toPath(), os);
     }
 
     public static void handleRequestError(Exception ex, HttpExchange exchange) throws IOException{
@@ -43,7 +45,7 @@ public class ExchangeUtilities {
         //  Send an "Internal Error" header
         exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR,0);
 
-        Response res = new Response(ex.getMessage(),false);
+        Response res = new Response("Internal Error: " + ex.getMessage(),false);
         ExchangeUtilities.writeResponseToHttpExchange(res,exchange);
     }
 

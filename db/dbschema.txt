@@ -17,7 +17,7 @@ create table users
 
 create table persons
 (
-    personID varchar(255) not null primary key,
+    personID integer primary key autoincrement,
     descendant varchar(255) not null,
     firstName varchar(255) not null,
     lastName varchar(255) not null,
@@ -33,7 +33,7 @@ create table persons
 
 create table events
 (
-    eventID varchar(255) not null primary key,
+    eventID integer primary key autoincrement,
     descendant varchar(255) not null,
     personID varchar(255) not null,
     latitude real not null,

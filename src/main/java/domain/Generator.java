@@ -115,25 +115,6 @@ public class Generator {
     }
 
     /**
-     * Generates a new Person instance to match a current User instance
-     * @param user a User object to build from. Assumed to have all essential fields
-     * @return a new Person object
-     */
-    private Person generatePersonFromUser(User user){
-        String personID = Person.getNewPersonID();
-
-        return new Person(
-                personID,
-                user.userName,
-                user.firstName,
-                user.lastName,
-                user.gender,
-                null,
-                null,
-                null);
-    }
-
-    /**
      * Generates a mother
      * @param person the child
      * @return a female Person object with matching descendant to person
@@ -144,7 +125,6 @@ public class Generator {
                 getfName();
 
         return new Person(
-                Person.getNewPersonID(),
                 person.descendant,
                 firstName,
                 lastName,
@@ -156,20 +136,6 @@ public class Generator {
     }
 
     /**
-     * Link the generation father, mother, spouse ids
-     * @param father father Person
-     * @param mother mother Person
-     * @param child child Person
-     */
-    private void linkGeneration(Person father, Person mother, Person child){
-        father.spouseID = mother.personID;
-        mother.spouseID = father.personID;
-
-        child.fatherID = father.personID;
-        child.motherID = mother.personID;
-    }
-
-    /**
      * Generates an event of a given type, year, for a given person type
      * @param person the Person object
      * @param year the year
@@ -177,7 +143,7 @@ public class Generator {
      * @return the new Event object
      */
     private Event generateEvent(Person person,int year,String eventType){
-        Event event = new Event(Event.getNewEventID(),
+        Event event = new Event(
                 person.descendant,
                 person.personID,
                 null,
@@ -195,18 +161,15 @@ public class Generator {
 
     /**
      * Generates the given number of generations, updating the database
-     * @param user the User object of the descendant
+     * @param userPerson the User object of the descendant
      * @param generations the number of generations to generate
      */
-    public void generateGenerations(User user, int generations) throws DataAccessException{
+    public void generateGenerations(Person userPerson, int generations) throws DataAccessException{
 
         try{
             //  Spin up Database driver, PersonDao and EventDao
             PersonDao personDao = new PersonDao(conn);
             EventDao eventDao = new EventDao(conn);
-
-            //  Make user Person
-            Person userPerson = generatePersonFromUser(user);
 
             //  Make user Birthday event, save it
             int userBirthYear = 2000;
@@ -235,9 +198,9 @@ public class Generator {
      * @throws DataAccessException should operation fail
      */
     private void generateNextGeneration(Person child, int childBirthYear, PersonDao personDao, EventDao eventDao, int generations) throws DataAccessException {
-        if( generations == 0 ){
-            //  Simply save the child
-            personDao.add(child);
+        if ( generations <= 0 ){
+            //  We are done
+            return;
         }
 
 
@@ -248,13 +211,15 @@ public class Generator {
 
         //  Generate mother and father Person objects
         Person mother = generateParent(child, lastName,"f");
+        personDao.add(mother);
+
         Person father = generateParent(child, lastName, "m");
+        personDao.add(father);
+
 
         //  Set everyone's id's to one another
-        linkGeneration(father, mother, child);
+        personDao.updateRelationships(child, mother, father);
 
-        //  child is now ready to be saved
-        personDao.add(child);
 
         //  Generate events for parents
 
@@ -262,8 +227,8 @@ public class Generator {
         int parentMarriageYear = getParentMarriageYear(childBirthYear);
         Location parentMarriageLocation = getLocation();
 
-        Event motherMarriage = new Event(Event.getNewEventID(), mother.descendant,mother.personID,null,null,null,null,"Marriage", parentMarriageYear);
-        Event fatherMarriage = new Event(Event.getNewEventID(), father.descendant,father.personID,null,null,null,null,"Marriage", parentMarriageYear);
+        Event motherMarriage = new Event( mother.descendant,mother.personID,null,null,null,null,"Marriage", parentMarriageYear);
+        Event fatherMarriage = new Event( father.descendant,father.personID,null,null,null,null,"Marriage", parentMarriageYear);
 
         loadLocation(motherMarriage,parentMarriageLocation);
         loadLocation(fatherMarriage,parentMarriageLocation);

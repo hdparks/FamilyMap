@@ -195,4 +195,52 @@ public class Database {
 
 
     }
+
+    public static String getLastAutoincrementID(Connection conn) throws SQLException {
+        ResultSet rs = conn.createStatement().executeQuery("SELECT last_insert_rowid()");
+        rs.next();
+        return rs.getString(1);
+    }
+
+    public static void main(String[] args){
+        // Show me everything in the database
+        Database db = new Database();
+        try {
+            Connection conn = db.openConnection();
+            ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM users");
+            int i = 0;
+            while (rs.next()){
+                i += 1;
+            }
+            System.out.println("Number of users: "+ i);
+
+            rs = conn.createStatement().executeQuery("SELECT * FROM persons");
+            i = 0;
+            while (rs.next()){
+                i += 1;
+            }
+            System.out.println("Number of persons: "+ i);
+
+            rs = conn.createStatement().executeQuery("SELECT * FROM events");
+            i = 0;
+            while (rs.next()){
+                i += 1;
+            }
+            System.out.println("Number of events: "+ i);
+
+            rs = conn.createStatement().executeQuery("SELECT * FROM authTokens");
+            i = 0;
+            while (rs.next()){
+                i += 1;
+            }
+            System.out.println("Number of authTokens: "+ i);
+
+            db.closeConnection(false);
+        } catch (DataAccessException | SQLException ex){
+            ex.printStackTrace();
+        }
+
+
+
+    }
 }

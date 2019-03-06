@@ -2,22 +2,58 @@ package handlers;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import database_access.DataAccessException;
 import requests.ClearRequest;
 import responses.ClearResponse;
 import services.ClearService;
+import services.HttpRequestException;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ClearHandler extends THandler {
+public class ClearHandler implements HttpHandler {
 
     private static Logger logger = Logger.getLogger("ClearHandler");
 
+    ClearService clearService;
+
     public ClearHandler() {
-        super(ClearRequest.class, ClearResponse.class, logger, "POST",false);
-        this.service = new ClearService();
+        clearService = new ClearService();
+    }
+
+    @Override
+    public void handle(HttpExchange exchange) throws IOException {
+        try {
+            //  Expect a POST request
+            if(exchange.getRequestMethod().toUpperCase().equals("POST")){
+
+                ClearRequest req = new ClearRequest();
+
+                ClearResponse res = clearService.serveResponse(req);
+
+                //  Job's finished!
+                exchange.sendResponseHeaders(200,0);
+                ExchangeUtilities.writeResponseToHttpExchange(res,exchange);
+
+
+            } else {
+
+                exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST,0);
+                throw new HttpRequestException("Invalid request method");
+
+            }
+        } catch (HttpRequestException ex){
+
+            ExchangeUtilities.handleRequestError(ex,exchange);
+            logger.severe(ex.getMessage());
+
+
+        } catch (DataAccessException ex){
+
+            ExchangeUtilities.handleInternalError(ex,exchange);
+            logger.severe(ex.getMessage());
+        }
+        exchange.close();
     }
 }

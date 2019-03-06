@@ -33,24 +33,35 @@ public class PersonHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         try{
+
+
             //  Expect a GET request
             if( exchange.getRequestMethod().toUpperCase().equals("GET") ){
+
+
 
                 //  Authentication
                 if ( AuthUtilities.isValidAuthentication(exchange)){
 
-                    //  Figure out if it needs a PersonIDService or PersonService
+
+
                     Response res;
 
                     if( exchange.getHttpContext().getPath().equals("/person")){
                         //  PersonService
+
+
                         String authString = exchange.getRequestHeaders().getFirst("Authentication");
                         PersonRequest req = new PersonRequest(authString);
 
                         res = personService.serveResponse(req);
 
+
+
                     } else {
                         //  PersonIDService
+
+
                         //  Parse path after "/person/"
                         String personID = exchange.getHttpContext().getPath().substring("/person/".length());
                         String authString = exchange.getRequestHeaders().getFirst("Authentication");
@@ -59,8 +70,11 @@ public class PersonHandler implements HttpHandler {
                         res = personIDService.serveResponse(req);
                     }
 
+
+
                     //  Write to the response object
                     ExchangeUtilities.writeResponseToHttpExchange(res,exchange);
+
 
                 } else {
                     //  Expected valid authentication
@@ -68,6 +82,8 @@ public class PersonHandler implements HttpHandler {
 
                     throw new HttpRequestException("Authentication failed");
                 }
+
+
             } else {
                 //  Expected a GET request
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST,0);
@@ -75,10 +91,10 @@ public class PersonHandler implements HttpHandler {
                 throw new HttpRequestException("Invalid request method");
             }
 
+
         } catch (DataAccessException ex){
             //  Something went wrong server side
             ExchangeUtilities.handleInternalError(ex, exchange);
-
             logger.severe(ex.getMessage());
 
         } catch (HttpRequestException ex) {
@@ -87,6 +103,8 @@ public class PersonHandler implements HttpHandler {
 
             logger.severe(ex.getMessage());
         }
+
+        //  And after everything,
         exchange.close();
     }
 }

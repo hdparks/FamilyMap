@@ -8,11 +8,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * a class for interfacing with Event data
  */
 public class EventDao {
+
+    private static Logger logger = Logger.getLogger("EventDao");
 
     Connection conn;
 
@@ -37,10 +40,11 @@ public class EventDao {
 
     /**
      * Adds new Event data
+     * Adds an eventID to the supplied event and returns it
      * @param event the Event object to be saved
      * @throws DataAccessException if the operation fails
      */
-    public void add(Event event) throws DataAccessException{
+    public Event add(Event event) throws DataAccessException{
         String sql = "INSERT INTO events (eventID, descendant, personID, latitude, longitude, country, city, eventType, year) "+
                 "VALUES (?,?,?,?,?,?,?,?,?)";
         try {
@@ -56,10 +60,13 @@ public class EventDao {
             stmt.setInt(9,event.year);
 
             stmt.executeUpdate();
-            stmt.close();
+
+            event.eventID = Database.getLastAutoincrementID(conn);
+            return event;
 
         } catch (SQLException ex) {
-            throw new DataAccessException("Error while adding Event: \n"+ex.getMessage());
+            logger.severe(ex.getMessage());
+            throw new DataAccessException("Error while adding Event data");
         }
     }
 
@@ -74,7 +81,8 @@ public class EventDao {
             stmt.setString(1,descendant);
             stmt.executeUpdate();
         } catch (SQLException ex) {
-            throw new DataAccessException("Error in deleting Events: \n"+ex.getMessage());
+            logger.severe(ex.getMessage());
+            throw new DataAccessException("Error in deleting Event data");
         }
     }
 
@@ -83,7 +91,7 @@ public class EventDao {
      * @param personID the personID of the Person whose events are returned
      * @return eventsList a list of all events related to the Person
      */
-    public List<Event> getEventsByPersonID(String personID) throws DataAccessException{
+    public Event[] getEventsByPersonID(String personID) throws DataAccessException{
         List<Event> eventList = new ArrayList<>();
         String sql = "SELECT * FROM events WHERE personID = ?";
 
@@ -108,10 +116,11 @@ public class EventDao {
             }
 
         } catch (SQLException ex){
-            throw new DataAccessException("Error getting events:\n"+ex.getMessage());
+            logger.severe(ex.getMessage());
+            throw new DataAccessException("Error getting Events data");
         }
 
-        return eventList;
+        return (Event[]) eventList.toArray();
     }
 
     /**
@@ -119,7 +128,7 @@ public class EventDao {
      * @param eventType the eventType of all Events to be returned
      * @return eventsList a list of all Events of type {eventType}
      */
-    public List<Event> getEventsByType(String eventType) throws DataAccessException {
+    public Event[] getEventsByType(String eventType) throws DataAccessException {
 
         List<Event> eventList = new ArrayList<>();
         String sql = "SELECT * FROM events WHERE eventType = ?";
@@ -145,10 +154,11 @@ public class EventDao {
             }
 
         } catch (SQLException ex) {
-            throw new DataAccessException("Error getting events:\n" + ex.getMessage());
+            logger.severe(ex.getMessage());
+            throw new DataAccessException("Error getting events");
         }
 
-        return eventList;
+        return (Event[]) eventList.toArray();
     }
 
 }

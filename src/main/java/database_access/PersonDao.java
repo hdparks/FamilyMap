@@ -35,38 +35,69 @@ public class PersonDao {
             stmt.executeUpdate();
         } catch (SQLException ex){
             logger.log(Level.SEVERE,ex.getMessage());
-            throw new DataAccessException("Error occurred while clearing table from database");
+            throw new DataAccessException("Error occurred while clearing persons table");
         }
     }
 
 
     /**
-     * Adds a Person to the database. Generates and returns a new personID.
+     * Adds a Person to the database.
+     * Adds a personID to the supplied person and returns it.
      * @param person the Person to add
      * @throws DataAccessException if operation fails
      */
-    public void add(Person person) throws DataAccessException{
-        String sql = "INSERT INTO persons (personID, descendant, firstName, lastName, gender, fatherID, motherID, spouseID)" +
-                "VALUES (?,?,?,?,?,?,?,?)";
+    public Person add(Person person) throws DataAccessException{
+        String sql = "INSERT INTO persons (descendant, firstName, lastName, gender, fatherID, motherID, spouseID)" +
+                "VALUES (?,?,?,?,?,?,?)";
         try{
 
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, person.personID);
-            stmt.setString(2, person.descendant);
-            stmt.setString(3, person.firstName);
-            stmt.setString(4, person.lastName);
-            stmt.setString(5, person.gender);
-            stmt.setString(6, person.fatherID);
-            stmt.setString(7, person.motherID);
-            stmt.setString(8, person.spouseID);
+            stmt.setString(1, person.descendant);
+            stmt.setString(2, person.firstName);
+            stmt.setString(3, person.lastName);
+            stmt.setString(4, person.gender);
+            stmt.setString(5, person.fatherID);
+            stmt.setString(6, person.motherID);
+            stmt.setString(7, person.spouseID);
 
             stmt.executeUpdate();
-            stmt.close();
+
+            //  Get last autoincrement id, add it as the ID of the person
+            person.personID = Database.getLastAutoincrementID(conn);
+            return person;
+
          } catch(SQLException ex){
             logger.log(Level.SEVERE,ex.getMessage());
-            throw new DataAccessException("Error encountered while creating Person data");
+            throw new DataAccessException("Error while adding Person data");
         }
 
+    }
+
+    public void updateRelationships(Person child, Person mother, Person father) throws DataAccessException{
+        try {
+            String childUpdate = "UPDATE persons SET (motherID, fatherID) VALUES (?,?) WHERE personID = ?";
+            PreparedStatement stmt = conn.prepareStatement(childUpdate);
+            stmt.setString(1,mother.personID);
+            stmt.setString(2,father.personID);
+            stmt.setString(3,child.personID);
+            stmt.executeUpdate();
+
+            String motherUpdate = "UPDATE persons SET spouseID = ? WHERE personID = ?";
+            stmt = conn.prepareStatement(motherUpdate);
+            stmt.setString(1,father.personID);
+            stmt.setString(2,mother.personID);
+            stmt.executeUpdate();
+
+            String fatherUpdate = "UPDATE persons SET spouseID = ? WHERE personID = ?";
+            stmt = conn.prepareStatement(fatherUpdate);
+            stmt.setString(1,mother.personID);
+            stmt.setString(2,father.personID);
+            stmt.executeUpdate();
+
+        } catch (SQLException ex){
+            logger.severe(ex.getMessage());
+            throw new DataAccessException("Error while updating family relationships");
+        }
     }
 
     /**
@@ -141,7 +172,7 @@ public class PersonDao {
      */
     public Person[] getPersonListByUser(String username) throws DataAccessException{
 
-        List<Person> list = new ArrayList<Person>();
+        List<Person> list = new ArrayList<>();
         String sql = "SELECT personID, descendant, firstName, lastName, gender, fatherID, motherID, spouseID FROM persons";
 
         try (PreparedStatement stmt = conn.prepareStatement(sql);

@@ -1,9 +1,6 @@
 package services;
 
-import database_access.AuthTokenDao;
-import database_access.DataAccessException;
-import database_access.Database;
-import database_access.UserDao;
+import database_access.*;
 import domain.AuthToken;
 import domain.Generator;
 import domain.Person;
@@ -51,23 +48,34 @@ public class RegisterService implements Service<RegisterRequest,RegisterResponse
             }
 
             //  Create new User account
-            String personID = Person.getNewPersonID();
-
             User user = new User(
                     req.getUserName(),
                     req.getPassword(),
                     req.getEmail(),
                     req.getFirstName(),
                     req.getLastName(),
-                    req.getGender(),
-                    personID);
+                    req.getGender());
 
             //  Add the User
             UserDao userDao = new UserDao(conn);
             userDao.add(user);
 
+            Person userPerson = new Person(
+                    req.getUserName(),
+                    req.getFirstName(),
+                    req.getLastName(),
+                    req.getGender(),
+                    null,
+                    null,
+                    null
+            );
+
+            PersonDao personDao = new PersonDao(conn);
+            personDao.add(userPerson);
+
+
             //  Generate 4 generations of data
-            new Generator(conn).generateGenerations(user, 4);
+            new Generator(conn).generateGenerations(userPerson, 4);
 
             //  Log user in
             AuthToken authToken = new AuthToken(user);
@@ -78,10 +86,7 @@ public class RegisterService implements Service<RegisterRequest,RegisterResponse
             db.closeConnection(true);
 
             //  Return new authToken
-            RegisterResponse res = new RegisterResponse(authToken.authToken,user.userName,personID);
-
-            return res;
-
+            return new RegisterResponse(authToken.authToken,user.userName,userPerson.personID);
 
         } catch (DataAccessException ex){
             //  Undo any changes

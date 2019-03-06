@@ -51,7 +51,7 @@ public class PersonIDService implements Service<PersonIDRequest, PersonIDRespons
             }
         } catch (DataAccessException ex){
             db.closeConnection(false);
-
+            throw ex;
         }
 
     }

@@ -82,13 +82,21 @@ public class PersonDaoTest {
 
         PersonDao pDao = new PersonDao(db.openConnection());
 
-        pDao.add(person);
+        String personID = pDao.add(person);
+
         result = pDao.getPersonByID(person.personID);
 
         db.closeConnection(true);
 
         assertNotNull(result);
         assertEquals(result, person);
+
+    }
+
+    @Test
+    public void addTwoPersonsIDunique() throws Exception {
+        //  This tests adding multiple Person objects to see if the returned
+        //  personID is truly unique
 
     }
 

@@ -4,8 +4,41 @@ import handlers.*;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.logging.FileHandler;
+import java.util.logging.Logger;
 
 public class FamilyMapServer {
+
+    private static Logger logger = Logger.getLogger("FamilyMapServer");
+
+
+    public static void main(String[] args){
+        //  Require port number
+        if (args.length < 1){
+            System.out.println("USAGE: java /path/to/FamilyMapServer portNumber\n" +
+                    "where portNumber is an integer in [1-65535]");
+            return;
+        }
+
+        //  Validate port number
+        int port = Integer.parseInt(args[0]);
+
+        if (port > 65535 || port < 1){
+            System.out.println("USAGE: java /path/to/FamilyMapServer portNumber\n" +
+                    "where portNumber is an integer in [1-65535]");
+            return;
+        }
+
+
+        //  Start the server
+        FamilyMapServer server = new FamilyMapServer();
+        try {
+            server.startServer(port);
+        } catch (IOException ex){
+            logger.severe(ex.getMessage());
+            logger.severe("Server could not be started, please try again");
+        }
+    }
+
 
 
 
