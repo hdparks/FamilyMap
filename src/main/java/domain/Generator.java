@@ -14,8 +14,8 @@ import java.util.Random;
 import java.util.logging.Logger;
 
 public class Generator {
-    private static Logger logger = Logger.getLogger("Generator");
 
+    private static Logger logger = Logger.getLogger("Generator");
 
     private static final int CURRENT_YEAR = 2019;
 
@@ -24,37 +24,63 @@ public class Generator {
     private String[] mnames;
     private String[] snames;
     private String[] locations;
+    private Connection conn;
 
-    public Generator() throws FileNotFoundException {
+    /**
+     * Generic constructor
+     * @throws FileNotFoundException if the operation fails
+     */
+    public Generator(Connection conn) throws FileNotFoundException {
         this.gson = new Gson();
 
         this.fnames  = gson.fromJson(new FileReader(new File("familymapserver/json/fnames.json")),String[].class);
         this.mnames = gson.fromJson(new FileReader(new File("familymapserver/json/mnames.json")),String[].class);
         this.snames = gson.fromJson(new FileReader(new File("familymapserver/json/snames.json")),String[].class);
         this.locations = gson.fromJson(new FileReader(new File("familymapserver/json/locations.json")),String[].class);
-
+        this.conn = conn;
     }
 
+    /**
+     * Get a random female first name
+     * @return a random female first name
+     */
     private String getfName(){
         Random random = new Random();
         return fnames[random.nextInt(fnames.length)];
     }
 
+    /**
+     * Get a random male first name
+     * @return a random male first name
+     */
     private String getmName(){
         Random random = new Random();
         return mnames[random.nextInt(mnames.length)];
     }
 
+    /**
+     * Get a random last name
+     * @return a random last name
+     */
     private String getsName(){
         Random random = new Random();
         return snames[random.nextInt(snames.length)];
     }
 
+    /**
+     * Get a random location
+     * @return a random location object
+     */
     private Location getLocation(){
         Random random = new Random();
         return gson.fromJson(locations[random.nextInt(locations.length)],Location.class);
     }
 
+
+    /**
+     * Load an event with the random location
+     * @param event the Event to be loaded
+     */
     private void loadLocation(Event event){
         Random random = new Random();
         Location location = gson.fromJson(locations[random.nextInt(locations.length)],Location.class);
@@ -64,6 +90,11 @@ public class Generator {
         event.longitude = location.longitude;
     }
 
+    /**
+     * Load an event with a specific location
+     * @param event the Event to be loaded
+     * @param location the Location to load
+     */
     private void loadLocation(Event event, Location location){
         event.city = location.city;
         event.country = location.country;
@@ -169,10 +200,8 @@ public class Generator {
      */
     public void generateGenerations(User user, int generations) throws DataAccessException{
 
-        Database db = new Database();
         try{
             //  Spin up Database driver, PersonDao and EventDao
-            Connection conn = db.openConnection();
             PersonDao personDao = new PersonDao(conn);
             EventDao eventDao = new EventDao(conn);
 
@@ -184,16 +213,14 @@ public class Generator {
             Event userBirthday = generateEvent(userPerson, userBirthYear,"Birthday" );
             eventDao.add(userBirthday);
 
-            //  generate specified generations
+            //  generate specified number of generations
             generateNextGeneration(userPerson,userBirthYear,personDao,eventDao,generations);
 
-            //  Close and save
-            db.closeConnection(true);
         } catch (DataAccessException ex){
             logger.severe(ex.getMessage());
 
             //  Close and roll back
-            db.closeConnection(false);
+            throw ex;
         }
 
     }
@@ -207,7 +234,6 @@ public class Generator {
      * @param generations number of recursions
      * @throws DataAccessException should operation fail
      */
-
     private void generateNextGeneration(Person child, int childBirthYear, PersonDao personDao, EventDao eventDao, int generations) throws DataAccessException {
         if( generations == 0 ){
             //  Simply save the child

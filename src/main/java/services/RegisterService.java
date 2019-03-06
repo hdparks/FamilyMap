@@ -1,15 +1,19 @@
 package services;
 
+import database_access.AuthTokenDao;
 import database_access.DataAccessException;
 import database_access.Database;
 import database_access.UserDao;
+import domain.AuthToken;
 import domain.Generator;
 import domain.Person;
 import domain.User;
 import requests.RegisterRequest;
 import responses.RegisterResponse;
 
+import javax.xml.crypto.Data;
 import java.io.FileNotFoundException;
+import java.sql.Connection;
 import java.util.logging.Logger;
 
 /**
@@ -30,7 +34,12 @@ public class RegisterService implements Service<RegisterRequest,RegisterResponse
      */
     @Override
     public RegisterResponse handleRequest(RegisterRequest req) {
+        Database db = new Database();
+        RegisterResponse res = null;
         try{
+            //  Spin up Database connection
+            Connection conn = db.openConnection();
+
             //  Validate RegisterRequest object for non-null fields
             if( req.getUserName() == null ||
                 req.getPassword() == null ||
@@ -41,9 +50,6 @@ public class RegisterService implements Service<RegisterRequest,RegisterResponse
 
                 throw new DataAccessException("Invalid request to /register : missing data.");
             }
-
-            //  Spin up Database connection
-            Database db = new Database();
 
             //  Create new User account
             String personID = Person.getNewPersonID();
@@ -58,29 +64,28 @@ public class RegisterService implements Service<RegisterRequest,RegisterResponse
                     personID);
 
             //  Add the User
-            UserDao userDao = new UserDao(db.openConnection());
+            UserDao userDao = new UserDao(conn);
             userDao.add(user);
-            db.closeConnection(true);
 
             //  Generate 4 generations of data
-            new Generator().generateGenerations(user, 4);
-
-
+            new Generator(conn).generateGenerations(user, 4);
 
             //  Log user in
+            AuthToken authToken = new AuthToken(user);
+            AuthTokenDao authTokenDao = new AuthTokenDao(conn);
+            authTokenDao.add(authToken);
 
             //  Return new authToken
-
+            res = new RegisterResponse(authToken.authToken,user.userName,personID);
 
         } catch (DataAccessException | FileNotFoundException ex){
             logger.severe(ex.getMessage());
-            //  Create failing RegisterResponse
-            RegisterResponse res = new RegisterResponse(ex.getMessage());
-        } finally {
-            //  Close Database connection
 
+            //  Create failing RegisterResponse
+            res = new RegisterResponse(ex.getMessage());
         }
 
+        return res;
 
     }
 

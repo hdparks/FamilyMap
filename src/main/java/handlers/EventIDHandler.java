@@ -10,7 +10,7 @@ public class EventIDHandler extends THandler{
 
     private static Logger logger = Logger.getLogger("EventIDHandler");
 
-    EventIDHandler() {
+    public EventIDHandler() {
         super(EventIDRequest.class, EventIDResponse.class, logger, "GET",true);
         this.service = new EventIDService();
    }

@@ -16,7 +16,7 @@ public class ClearHandler extends THandler {
 
     private static Logger logger = Logger.getLogger("ClearHandler");
 
-    ClearHandler() {
+    public ClearHandler() {
         super(ClearRequest.class, ClearResponse.class, logger, "POST",false);
         this.service = new ClearService();
     }
