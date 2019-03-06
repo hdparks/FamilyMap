@@ -33,9 +33,8 @@ public class RegisterService implements Service<RegisterRequest,RegisterResponse
      *
      */
     @Override
-    public RegisterResponse handleRequest(RegisterRequest req) {
+    public RegisterResponse handleRequest(RegisterRequest req) throws DataAccessException{
         Database db = new Database();
-        RegisterResponse res = null;
         try{
             //  Spin up Database connection
             Connection conn = db.openConnection();
@@ -75,21 +74,29 @@ public class RegisterService implements Service<RegisterRequest,RegisterResponse
             AuthTokenDao authTokenDao = new AuthTokenDao(conn);
             authTokenDao.add(authToken);
 
-            //  Return new authToken
-            res = new RegisterResponse(authToken.authToken,user.userName,personID);
+            //  Close and save changes
+            db.closeConnection(true);
 
-        } catch (DataAccessException | FileNotFoundException ex){
+            //  Return new authToken
+            RegisterResponse res = new RegisterResponse(authToken.authToken,user.userName,personID);
+
+            return res;
+
+
+        } catch (DataAccessException ex){
+            //  Undo any changes
+            db.closeConnection(false);
+
             logger.severe(ex.getMessage());
 
-            //  Create failing RegisterResponse
-            res = new RegisterResponse(ex.getMessage());
+            throw ex;
+
+        } catch (FileNotFoundException ex){
+            //  Undo any changes
+            db.closeConnection(false);
+            logger.severe(ex.getMessage());
+
+            throw new DataAccessException("Error generating ancestor data.");
         }
-
-        return res;
-
     }
-
-
-
-
 }

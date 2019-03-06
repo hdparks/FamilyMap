@@ -2,11 +2,13 @@ package handlers;
 
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
 import database_access.AuthTokenDao;
 import database_access.DataAccessException;
 import database_access.Database;
 
-public class AuthenticationHandler {
+
+public class AuthUtilities {
 
     public static String getAuthToken(HttpExchange exchange){
         Headers headers = exchange.getRequestHeaders();
@@ -34,5 +36,15 @@ public class AuthenticationHandler {
 
         //  If a non-null userName is returned, the authToken was valid.
         return authTokenDao.getUsernameByAuthToken(authToken) != null;
+    }
+
+    /**
+     * Chains authentication methods into one method, for quick and easy use
+     * @param exchange an HttpExchange object
+     * @return whether the authentication was valid or not
+     * @throws DataAccessException if the operation fails
+     */
+    public static boolean isValidAuthentication(HttpExchange exchange) throws DataAccessException {
+        return authTokenIsValid(getAuthToken(exchange));
     }
 }

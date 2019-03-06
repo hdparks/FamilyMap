@@ -27,9 +27,7 @@ public class FamilyMapServer {
         server.createContext("/clear", new ClearHandler());
         server.createContext("/fill", new FillHandler());
         server.createContext("/load",new LoadHandler());
-        server.createContext("/person/[personID]", new PersonIDHandler());
         server.createContext("/person", new PersonHandler());
-        server.createContext("/event/[eventID]", new EventIDHandler());
         server.createContext("/event", new EventHandler());
 
     }

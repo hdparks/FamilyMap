@@ -19,7 +19,7 @@ public class EventIDRequest implements IRequest {
      * @param authToken the supplied authToken
      * @param eventID the supplied eventID
      */
-    EventIDRequest(String authToken, String eventID){
+    public EventIDRequest(String authToken, String eventID){
         this.authToken = authToken;
         this.eventID = eventID;
     }

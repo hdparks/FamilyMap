@@ -12,13 +12,13 @@ public class PersonResponse extends Response{
     /**
      * A list of Person objects
      */
-    public List<Person> persons;
+    public Person[] persons;
 
     /**
      * Creates a successful PersonResponse object
      * @param persons the Person objects which will be returned
      */
-    public PersonResponse(List<Person> persons){
+    public PersonResponse(Person[] persons){
         super(true);
         this.persons = persons;
     }

@@ -8,10 +8,56 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0a5cc4dd-9241-44bb-8fe9-6cfcde4d6443" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/handlers/AuthenticationHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/handlers/ExchangeUtilities.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/services/HttpRequestException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/handlers/JSONUtilitiesTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/FamilyMapServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/FamilyMapServer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/database_access/AuthTokenDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/database_access/AuthTokenDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/database_access/Database.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/database_access/Database.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/database_access/UserDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/database_access/UserDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/domain/AuthToken.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/domain/AuthToken.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/domain/Event.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/domain/Event.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/domain/Person.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/domain/Person.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/handlers/ClearHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/handlers/ClearHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/handlers/EventHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/handlers/EventHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/handlers/EventIDHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/handlers/EventIDHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/handlers/FillHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/handlers/FillHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/handlers/LoadHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/handlers/LoadHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/handlers/LoginHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/handlers/LoginHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/handlers/PersonHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/handlers/PersonHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/handlers/RegisterHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/handlers/RegisterHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/services/ClearService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/services/ClearService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/services/EventIDService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/services/EventIDService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/services/EventService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/services/EventService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/services/FillService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/services/FillService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/services/LoadService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/services/LoadService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/services/LoginService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/services/LoginService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/services/PersonIDService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/services/PersonIDService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/services/PersonService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/services/PersonService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/services/RegisterService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/services/RegisterService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/classes/services/Service.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/classes/services/Service.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/classes/service/RegisterServiceTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/classes/service/response/LoginResponseTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FamilyMapServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/FamilyMapServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/database_access/PersonDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database_access/PersonDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/handlers/AuthenticationHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/handlers/AuthUtilities.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/handlers/EventHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/handlers/EventHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/handlers/FileRequestHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/handlers/FileRequestHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/handlers/FillHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/handlers/FillHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/handlers/JSONHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/handlers/JSONUtilities.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/handlers/PersonHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/handlers/PersonHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/handlers/PersonIDHandler.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/handlers/THandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/handlers/THandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/requests/EventIDRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/requests/EventIDRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/requests/EventRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/requests/EventRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/requests/PersonRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/requests/PersonRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/responses/EventIDResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/responses/EventIDResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/responses/PersonResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/responses/PersonResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/services/FillService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/FillService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/services/PersonService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/PersonService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/services/RegisterService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/RegisterService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/services/Service.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/services/Service.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -28,68 +74,60 @@
     </projectState>
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
-      <split-first>
-        <leaf>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/domain/Generator.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="3232">
-                  <caret line="201" selection-start-line="201" selection-end-line="201" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/main/java/handlers/PersonHandler.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="170">
-                  <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/java/handlers/AuthenticationHandler.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="68">
-                  <caret line="10" column="18" selection-start-line="10" selection-start-column="18" selection-end-line="10" selection-end-column="18" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/main/java/handlers/THandler.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="136">
-                  <caret line="42" column="110" selection-start-line="42" selection-start-column="110" selection-end-line="42" selection-end-column="110" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/services/PersonService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="322">
+              <caret line="54" selection-start-line="54" selection-end-line="54" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#415#416#0" expanded="true" />
+                <element signature="e#449#450#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/responses/PersonResponse.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret lean-forward="true" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/database_access/AuthTokenDao.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="390">
+              <caret line="87" column="11" lean-forward="true" selection-start-line="87" selection-start-column="11" selection-end-line="87" selection-end-column="11" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/database_access/PersonDao.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="138" column="39" lean-forward="true" selection-start-line="138" selection-start-column="39" selection-end-line="138" selection-end-column="39" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#5173#5181#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JUnit4 Test Class" />
         <option value="Interface" />
         <option value="Class" />
+        <option value="JUnit4 Test Class" />
       </list>
     </option>
   </component>
@@ -106,27 +144,17 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/db/dbfiller.txt" />
-        <option value="$PROJECT_DIR$/src/test/java/database_access/UserDaoTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/service/response/FillResponse.java" />
-        <option value="$PROJECT_DIR$/src/main/java/service/request/PersonRequest.java" />
-        <option value="$PROJECT_DIR$/src/test/java/database_access/PersonDaoTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/database_access/EventDao.java" />
-        <option value="$PROJECT_DIR$/logging.properties" />
         <option value="$PROJECT_DIR$/src/main/java/Server.java" />
         <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/familymapserver/json/eventid.json" />
         <option value="$PROJECT_DIR$/src/main/java/handlers/request/EventIDRequest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/services/Service.java" />
         <option value="$PROJECT_DIR$/src/main/java/handlers/IHandler.java" />
         <option value="$PROJECT_DIR$/src/main/java/handlers/Handler.java" />
         <option value="$PROJECT_DIR$/src/main/java/handlers/JSONHandler.java" />
         <option value="$PROJECT_DIR$/src/main/java/services/PersonIDService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/services/PersonService.java" />
         <option value="$PROJECT_DIR$/src/main/java/services/LoginService.java" />
         <option value="$PROJECT_DIR$/src/main/java/responses/LoadResponse.java" />
         <option value="$PROJECT_DIR$/src/main/java/services/LoadService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/services/FillService.java" />
         <option value="$PROJECT_DIR$/src/main/java/services/EventIDService.java" />
         <option value="$PROJECT_DIR$/src/main/java/services/EventService.java" />
         <option value="$PROJECT_DIR$/src/main/java/responses/ClearResponse.java" />
@@ -136,27 +164,37 @@
         <option value="$PROJECT_DIR$/src/main/java/responses/Response.java" />
         <option value="$PROJECT_DIR$/src/main/java/handlers/RegisterHandler.java" />
         <option value="$PROJECT_DIR$/src/main/java/handlers/LoginHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/handlers/FillHandler.java" />
         <option value="$PROJECT_DIR$/src/main/java/database_access/Database.java" />
         <option value="$PROJECT_DIR$/src/main/java/database_access/AuthTokenDao.java" />
         <option value="$PROJECT_DIR$/src/main/java/requests/RegisterRequest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/database_access/PersonDao.java" />
         <option value="$PROJECT_DIR$/src/main/java/domain/Person.java" />
         <option value="$PROJECT_DIR$/src/main/java/domain/Event.java" />
         <option value="$PROJECT_DIR$/src/main/java/domain/AuthToken.java" />
         <option value="$PROJECT_DIR$/src/main/java/database_access/UserDao.java" />
         <option value="$PROJECT_DIR$/src/main/java/domain/Generator.java" />
-        <option value="$PROJECT_DIR$/src/main/java/services/RegisterService.java" />
         <option value="$PROJECT_DIR$/src/main/java/handlers/ClearHandler.java" />
         <option value="$PROJECT_DIR$/src/main/java/handlers/LoadHandler.java" />
         <option value="$PROJECT_DIR$/src/main/java/handlers/EventIDHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/handlers/FileRequestHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/FamilyMapServer.java" />
         <option value="$PROJECT_DIR$/src/main/java/handlers/PersonIDHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/handlers/EventHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/FamilyMapServer.java" />
         <option value="$PROJECT_DIR$/src/main/java/handlers/AuthenticationHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/services/Service.java" />
+        <option value="$PROJECT_DIR$/src/main/java/services/FillService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/services/HttpRequestException.java" />
+        <option value="$PROJECT_DIR$/src/main/java/handlers/ExchangeUtilities.java" />
+        <option value="$PROJECT_DIR$/src/main/java/handlers/FillHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/handlers/EventHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/handlers/FileRequestHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/responses/EventIDResponse.java" />
+        <option value="$PROJECT_DIR$/src/main/java/handlers/JSONUtilities.java" />
         <option value="$PROJECT_DIR$/src/main/java/handlers/THandler.java" />
+        <option value="$PROJECT_DIR$/src/test/java/handlers/JSONUtilitiesTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/handlers/PersonHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/requests/PersonRequest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/services/RegisterService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/database_access/PersonDao.java" />
+        <option value="$PROJECT_DIR$/src/main/java/responses/PersonResponse.java" />
+        <option value="$PROJECT_DIR$/src/main/java/services/PersonService.java" />
       </list>
     </option>
   </component>
@@ -352,7 +390,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1551836548389" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1551895657458" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/java/handlers" />
@@ -364,16 +402,14 @@
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="handlers" />
       <recent name="database_access" />
       <recent name="service.response" />
       <recent name="service" />
     </key>
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="handlers" />
-      <recent name="service.request" />
-      <recent name="service.response" />
-      <recent name="services" />
-      <recent name="domain" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Brooklyn\Desktop\cs240\FamilyMap\db" />
+      <recent name="C:\Users\hdparkin\IdeaProjects\FamilyMapServer\src\main\java\database_access" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="" />
@@ -382,9 +418,12 @@
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Brooklyn\Desktop\cs240\FamilyMap\db" />
-      <recent name="C:\Users\hdparkin\IdeaProjects\FamilyMapServer\src\main\java\database_access" />
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="handlers" />
+      <recent name="service.request" />
+      <recent name="service.response" />
+      <recent name="services" />
+      <recent name="domain" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -399,9 +438,9 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.JSONHandler">
-    <configuration name="JSONHandler" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="handlers.JSONHandler" />
+  <component name="RunManager" selected="JUnit.JSONUtilitiesTest.createRequestInstance">
+    <configuration name="JSONUtilities" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="handlers.JSONUtilities" />
       <module name="FamilyMap.main" />
       <extension name="coverage">
         <pattern>
@@ -426,19 +465,34 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="DatabaseTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="JSONUtilitiesTest.createRequestInstance" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="FamilyMap.test" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="database_access.*" />
+          <option name="PATTERN" value="handlers.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="database_access" />
-      <option name="MAIN_CLASS_NAME" value="database_access.DatabaseTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" />
+      <option name="PACKAGE_NAME" value="handlers" />
+      <option name="MAIN_CLASS_NAME" value="handlers.JSONUtilitiesTest" />
+      <option name="METHOD_NAME" value="createRequestInstance" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="JSONUtilitiesTest.generateResponseJSON" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="FamilyMap.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="handlers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="handlers" />
+      <option name="MAIN_CLASS_NAME" value="handlers.JSONUtilitiesTest" />
+      <option name="METHOD_NAME" value="generateResponseJSON" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -462,24 +516,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PersonDaoTest.addPass" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="FamilyMap.test" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="database_access.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="database_access" />
-      <option name="MAIN_CLASS_NAME" value="database_access.PersonDaoTest" />
-      <option name="METHOD_NAME" value="addPass" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="UserDaoTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="FamilyMap.test" />
       <extension name="coverage">
@@ -498,20 +534,20 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.JSONHandler" />
+      <item itemvalue="Application.JSONUtilities" />
       <item itemvalue="JUnit.All in FamilyMap.test" />
-      <item itemvalue="JUnit.DatabaseTest" />
       <item itemvalue="JUnit.PersonDaoTest" />
-      <item itemvalue="JUnit.PersonDaoTest.addPass" />
       <item itemvalue="JUnit.UserDaoTest" />
+      <item itemvalue="JUnit.JSONUtilitiesTest.generateResponseJSON" />
+      <item itemvalue="JUnit.JSONUtilitiesTest.createRequestInstance" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.JSONHandler" />
+        <item itemvalue="JUnit.JSONUtilitiesTest.createRequestInstance" />
+        <item itemvalue="JUnit.JSONUtilitiesTest.generateResponseJSON" />
+        <item itemvalue="Application.JSONUtilities" />
         <item itemvalue="JUnit.PersonDaoTest" />
         <item itemvalue="JUnit.UserDaoTest" />
-        <item itemvalue="JUnit.PersonDaoTest.addPass" />
-        <item itemvalue="JUnit.DatabaseTest" />
       </list>
     </recent_temporary>
   </component>
@@ -530,35 +566,35 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="UserDaoTest - 2019.02.22 at 15h 33m 44s.xml">
-      <configuration name="UserDaoTest" configurationId="JUnit" />
+    <history-entry file="JSONUtilitiesTest_generateResponseJSON - 2019.03.06 at 09h 38m 54s.xml">
+      <configuration name="JSONUtilitiesTest.generateResponseJSON" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="PersonDaoTest - 2019.02.22 at 15h 34m 13s.xml">
-      <configuration name="PersonDaoTest" configurationId="JUnit" />
+    <history-entry file="JSONUtilitiesTest_createRequestInstance - 2019.03.06 at 09h 39m 41s.xml">
+      <configuration name="JSONUtilitiesTest.createRequestInstance" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="PersonDaoTest - 2019.02.22 at 15h 46m 51s.xml">
-      <configuration name="PersonDaoTest" configurationId="JUnit" />
+    <history-entry file="JSONUtilitiesTest_generateResponseJSON - 2019.03.06 at 09h 40m 17s.xml">
+      <configuration name="JSONUtilitiesTest.generateResponseJSON" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="UserDaoTest - 2019.02.22 at 15h 46m 59s.xml">
-      <configuration name="UserDaoTest" configurationId="JUnit" />
+    <history-entry file="JSONUtilitiesTest_generateResponseJSON - 2019.03.06 at 09h 41m 11s.xml">
+      <configuration name="JSONUtilitiesTest.generateResponseJSON" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="UserDaoTest - 2019.02.22 at 16h 15m 41s.xml">
-      <configuration name="UserDaoTest" configurationId="JUnit" />
+    <history-entry file="JSONUtilitiesTest_generateResponseJSON - 2019.03.06 at 09h 41m 46s.xml">
+      <configuration name="JSONUtilitiesTest.generateResponseJSON" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="PersonDaoTest - 2019.02.22 at 16h 15m 57s.xml">
-      <configuration name="PersonDaoTest" configurationId="JUnit" />
+    <history-entry file="JSONUtilitiesTest_generateResponseJSON - 2019.03.06 at 09h 42m 35s.xml">
+      <configuration name="JSONUtilitiesTest.generateResponseJSON" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="PersonDaoTest - 2019.02.22 at 16h 32m 31s.xml">
-      <configuration name="PersonDaoTest" configurationId="JUnit" />
+    <history-entry file="JSONUtilitiesTest_generateResponseJSON - 2019.03.06 at 09h 42m 59s.xml">
+      <configuration name="JSONUtilitiesTest.generateResponseJSON" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="UserDaoTest - 2019.02.22 at 16h 32m 58s.xml">
-      <configuration name="UserDaoTest" configurationId="JUnit" />
+    <history-entry file="JSONUtilitiesTest_generateResponseJSON - 2019.03.06 at 09h 50m 41s.xml">
+      <configuration name="JSONUtilitiesTest.generateResponseJSON" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="UserDaoTest - 2019.02.22 at 16h 37m 57s.xml">
-      <configuration name="UserDaoTest" configurationId="JUnit" />
+    <history-entry file="JSONUtilitiesTest_generateResponseJSON - 2019.03.06 at 09h 52m 31s.xml">
+      <configuration name="JSONUtilitiesTest.generateResponseJSON" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="PersonDaoTest - 2019.02.22 at 16h 38m 13s.xml">
-      <configuration name="PersonDaoTest" configurationId="JUnit" />
+    <history-entry file="JSONUtilitiesTest_createRequestInstance - 2019.03.06 at 10h 09m 41s.xml">
+      <configuration name="JSONUtilitiesTest.createRequestInstance" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
@@ -574,10 +610,10 @@
       <window_info id="Capture Tool" order="3" />
       <window_info id="UI Designer" order="4" />
       <window_info id="Favorites" order="5" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="6" weight="0.20574887" />
+      <window_info active="true" content_ui="combo" id="Project" order="6" visible="true" weight="0.1913767" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32569557" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.22823985" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.22749591" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -586,7 +622,7 @@
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Build" order="10" weight="0.3291536" />
-      <window_info anchor="bottom" id="Messages" order="11" weight="0.3288201" />
+      <window_info anchor="bottom" id="Messages" order="11" weight="0.32733223" />
       <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -607,10 +643,10 @@
       <window_info id="Capture Tool" order="3" />
       <window_info id="UI Designer" order="4" />
       <window_info id="Favorites" order="5" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="6" visible="true" weight="0.20574887" />
+      <window_info content_ui="combo" id="Project" order="6" visible="true" weight="0.20574887" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32569557" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.22823985" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.22749591" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -619,7 +655,7 @@
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Build" order="10" weight="0.3291536" />
-      <window_info anchor="bottom" id="Messages" order="11" weight="0.3288201" />
+      <window_info anchor="bottom" id="Messages" order="11" weight="0.32733223" />
       <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -638,54 +674,10 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/familymapserver/json/eventid.json" />
-    <entry file="file://$PROJECT_DIR$/logging.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/responses/RegisterResponse.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/handlers/IHandler.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/handlers/Handler.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/services/PersonService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="26" selection-start-line="19" selection-start-column="26" selection-end-line="19" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/services/PersonIDService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="34" selection-start-line="3" selection-start-column="34" selection-end-line="3" selection-end-column="34" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/services/LoginService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
           <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/responses/LoginResponse.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
         </state>
       </provider>
     </entry>
@@ -707,24 +699,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/services/FillService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="6" column="3" lean-forward="true" selection-start-line="6" selection-start-column="3" selection-end-line="6" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/services/EventIDService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="15" column="7" lean-forward="true" selection-start-line="15" selection-start-column="7" selection-end-line="15" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/responses/EventIDResponse.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -758,13 +736,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/services/Service.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="27" lean-forward="true" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/requests/IRequest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -776,13 +747,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/responses/Response.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="42" selection-start-line="6" selection-start-column="42" selection-end-line="6" selection-end-column="42" />
         </state>
       </provider>
     </entry>
@@ -815,13 +779,6 @@
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/database_access/AuthTokenDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="27" column="11" selection-start-line="27" selection-start-column="11" selection-end-line="27" selection-end-column="11" />
         </state>
       </provider>
     </entry>
@@ -886,27 +843,10 @@
     <entry file="file://$PROJECT_DIR$/familymapserver/json/fnames.json">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/handlers/JSONHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/familymapserver/json/locations.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
           <caret line="11" column="23" lean-forward="true" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/database_access/PersonDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-493">
-          <caret line="13" column="24" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -930,23 +870,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/handlers/EventIDHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/handlers/FillHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="16" selection-start-line="4" selection-start-column="16" selection-end-line="4" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/handlers/LoadHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -957,34 +880,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/handlers/FileRequestHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="4" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/handlers/PersonIDHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" selection-start-line="2" selection-end-line="2" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/FamilyMapServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="332">
-          <caret line="29" column="49" selection-start-line="29" selection-start-column="49" selection-end-line="29" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/handlers/EventHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="32" selection-start-line="13" selection-start-column="32" selection-end-line="13" selection-end-column="32" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1001,16 +900,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/services/RegisterService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="852">
-          <caret line="71" selection-start-line="71" selection-end-line="71" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/domain/Generator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3232">
@@ -1021,30 +910,221 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/handlers/AuthenticationHandler.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/handlers/EventIDHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="10" column="18" selection-start-line="10" selection-start-column="18" selection-end-line="10" selection-end-column="18" />
+        <state relative-caret-position="153">
+          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/handlers/AuthUtilities.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="155">
+          <caret line="46" column="10" selection-start-line="46" selection-start-column="10" selection-end-line="46" selection-end-column="10" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/FamilyMapServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="376">
+          <caret line="29" column="61" lean-forward="true" selection-start-line="29" selection-start-column="61" selection-end-line="29" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/services/FillService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="172">
+          <caret line="22" column="81" selection-start-line="22" selection-start-column="81" selection-end-line="22" selection-end-column="81" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/services/Service.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="53" selection-start-line="6" selection-start-column="53" selection-end-line="6" selection-end-column="53" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/responses/Response.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="6" column="42" selection-start-line="6" selection-start-column="42" selection-end-line="6" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/services/HttpRequestException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="53" selection-start-line="4" selection-start-column="53" selection-end-line="4" selection-end-column="53" />
+          <folding>
+            <element signature="e#244#245#0" expanded="true" />
+            <element signature="e#268#269#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/database_access/DataAccessException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="12" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/handlers/ExchangeUtilities.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="512">
+          <caret line="49" selection-start-line="49" selection-end-line="49" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/handlers/EventHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="529">
+          <caret line="72" column="20" selection-start-line="72" selection-start-column="20" selection-end-line="72" selection-end-column="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/handlers/FileRequestHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/handlers/FillHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="79" column="9" lean-forward="true" selection-start-line="79" selection-start-column="9" selection-end-line="79" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/responses/EventIDResponse.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="410">
+          <caret line="26" column="11" selection-start-line="26" selection-start-column="11" selection-end-line="26" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/handlers/JSONUtilities.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="22" column="45" selection-start-line="22" selection-start-column="45" selection-end-line="22" selection-end-column="45" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/handlers/JSONUtilitiesTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="339">
+          <caret line="59" column="57" lean-forward="true" selection-start-line="59" selection-start-column="57" selection-end-line="59" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/requests/PersonRequest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="169">
+          <caret line="21" column="4" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="4" />
+          <folding>
+            <element signature="e#538#539#0" expanded="true" />
+            <element signature="e#584#585#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/handlers/THandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="42" column="110" selection-start-line="42" selection-start-column="110" selection-end-line="42" selection-end-column="110" />
+        <state relative-caret-position="271">
+          <caret line="78" column="17" selection-start-line="78" selection-start-column="17" selection-end-line="78" selection-end-column="17" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/services/RegisterService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="32" column="5" lean-forward="true" selection-start-line="32" selection-start-column="5" selection-end-line="32" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/responses/LoginResponse.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="35" column="7" lean-forward="true" selection-start-line="35" selection-start-column="7" selection-end-line="35" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/handlers/PersonHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+        <state relative-caret-position="390">
+          <caret line="33" column="13" lean-forward="true" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/database_access/AuthTokenDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="87" column="11" lean-forward="true" selection-start-line="87" selection-start-column="11" selection-end-line="87" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/database_access/PersonDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="138" column="39" lean-forward="true" selection-start-line="138" selection-start-column="39" selection-end-line="138" selection-end-column="39" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#5173#5181#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/responses/PersonResponse.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret lean-forward="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/services/PersonService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="54" selection-start-line="54" selection-end-line="54" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#415#416#0" expanded="true" />
+            <element signature="e#449#450#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

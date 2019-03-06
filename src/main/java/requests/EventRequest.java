@@ -13,7 +13,7 @@ public class EventRequest implements IRequest {
      * Creates an EventRequest with a given authToken string
      * @param authToken the given authToken string
      */
-    EventRequest(String authToken){
+    public EventRequest(String authToken){
         this.authToken = authToken;
     }
 }

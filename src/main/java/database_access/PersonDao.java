@@ -139,7 +139,7 @@ public class PersonDao {
      * @return a List of Person objects
      * @throws DataAccessException if the operation fails
      */
-    public List<Person> getPersonListByUser(String username) throws DataAccessException{
+    public Person[] getPersonListByUser(String username) throws DataAccessException{
 
         List<Person> list = new ArrayList<Person>();
         String sql = "SELECT personID, descendant, firstName, lastName, gender, fatherID, motherID, spouseID FROM persons";
@@ -161,7 +161,7 @@ public class PersonDao {
                 list.add(new Person(personID, descendant, firstName, lastName, gender, fatherID, motherID, spouseID));
             }
 
-            return list;
+            return  (Person[]) list.toArray();
 
         } catch (SQLException ex){
             logger.log(Level.SEVERE,ex.getMessage());

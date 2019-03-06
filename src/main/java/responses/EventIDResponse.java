@@ -15,7 +15,7 @@ public class EventIDResponse extends Response {
      * Creates a valid EventIDResponse object
      * @param event the Event object with desired ID
      */
-    EventIDResponse(Event event){
+    public EventIDResponse(Event event){
         super(true);
         this.event = event;
     }
@@ -24,7 +24,7 @@ public class EventIDResponse extends Response {
      * Creates a failing EventIDResponse object
      * @param message a description of what went wrong
      */
-    EventIDResponse(String message){
+    public EventIDResponse(String message){
         super(message, false);
     }
 

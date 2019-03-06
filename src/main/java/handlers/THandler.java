@@ -1,19 +1,23 @@
 package handlers;
 
-import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import database_access.AuthTokenDao;
 import database_access.DataAccessException;
-import database_access.Database;
+import services.HttpRequestException;
 import services.Service;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * A Generic Handler object whose functionality matches many Handler footprints
+ * Thus, we can write most of the shared logic here and extend a version
+ * of THandler with the correct Request and Response types
+ * @param <Req> the specific Request Type
+ * @param <Res> the specific Response Type
+ */
 public class THandler<Req,Res> implements HttpHandler {
 
     private Logger logger;
@@ -40,39 +44,42 @@ public class THandler<Req,Res> implements HttpHandler {
             //  Expect the supplied method requests
             if(exchange.getRequestMethod().toUpperCase().equals(this.requestMethod)) {
 
-                if(!authRequired || AuthenticationHandler.authTokenIsValid(AuthenticationHandler.getAuthToken(exchange))){
+                if(!authRequired || AuthUtilities.authTokenIsValid(AuthUtilities.getAuthToken(exchange))){
 
                     //  Parse request body into RegisterRequest object
 
-                    Req req = JSONHandler.createRequest(exchange.getRequestBody(), this.reqClass);
+                    Req req = JSONUtilities.createRequestInstance(exchange.getRequestBody(), this.reqClass);
 
                     //  Pass the request to the RegisterService to get the response data
                     Res res = this.service.handleRequest(req);
 
-                    //  Convert response content to JSON
-                    String json = JSONHandler.generateResponseJSON(res);
-
                     //  Write to the response object
-                    OutputStream responseBody = exchange.getResponseBody();
-                    JSONHandler.writeString(json, responseBody);
+                    ExchangeUtilities.writeResponseToHttpExchange(res,exchange);
 
                 } else {
                     //  Authentication failure
                     exchange.sendResponseHeaders(HttpURLConnection.HTTP_UNAUTHORIZED,0);
+                    throw new HttpRequestException("Authentication failed");
                 }
 
             } else {
                 //  We expected a different request method to this endpoint.
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST,0);
+                throw new HttpRequestException("Invalid request method");
             }
 
-        } catch (IOException | DataAccessException ex ){
+        } catch (DataAccessException ex ){
             //  Something went wrong on the server side, so we return
-            //  "Internal Service Error"
-            exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR,0);
+            ExchangeUtilities.handleInternalError(ex,exchange);
+
             logger.log(Level.SEVERE,ex.getMessage());
+
+        } catch (HttpRequestException ex){
+            //  Something went wrong with the request
+            ExchangeUtilities.handleRequestError(ex,exchange);
+
+            logger.severe(ex.getMessage());
         }
         exchange.close();
     }
-
 }
