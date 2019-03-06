@@ -37,10 +37,10 @@ public class THandler<Req,Res> implements HttpHandler {
     public void handle(HttpExchange exchange) throws IOException {
 
         try {
-            //  Expect a POST requests
+            //  Expect the supplied method requests
             if(exchange.getRequestMethod().toUpperCase().equals(this.requestMethod)) {
 
-                if(!authRequired || authTokenIsValid(getAuthToken(exchange))){
+                if(!authRequired || AuthenticationHandler.authTokenIsValid(AuthenticationHandler.getAuthToken(exchange))){
 
                     //  Parse request body into RegisterRequest object
 
@@ -73,34 +73,6 @@ public class THandler<Req,Res> implements HttpHandler {
             logger.log(Level.SEVERE,ex.getMessage());
         }
         exchange.close();
-    }
-
-    private String getAuthToken(HttpExchange exchange){
-        Headers headers = exchange.getRequestHeaders();
-        if (headers.containsKey("Authentication")){
-            return headers.getFirst("Authentication");
-        }
-        return null;
-    }
-
-    /**
-     * Quickly spin up a Database connection to check the validity of an
-     * authentication token
-     * @param authToken the token which was passed in as the Authorization header
-     * @return whether the token is valid or not
-     * @throws DataAccessException if operation fails
-     */
-    private boolean authTokenIsValid(String authToken) throws DataAccessException {
-        //  If there is no authToken string, we fail to authenticate
-        if(authToken == null){
-            return false;
-        }
-
-        Database db = new Database();
-        AuthTokenDao authTokenDao = new AuthTokenDao(db.openConnection());
-
-        //  If a non-null userName is returned, the authToken was valid.
-        return authTokenDao.getUsernameByAuthToken(authToken) != null;
     }
 
 }
