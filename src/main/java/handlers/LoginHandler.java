@@ -30,10 +30,17 @@ public class LoginHandler implements HttpHandler {
 
                LoginRequest req = ExchangeUtilities.generateRequest(exchange, LoginRequest.class);
 
+               //   Parse LoginRequest
+               if(  req.getPassword() == null ||
+                    req.getUserName() == null){
+
+                   throw new HttpRequestException("Invalid request to /login : missing data");
+               }
+
                LoginResponse res = loginService.serveResponse(req);
 
-
-
+               exchange.sendResponseHeaders(200,0);
+               ExchangeUtilities.writeResponseToHttpExchange(res,exchange);
 
            } else {
                //   Expected POST request
@@ -46,8 +53,13 @@ public class LoginHandler implements HttpHandler {
             logger.severe(e.getMessage());
 
         } catch (DataAccessException e) {
+            //  Handles any bubbling internal errors
+            exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR,0);
             ExchangeUtilities.handleInternalError(e,exchange);
             logger.severe(e.getMessage());
         }
+
+        //  And after everything,
+        exchange.close();
     }
 }

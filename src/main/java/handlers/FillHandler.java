@@ -20,8 +20,6 @@ public class FillHandler implements HttpHandler {
 
     FillService fillService;
 
-
-
     public FillHandler() {
         fillService = new FillService();
     }
@@ -39,11 +37,17 @@ public class FillHandler implements HttpHandler {
                 //  Parse path to get correct username/generations
                 String path = exchange.getHttpContext().getPath().substring("/fill/".length());
                 if(path.contains("/")){
+
                     String[] pathSplit = path.split("/");
+
                     username = pathSplit[0];
                     generations = Integer.parseInt(pathSplit[1]);
+
+                    logger.fine("/fill endpoint with user: "+username+", generations: "+generations);
+
                 } else {
                     username = path;
+                    logger.fine("/fill endpoint with user: "+username);
                 }
 
                 FillRequest req = new FillRequest(username, generations);
@@ -58,7 +62,6 @@ public class FillHandler implements HttpHandler {
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK,0);
                 ExchangeUtilities.writeResponseToHttpExchange(res,exchange);
 
-
             } else {
                 //  Expected a POST request
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST,0);
@@ -68,14 +71,13 @@ public class FillHandler implements HttpHandler {
 
         } catch (DataAccessException ex){
             //  Something went wrong server side
+            exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR,0);
             ExchangeUtilities.handleInternalError(ex, exchange);
-
             logger.severe(ex.getMessage());
 
         } catch (HttpRequestException ex) {
             //  Something was wrong with the request
             ExchangeUtilities.handleRequestError(ex, exchange);
-
             logger.severe(ex.getMessage());
         }
         //  Close the exchange explicitly

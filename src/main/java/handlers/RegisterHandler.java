@@ -2,9 +2,9 @@ package handlers;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import com.sun.org.apache.xerces.internal.util.HTTPInputSource;
+
 import database_access.DataAccessException;
-import domain.Person;
+
 import requests.RegisterRequest;
 import responses.RegisterResponse;
 import services.HttpRequestException;
@@ -18,7 +18,7 @@ public class RegisterHandler implements HttpHandler {
 
     private static Logger logger = Logger.getLogger("RegisterHandler");
 
-    RegisterService registerService;
+    private RegisterService registerService;
 
     public RegisterHandler(){
         registerService = new RegisterService();
@@ -43,11 +43,12 @@ public class RegisterHandler implements HttpHandler {
                         req.getLastName() == null ||
                         req.getGender()   == null)  {
 
-                    throw new HttpRequestException("Invalid request to /register : missing data.");
+                    throw new HttpRequestException("Invalid request to /register : missing data");
                 }
 
                 RegisterResponse res = registerService.serveResponse(req);
 
+                exchange.sendResponseHeaders(200,0);
                 ExchangeUtilities.writeResponseToHttpExchange(res,exchange);
 
             } else{

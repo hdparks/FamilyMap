@@ -8,12 +8,12 @@ public class LoginRequest implements IRequest {
     /**
      * Non-empty string
      */
-    String userName;
+    private String userName;
 
     /**
      * Non-empty string
      */
-    String password;
+    private String password;
 
     /**
      * Creates a LoginRequest
@@ -22,6 +22,22 @@ public class LoginRequest implements IRequest {
      */
     LoginRequest(String userName, String password){
         this.userName = userName;
+        this.password = password;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
         this.password = password;
     }
 }

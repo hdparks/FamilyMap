@@ -1,5 +1,9 @@
 package requests;
 
+import domain.Event;
+import domain.Person;
+import domain.User;
+
 /**
  * Represents a requests made to the /load endpoint
  */
@@ -7,29 +11,40 @@ public class LoadRequest implements IRequest {
     /**
      * A JSON array of User-object-friendly data (to be GSON-ed into User object)
      */
-    String users;
+    private User[] users;
 
     /**
      * A JSON array of Person objects
      */
-    String persons;
+    private Person[] persons;
 
     /**
      * A JSON array of Event objects
      */
-    String events;
+    private Event[] events;
 
-    /**
-     * Creates a LoadRequest with separated JSON lists
-     * @param users a JSON list representing Users
-     * @param persons a JSON list representing Persons
-     * @param events a JSON list representing Events
-     */
-    LoadRequest(String users, String persons, String events){
-        this.users = users;
-        this.persons = persons;
-        this.events = events;
+    public User[] getUsers() {
+        return users;
     }
 
+    public void setUsers(User[] users) {
+        this.users = users;
+    }
+
+    public Person[] getPersons() {
+        return persons;
+    }
+
+    public void setPersons(Person[] persons) {
+        this.persons = persons;
+    }
+
+    public Event[] getEvents() {
+        return events;
+    }
+
+    public void setEvents(Event[] events) {
+        this.events = events;
+    }
 }
 

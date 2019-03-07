@@ -45,13 +45,12 @@ public class PersonHandler implements HttpHandler {
 
 
 
+                    String authString = exchange.getRequestHeaders().getFirst("Authentication");
                     Response res;
-
                     if( exchange.getHttpContext().getPath().equals("/person")){
                         //  PersonService
 
 
-                        String authString = exchange.getRequestHeaders().getFirst("Authentication");
                         PersonRequest req = new PersonRequest(authString);
 
                         res = personService.serveResponse(req);
@@ -64,7 +63,6 @@ public class PersonHandler implements HttpHandler {
 
                         //  Parse path after "/person/"
                         String personID = exchange.getHttpContext().getPath().substring("/person/".length());
-                        String authString = exchange.getRequestHeaders().getFirst("Authentication");
                         PersonIDRequest req = new PersonIDRequest(authString, personID);
 
                         res = personIDService.serveResponse(req);
