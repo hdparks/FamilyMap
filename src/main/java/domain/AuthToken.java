@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -41,4 +42,17 @@ public class AuthToken {
         this.authToken = AuthToken.generateToken();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AuthToken authToken1 = (AuthToken) o;
+        return authToken.equals(authToken1.authToken) &&
+                userName.equals(authToken1.userName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(authToken, userName);
+    }
 }

@@ -8,14 +8,19 @@ import database_access.DataAccessException;
 import database_access.Database;
 import database_access.UserDao;
 
+import java.util.logging.Logger;
+
 
 public class AuthUtilities {
 
+    private static Logger logger = Logger.getLogger("AuthUtilities");
+
     public static String getAuthToken(HttpExchange exchange){
         Headers headers = exchange.getRequestHeaders();
-        if (headers.containsKey("Authentication")){
-            return headers.getFirst("Authentication");
+        if (headers.containsKey("Authorization")){
+            return headers.getFirst("Authorization");
         }
+        logger.severe("Authentication token not found");
         return null;
     }
 
@@ -39,8 +44,8 @@ public class AuthUtilities {
         //  If a non-null userName is returned, the authToken was valid.
         boolean valid = authTokenDao.getUsernameByAuthToken(authToken) != null;
 
-        db.closeConnection(false);
-
+        db.closeConnection(true);
+        if (!valid) logger.severe("Authentication failed");
         return valid;
 
     }

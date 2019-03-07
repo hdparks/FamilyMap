@@ -52,32 +52,10 @@ public class AuthTokenDao {
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1,authToken.authToken);
             stmt.setString(2,authToken.userName);
+            stmt.executeUpdate();
         } catch (SQLException ex){
             logger.log(Level.SEVERE,ex.getMessage());
             throw new DataAccessException("Error adding AuthToken");
-        }
-    }
-
-    public String generateAuthByUserName(String userName) throws DataAccessException{
-        String authString = UUID.randomUUID().toString();
-        add(new AuthToken(authString,userName));
-        return authString;
-
-    }
-
-    /**
-     * Deletes the given AuthToken
-     * @param authToken the AuthToken to be deleted
-     * @throws DataAccessException if the operation fails, ie. the given AuthToken is not found
-     */
-    public void deleteByToken(String authToken) throws DataAccessException{
-        try {
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM authTokens WHERE authToken = ?");
-            stmt.setString(1,authToken);
-            stmt.executeUpdate();
-        } catch (SQLException ex){
-            logger.log(Level.SEVERE, ex.getMessage());
-            throw new DataAccessException("Error deleting Authentication Token");
         }
     }
 
@@ -88,7 +66,7 @@ public class AuthTokenDao {
      * @throws DataAccessException if the operation fails
      */
     public String getUsernameByAuthToken(String auth) throws DataAccessException{
-        String sql = "SELECT username FROM authToken WHERE authToken = ?";
+        String sql = "SELECT username FROM authTokens WHERE authToken = ?";
         String userName = null;
 
         try {

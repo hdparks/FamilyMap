@@ -30,6 +30,7 @@ public class EventHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
+        logger.info("Handling request");
         try{
             //  Expect a GET request
             if(exchange.getRequestMethod().toUpperCase().equals("GET")){
@@ -60,23 +61,23 @@ public class EventHandler implements HttpHandler {
                     }
 
                     //  Successful operation, write to the response object
-                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK,0);
+                    exchange.sendResponseHeaders(200,0);
                     ExchangeUtilities.writeResponseToHttpExchange(res,exchange);
-
+                    logger.info("Successful operation");
                 } else {
                     //  Expected valid authentication
-                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_UNAUTHORIZED,0);
+                    exchange.sendResponseHeaders(401,0);
                     throw new HttpRequestException("Authentication failed");
                 }
             } else {
                 //  Expected "GET" request
-                exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST,0);
+                exchange.sendResponseHeaders(400,0);
                 throw new HttpRequestException("Invalid request method");
             }
 
         } catch (DataAccessException ex){
             //  Something wrong on our end
-            exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR,0);
+            exchange.sendResponseHeaders(500,0);
             ExchangeUtilities.handleInternalError(ex,exchange);
 
             logger.severe(ex.getMessage());
@@ -89,10 +90,12 @@ public class EventHandler implements HttpHandler {
 
         } catch (HttpRequestParseException ex) {
             //  Something wrong in request data
-            exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST,0);
+            exchange.sendResponseHeaders(400,0);
             ExchangeUtilities.handleRequestError(ex,exchange);
 
             logger.severe(ex.getMessage());
+        } finally {
+            exchange.close();
         }
     }
 }

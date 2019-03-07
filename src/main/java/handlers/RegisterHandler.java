@@ -7,16 +7,11 @@ import database_access.DataAccessException;
 
 import requests.RegisterRequest;
 import responses.RegisterResponse;
-import responses.Response;
 import services.HttpRequestException;
 import services.HttpRequestParseException;
 import services.RegisterService;
 
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
 import java.util.logging.Logger;
 
 public class RegisterHandler implements HttpHandler {
@@ -48,7 +43,7 @@ public class RegisterHandler implements HttpHandler {
 
             } else{
                 //  Expected POST request
-                exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST,0);
+                exchange.sendResponseHeaders(400,0);
                 throw new HttpRequestException("Invalid request method");
             }
 
@@ -61,19 +56,19 @@ public class RegisterHandler implements HttpHandler {
 
         } catch (DataAccessException ex){
             //  Something went wrong server-side
-            exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR,0);
+            exchange.sendResponseHeaders(500,0);
             ExchangeUtilities.handleInternalError(ex,exchange);
             exchange.getResponseBody().close();
-            logger.info("DataAccess"+ex.getMessage());
+            logger.info(ex.getMessage());
 
 
         } catch (HttpRequestParseException ex) {
             //  The request was missing some data
-            exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+            exchange.sendResponseHeaders(400, 0);
 
             ExchangeUtilities.handleRequestError(ex, exchange);
             exchange.getResponseBody().close();
-            logger.info("HERE "+ex.getMessage());
+            logger.info(ex.getMessage());
 
         } catch (Exception ex){
             ex.printStackTrace();
@@ -81,6 +76,7 @@ public class RegisterHandler implements HttpHandler {
             throw ex;
         } finally {
             //  And after everything,
+            exchange.close();
             logger.info("End of RegisterHandler");
         }
 

@@ -39,18 +39,17 @@ public class ClearHandler implements HttpHandler {
 
             } else {
 
-                exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST,0);
+                exchange.sendResponseHeaders(400,0);
                 throw new HttpRequestException("Invalid request method");
 
             }
         } catch (HttpRequestException ex){
-
             ExchangeUtilities.handleRequestError(ex,exchange);
             logger.severe(ex.getMessage());
 
 
         } catch (DataAccessException ex){
-
+            exchange.sendResponseHeaders(500,0);
             ExchangeUtilities.handleInternalError(ex,exchange);
             logger.severe(ex.getMessage());
         }

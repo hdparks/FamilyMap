@@ -252,7 +252,7 @@ public class Database {
 
 
             //  Toggle clear database
-            if(true){
+            if(false){
                 db.createTables();
             }
 
