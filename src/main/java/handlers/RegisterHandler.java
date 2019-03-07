@@ -35,6 +35,17 @@ public class RegisterHandler implements HttpHandler {
 
                 RegisterRequest req = ExchangeUtilities.generateRequest(exchange,RegisterRequest.class);
 
+                //  Parse request
+                if( req.getUserName() == null ||
+                        req.getPassword() == null ||
+                        req.getEmail()    == null ||
+                        req.getFirstName()== null ||
+                        req.getLastName() == null ||
+                        req.getGender()   == null)  {
+
+                    throw new HttpRequestException("Invalid request to /register : missing data.");
+                }
+
                 RegisterResponse res = registerService.serveResponse(req);
 
                 ExchangeUtilities.writeResponseToHttpExchange(res,exchange);

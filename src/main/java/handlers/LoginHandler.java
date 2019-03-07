@@ -1,17 +1,53 @@
 package handlers;
 
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
+import database_access.DataAccessException;
 import requests.LoginRequest;
 import responses.LoginResponse;
+import services.HttpRequestException;
 import services.LoginService;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.util.logging.Logger;
 
-public class LoginHandler extends THandler{
+public class LoginHandler implements HttpHandler {
 
     private static Logger logger = Logger.getLogger("LoginHandler");
 
-    public LoginHandler() {
-        super(LoginRequest.class,LoginResponse.class, logger, "POST",false);
-        this.service = new LoginService();
+    LoginService loginService;
+
+    public LoginHandler(){
+        loginService = new LoginService();
+    }
+
+    @Override
+    public void handle(HttpExchange exchange) throws IOException {
+        try{
+           //   Expect POST request
+           if (exchange.getRequestMethod().toUpperCase().equals("POST")){
+
+               LoginRequest req = ExchangeUtilities.generateRequest(exchange, LoginRequest.class);
+
+               LoginResponse res = loginService.serveResponse(req);
+
+
+
+
+           } else {
+               //   Expected POST request
+               exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST,0);
+               throw new HttpRequestException("Invalid response method");
+           }
+
+        } catch (HttpRequestException e) {
+            ExchangeUtilities.handleRequestError(e,exchange);
+            logger.severe(e.getMessage());
+
+        } catch (DataAccessException e) {
+            ExchangeUtilities.handleInternalError(e,exchange);
+            logger.severe(e.getMessage());
+        }
     }
 }

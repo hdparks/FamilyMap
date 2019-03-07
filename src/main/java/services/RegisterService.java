@@ -35,17 +35,6 @@ public class RegisterService implements Service<RegisterRequest,RegisterResponse
             //  Spin up Database connection
             Connection conn = db.openConnection();
 
-            //  Validate RegisterRequest object for non-null fields
-            if( req.getUserName() == null ||
-                req.getPassword() == null ||
-                req.getEmail()    == null ||
-                req.getFirstName()== null ||
-                req.getLastName() == null ||
-                req.getGender()   == null)  {
-
-                throw new DataAccessException("Invalid request to /register : missing data.");
-            }
-
             //  Create new User account
             User user = new User(
                     req.getUserName(),
