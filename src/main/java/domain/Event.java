@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Objects;
+
 /**
  * Represents an event
  */
@@ -73,6 +75,27 @@ public class Event {
         this.city = city;
         this.eventType = eventType;
         this.year = year;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Event event = (Event) o;
+        return year == event.year &&
+                eventID.equals(event.eventID) &&
+                descendant.equals(event.descendant) &&
+                personID.equals(event.personID) &&
+                latitude.equals(event.latitude) &&
+                longitude.equals(event.longitude) &&
+                country.equals(event.country) &&
+                city.equals(event.city) &&
+                eventType.equals(event.eventType);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(eventID, descendant, personID, latitude, longitude, country, city, eventType, year);
     }
 
     /**

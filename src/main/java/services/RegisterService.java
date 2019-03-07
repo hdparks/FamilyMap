@@ -1,10 +1,7 @@
 package services;
 
 import database_access.*;
-import domain.AuthToken;
-import domain.Generator;
-import domain.Person;
-import domain.User;
+import domain.*;
 import requests.RegisterRequest;
 import responses.RegisterResponse;
 
@@ -41,6 +38,11 @@ public class RegisterService implements Service<RegisterRequest,RegisterResponse
                 req.getGender()   == null)  {
             logger.severe("Parse Error in RegisterResponse");
             throw new HttpRequestParseException("Invalid request to /register : missing data");
+        }
+
+        //  Parse gender
+        if (!req.getGender().equals("m") && !req.getGender().equals("f")){
+            throw new HttpRequestParseException("Gender must be \"m\" or \"f\"");
         }
 
 
@@ -83,7 +85,6 @@ public class RegisterService implements Service<RegisterRequest,RegisterResponse
             //  Generate 4 generations of data
             Generator generator = new Generator(conn);
             generator.generateGenerations(userPerson, 4);
-
             logger.info("Generations generated.");
             //  Log user in
             AuthToken authToken = new AuthToken(user);
@@ -113,6 +114,7 @@ public class RegisterService implements Service<RegisterRequest,RegisterResponse
 
             throw new DataAccessException("Error generating ancestor data.");
         } finally {
+            //  finally
             //  Always close connection
             db.closeConnection(false);
         }

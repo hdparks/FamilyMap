@@ -34,7 +34,7 @@ public class RegisterRequest implements IRequest {
      */
     String gender;
 
-    RegisterRequest(String userName, String password, String email, String firstName, String lastName, String gender){
+    public RegisterRequest(String userName, String password, String email, String firstName, String lastName, String gender){
         this.userName = userName;
         this.password = password;
         this.email = email;

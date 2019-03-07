@@ -27,7 +27,7 @@ public class RegisterHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        logger.info("Recieved request");
+        logger.info("handling /register");
         try{
             //  Expect a POST request
             if(exchange.getRequestMethod().toUpperCase().equals("POST")){
