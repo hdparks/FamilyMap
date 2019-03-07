@@ -200,7 +200,8 @@ public class PersonDao {
                 list.add(new Person(personID, descendant, firstName, lastName, gender, fatherID, motherID, spouseID));
             }
 
-            return  (Person[]) list.toArray();
+            Person[] personArray = new Person[list.size()];
+            return list.toArray(personArray);
 
         } catch (SQLException ex){
             logger.log(Level.SEVERE,ex.getMessage());

@@ -38,21 +38,28 @@ public class EventHandler implements HttpHandler {
                 //  Authentication
                 if ( AuthUtilities.isValidAuthentication(exchange)){
                     //  Set up blank response string
-                    String authString = exchange.getRequestHeaders().getFirst("Authentication");
+                    String authString = AuthUtilities.getAuthToken(exchange);
                     Response res;
 
+
+
+                    String uri = exchange.getRequestURI().toString();
+                    logger.info("Request URI: "+uri);
                     //  Figure out if it needs an EventService or EventIDService
-                    if( exchange.getHttpContext().getPath().equals("/event")){
+                    if(uri.equals("/event") || uri.equals("/event/")){
+                        logger.info("Event Service");
                         //  EventService
-                        EventRequest req = ExchangeUtilities.generateRequest(exchange,EventRequest.class);
+                        EventRequest req = new EventRequest(authString);
+
                         req.setAuthToken(authString);
 
                         res = eventService.serveResponse(req);
 
                     } else {
+                        logger.info("EventID Service");
                         //  EventIDService
                         //  Parse path after "/event/"
-                        String eventID = exchange.getHttpContext().getPath().substring("/event/".length());
+                        String eventID = uri.substring("/event/".length());
 
                         EventIDRequest req = new EventIDRequest(authString, eventID);
 
@@ -79,13 +86,11 @@ public class EventHandler implements HttpHandler {
             //  Something wrong on our end
             exchange.sendResponseHeaders(500,0);
             ExchangeUtilities.handleInternalError(ex,exchange);
-
             logger.severe(ex.getMessage());
 
         } catch (HttpRequestException ex) {
             //  Something was wrong with the request
             ExchangeUtilities.handleRequestError(ex, exchange);
-
             logger.severe(ex.getMessage());
 
         } catch (HttpRequestParseException ex) {
@@ -94,8 +99,14 @@ public class EventHandler implements HttpHandler {
             ExchangeUtilities.handleRequestError(ex,exchange);
 
             logger.severe(ex.getMessage());
-        } finally {
+        } catch (Exception ex){
+            ex.printStackTrace();
+            logger.severe("Unchecked exception");
+            throw ex;
+        }
+        finally {
             exchange.close();
+            logger.info("Event handled");
         }
     }
 }

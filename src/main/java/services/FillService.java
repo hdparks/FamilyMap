@@ -35,20 +35,32 @@ public class FillService implements Service<FillRequest, FillResponse> {
         String username;
         int generations = 4;
 
-        //  Parse path to get correct username/generations
-        if(req.getPath().contains("/")){
+        String uri = req.getPath();
 
-            String[] pathSplit = req.getPath().split("/");
+        uri = uri.substring("/fill/".length());
+
+        //  Parse path to get correct username/generations
+        if(uri.contains("/")){
+
+            String[] pathSplit = uri.split("/");
 
             username = pathSplit[0];
-            generations = Integer.parseInt(pathSplit[1]);
+
+            try{
+                generations = Integer.parseInt(pathSplit[1]);
+            } catch (NumberFormatException ex){
+                logger.info("Invalid generations parameter");
+                throw new HttpRequestParseException("Invalid parameter: generations");
+            }
+
 
         } else {
 
-            username = req.getPath();
+            username = uri;
 
         }
 
+        logger.info("validating username "+username);
         //  Parse username
         if (!AuthUtilities.isValidUsername(username)){
             throw new HttpRequestParseException("Invalid parameter: username");
@@ -91,7 +103,11 @@ public class FillService implements Service<FillRequest, FillResponse> {
             logger.severe(ex.getMessage());
             throw new DataAccessException("Family generator file not found");
 
-        } finally {
+        } catch (Exception ex){
+            ex.printStackTrace();
+            throw ex;
+        }
+                finally {
             db.closeConnection(false);
         }
     }

@@ -27,12 +27,14 @@ public class FillHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-
+        logger.info("Handling /fill/[]");
         try{
             //  Expect a POST
             if( exchange.getRequestMethod().toUpperCase().equals("POST") ){
 
-                FillRequest req = new FillRequest(exchange.getHttpContext().getPath());
+                //  Get the userName from the request URI.
+                String uri = exchange.getRequestURI().toString();
+                FillRequest req = new FillRequest(uri);
 
                 FillResponse res = fillService.serveResponse(req);
 
@@ -64,5 +66,6 @@ public class FillHandler implements HttpHandler {
         }
         //  Close the exchange explicitly
         exchange.close();
+        logger.info("/fill/[] handled");
     }
 }

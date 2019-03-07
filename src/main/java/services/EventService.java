@@ -26,7 +26,7 @@ public class EventService implements Service<EventRequest, EventResponse> {
     @Override
     public EventResponse serveResponse(EventRequest req) throws DataAccessException, HttpRequestParseException {
         //  Parse request
-        if (req.getData() == null || req.getAuthToken() == null){
+        if (req.getAuthToken() == null){
             throw new HttpRequestParseException("Invalid parameters: missing data");
         }
 

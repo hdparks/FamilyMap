@@ -4,13 +4,11 @@ import database_access.AuthTokenDao;
 import database_access.DataAccessException;
 import database_access.Database;
 import database_access.EventDao;
-import domain.AuthToken;
 import domain.Event;
 import requests.EventIDRequest;
 import responses.EventIDResponse;
 
 import java.sql.Connection;
-import java.util.logging.Logger;
 
 /**
  * Returns a single Event object with the specified ID
@@ -33,7 +31,7 @@ public class EventIDService implements Service<EventIDRequest, EventIDResponse> 
         Database db = new Database();
         try {
             Connection conn = db.openConnection();
-            Event event = new EventDao(conn).getEventsByEventID(req.getEventID());
+            Event event = new EventDao(conn).getEventByEventID(req.getEventID());
 
             if (event == null) throw new HttpRequestParseException("Invalid parameters: eventID not found");
 

@@ -54,7 +54,9 @@ public class ExchangeUtilities {
     }
 
     public static <T> T generateRequest(HttpExchange exchange, Class<T> tClass) throws IOException{
-        return JSONUtilities.createRequestInstance(exchange.getRequestBody(),tClass);
+        T tObj = JSONUtilities.createRequestInstance(exchange.getRequestBody(),tClass);
+        if (tObj == null) logger.severe("Null object here");
+        return tObj;
     }
 
 

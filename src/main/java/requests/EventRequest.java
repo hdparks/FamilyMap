@@ -11,11 +11,6 @@ public class EventRequest implements IRequest {
      */
     String authToken;
 
-    /**
-     * An array of Event objects
-     */
-    Event[] data;
-
     public String getAuthToken() {
         return authToken;
     }
@@ -24,19 +19,8 @@ public class EventRequest implements IRequest {
         this.authToken = authToken;
     }
 
-    public Event[] getData() {
-        return data;
+    public EventRequest(String authString){
+        this.authToken = authString;
     }
 
-    public void setData(Event[] data) {
-        this.data = data;
-    }
-
-    /**
-     * Creates an EventRequest with a given authToken string
-     * @param data an array of Events
-     */
-    public EventRequest(Event[] data){
-        this.data = data;
-    }
 }

@@ -33,6 +33,7 @@ public class PersonHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
+        logger.info("Handling /person");
         try {
 
 
@@ -44,9 +45,11 @@ public class PersonHandler implements HttpHandler {
                 if (AuthUtilities.isValidAuthentication(exchange)) {
 
 
-                    String authString = exchange.getRequestHeaders().getFirst("Authentication");
+                    String authString = exchange.getRequestHeaders().getFirst("Authorization");
+                    String uri = exchange.getRequestURI().toString();
                     Response res;
-                    if (exchange.getHttpContext().getPath().equals("/person")) {
+                    if (uri.equals("/person") || uri.equals("/person/")) {
+                        logger.info("Person Service");
                         //  PersonService
 
 
@@ -56,25 +59,27 @@ public class PersonHandler implements HttpHandler {
 
 
                     } else {
+                        logger.info("PersonID Service");
                         //  PersonIDService
 
 
                         //  Parse path after "/person/"
-                        String personID = exchange.getHttpContext().getPath().substring("/person/".length());
+                        String personID = uri.substring("/person/".length());
                         PersonIDRequest req = new PersonIDRequest(authString, personID);
 
                         res = personIDService.serveResponse(req);
                     }
 
-
+                    //  Success!
                     //  Write to the response object
+                    exchange.sendResponseHeaders(200,0);
                     ExchangeUtilities.writeResponseToHttpExchange(res, exchange);
-
+                    logger.info("Successful operation");
 
                 } else {
                     //  Expected valid authentication
-                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_UNAUTHORIZED, 0);
 
+                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_UNAUTHORIZED, 0);
                     throw new HttpRequestException("Authentication failed");
                 }
 
@@ -82,7 +87,6 @@ public class PersonHandler implements HttpHandler {
             } else {
                 //  Expected a GET request
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
-
                 throw new HttpRequestException("Invalid request method");
             }
 
@@ -104,9 +108,14 @@ public class PersonHandler implements HttpHandler {
             ExchangeUtilities.handleRequestError(e,exchange);
             logger.severe(e.getMessage());
 
+        } catch (Exception ex){
+            ex.printStackTrace();
+            logger.severe("Unchecked exception");
+            throw ex;
         }
 
         //  And after everything,
         exchange.close();
+        logger.info("/person handled");
     }
 }

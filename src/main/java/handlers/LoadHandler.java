@@ -24,12 +24,13 @@ public class LoadHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
+        logger.info("Handling /load");
         try {
             //  Expect POST request
             if (exchange.getRequestMethod().toUpperCase().equals("POST")){
 
                 LoadRequest req = ExchangeUtilities.generateRequest(exchange,LoadRequest.class);
-
+                logger.info("Request has "+req.getEvents().length+ " events, "+req.getPersons().length+" persons, "+req.getUsers().length+" users");
                 //  Service parses the request, so we go ahead
                 LoadResponse res = loadService.serveResponse(req);
 
@@ -50,8 +51,12 @@ public class LoadHandler implements HttpHandler {
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR,0);
             ExchangeUtilities.handleInternalError(ex,exchange);
             logger.severe(ex.getMessage());
+        } catch (Exception ex){
+            ex.printStackTrace();
+            logger.severe("Unhandled Exception");
         }
-
+        exchange.close();
+        logger.severe("/load handled");
 
     }
 }

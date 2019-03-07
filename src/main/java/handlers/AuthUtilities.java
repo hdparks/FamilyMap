@@ -42,10 +42,12 @@ public class AuthUtilities {
         AuthTokenDao authTokenDao = new AuthTokenDao(db.openConnection());
 
         //  If a non-null userName is returned, the authToken was valid.
-        boolean valid = authTokenDao.getUsernameByAuthToken(authToken) != null;
+        boolean valid = (authTokenDao.getUsernameByAuthToken(authToken) != null);
 
         db.closeConnection(true);
+
         if (!valid) logger.severe("Authentication failed");
+
         return valid;
 
     }

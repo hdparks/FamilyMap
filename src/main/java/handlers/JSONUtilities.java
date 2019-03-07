@@ -20,11 +20,14 @@ public class JSONUtilities {
      * @param <T> the return type
      * @return an instance of the requests class T. Returns null if fails.
      */
-    public static <T> T createRequestInstance(InputStream inputStream, Class<T> tClass) throws IOException {
+    public static <T> T createRequestInstance(InputStream inputStream, Class<T> tClass) {
 
-        try(Reader reader = new InputStreamReader(inputStream)) {
-            return new Gson().fromJson(reader, tClass);
-        }
+        Reader reader = new InputStreamReader(inputStream);
+        Gson gson = new Gson();
+        T tObj = gson.fromJson(reader,tClass);
+        return tObj;
+
+
     }
 
     public static <T> String generateResponseJSON(T obj){
