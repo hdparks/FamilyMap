@@ -22,12 +22,14 @@ public class AuthToken {
     public String userName;
 
 
-    /**
-     * Randomly generates a new unique authToken string
-     * @return authTokenString a unique string representing a new authToken
-     */
-    public static String generateAuthToken() {
-        return null;
+    public AuthToken(String userName){
+        this.authToken = generateToken();
+        this.userName = userName;
+    }
+
+    public AuthToken(String authToken,String userName){
+        this.authToken = authToken;
+        this.userName = userName;
     }
 
     /**
@@ -36,15 +38,7 @@ public class AuthToken {
      */
     public AuthToken(User user){
         this.userName = user.userName;
-        this.authToken = AuthToken.generateAuthToken();
+        this.authToken = AuthToken.generateToken();
     }
 
-    /**
-     * Generates an authToken object with the given auth string.
-     * This object can then be used by AuthTokenDao to access the associated userName
-     * @param authToken the authorization token, passed in via IRequest object
-     */
-    public AuthToken(String authToken){
-        this.authToken = authToken;
-    }
 }

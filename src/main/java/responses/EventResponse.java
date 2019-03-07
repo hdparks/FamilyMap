@@ -11,13 +11,13 @@ public class EventResponse extends Response {
     /**
      * A list of Event objects
      */
-    List<Event> events;
+    Event[] events;
 
     /**
      * Creates a valid responses
      * @param events the requested list of Event objects
      */
-    EventResponse(List<Event> events){
+    public EventResponse(Event[] events){
         super(true);
         this.events = events;
     }

@@ -1,5 +1,7 @@
 package domain;
 
+import services.HttpRequestParseException;
+
 import java.util.Objects;
 
 /**
@@ -43,7 +45,9 @@ public class User {
     public String personID;
 
 
-    public User(String userName, String password, String email, String firstName, String lastName, String gender){
+    public User(String userName, String password, String email, String firstName, String lastName, String gender) throws GenderException {
+        if (!gender.matches("m|f")) throw new GenderException();
+
         this.userName = userName;
         this.password = password;
         this.email = email;
@@ -74,7 +78,9 @@ public class User {
         return Objects.hash(userName, password, email, firstName, lastName, gender, personID);
     }
 
-    public User(String userName, String password, String email, String firstName, String lastName, String gender, String personID){
+    public User(String userName, String password, String email, String firstName, String lastName, String gender, String personID) throws GenderException{
+        if (!gender.matches("m|f")) throw new GenderException();
+
         this.userName = userName;
         this.password = password;
         this.email = email;

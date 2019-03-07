@@ -167,4 +167,67 @@ public class EventDao {
         return (Event[]) eventList.toArray();
     }
 
+    public Event[] getEventsByDescendant(String descendant) throws DataAccessException {
+        List<Event> eventList = new ArrayList<>();
+        String sql = "SELECT (eventID, descendant, personID, latitude, longitude, country, city, eventType, year) FROM events WHERE descendant = ?";
+
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, descendant);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                //  Get everything we need
+                String eventID = rs.getString(1);
+                String idescendant = rs.getString(2);
+                String personID = rs.getString(3);
+                String latitude = rs.getString(4);
+                String longitude = rs.getString(5);
+                String country = rs.getString(6);
+                String city = rs.getString(7);
+                String eventType = rs.getString(8);
+                int year = rs.getInt(9);
+
+                eventList.add(new Event(eventID, idescendant, personID, latitude, longitude, country, city, eventType, year));
+            }
+
+        } catch (SQLException ex) {
+            logger.severe(ex.getMessage());
+            throw new DataAccessException("Error getting events");
+        }
+
+        return (Event[]) eventList.toArray();
+    }
+
+    public Event getEventsByEventID(String eventID) throws DataAccessException {
+
+        String sql = "SELECT (eventID, descendant, personID, latitude, longitude, country, city, eventType, year) FROM events WHERE eventID = ?";
+
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, eventID);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                //  Get everything we need
+                String ieventID = rs.getString(1);
+                String descendant = rs.getString(2);
+                String personID = rs.getString(3);
+                String latitude = rs.getString(4);
+                String longitude = rs.getString(5);
+                String country = rs.getString(6);
+                String city = rs.getString(7);
+                String eventType = rs.getString(8);
+                int year = rs.getInt(9);
+
+                return new Event(ieventID, descendant, personID, latitude, longitude, country, city, eventType, year);
+            }
+        } catch (SQLException ex) {
+            logger.severe(ex.getMessage());
+            throw new DataAccessException("Error getting events");
+        }
+        //  If nothing was found, return null
+        return null;
+    }
+
 }

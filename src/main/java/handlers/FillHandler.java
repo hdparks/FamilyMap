@@ -9,6 +9,7 @@ import responses.FillResponse;
 import services.FillService;
 
 import services.HttpRequestException;
+import services.HttpRequestParseException;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -18,7 +19,7 @@ public class FillHandler implements HttpHandler {
 
     private static Logger logger = Logger.getLogger("FillHandler");
 
-    FillService fillService;
+    private FillService fillService;
 
     public FillHandler() {
         fillService = new FillService();
@@ -29,34 +30,11 @@ public class FillHandler implements HttpHandler {
 
         try{
             //  Expect a POST
-            if(exchange.getRequestMethod().toUpperCase().equals("POST")){
-                //  Get username
-                String username;
-                int generations = 4;
+            if( exchange.getRequestMethod().toUpperCase().equals("POST") ){
 
-                //  Parse path to get correct username/generations
-                String path = exchange.getHttpContext().getPath().substring("/fill/".length());
-                if(path.contains("/")){
-
-                    String[] pathSplit = path.split("/");
-
-                    username = pathSplit[0];
-                    generations = Integer.parseInt(pathSplit[1]);
-
-                    logger.fine("/fill endpoint with user: "+username+", generations: "+generations);
-
-                } else {
-                    username = path;
-                    logger.fine("/fill endpoint with user: "+username);
-                }
-
-                FillRequest req = new FillRequest(username, generations);
+                FillRequest req = new FillRequest(exchange.getHttpContext().getPath());
 
                 FillResponse res = fillService.serveResponse(req);
-
-
-                //  Ready the JSON response body
-                String jsonRes = JSONUtilities.generateResponseJSON(res);
 
                 //  Send "OK" header and fill the response body with JSON
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK,0);
@@ -65,7 +43,6 @@ public class FillHandler implements HttpHandler {
             } else {
                 //  Expected a POST request
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST,0);
-
                 throw new HttpRequestException("Invalid request method");
             }
 
@@ -77,6 +54,11 @@ public class FillHandler implements HttpHandler {
 
         } catch (HttpRequestException ex) {
             //  Something was wrong with the request
+            ExchangeUtilities.handleRequestError(ex, exchange);
+            logger.severe(ex.getMessage());
+
+        } catch (HttpRequestParseException ex) {
+            exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST,0);
             ExchangeUtilities.handleRequestError(ex, exchange);
             logger.severe(ex.getMessage());
         }

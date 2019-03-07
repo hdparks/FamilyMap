@@ -6,10 +6,18 @@ import java.util.Objects;
  * Represents a requests to the /person endpoint
  */
 public class PersonRequest implements IRequest {
+    public String getAuthToken() {
+        return authToken;
+    }
+
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
+    }
+
     /**
      * The authToken of the current user
      */
-    public String authToken;
+    private String authToken;
 
     /**
      * Construct a PersonRequest

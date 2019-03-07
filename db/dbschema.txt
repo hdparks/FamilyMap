@@ -10,7 +10,7 @@ create table users
     email varchar(255) not null,
     firstName varchar(255) not null,
     lastName varchar(255) not null,
-    gender char(1) check(gender in ("f","m")),
+    gender char(1) not null,
     personID varchar(255) not null,
     foreign key(personID) references persons(personID)
 );
@@ -49,6 +49,6 @@ create table events
 create table authTokens
 (
     authToken varchar(255) not null primary key,
-    username varchar(255) not null,
-    foreign key(username) references users(username)
+    userName varchar(255) not null,
+    foreign key(username) references users(userName)
 );

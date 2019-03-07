@@ -9,6 +9,7 @@ import responses.Response;
 import services.EventIDService;
 import services.EventService;
 import services.HttpRequestException;
+import services.HttpRequestParseException;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -37,13 +38,13 @@ public class EventHandler implements HttpHandler {
                 if ( AuthUtilities.isValidAuthentication(exchange)){
                     //  Set up blank response string
                     String authString = exchange.getRequestHeaders().getFirst("Authentication");
-                    String jsonRes;
                     Response res;
 
                     //  Figure out if it needs an EventService or EventIDService
                     if( exchange.getHttpContext().getPath().equals("/event")){
                         //  EventService
-                        EventRequest req = new EventRequest(authString);
+                        EventRequest req = ExchangeUtilities.generateRequest(exchange,EventRequest.class);
+                        req.setAuthToken(authString);
 
                         res = eventService.serveResponse(req);
 
@@ -75,6 +76,7 @@ public class EventHandler implements HttpHandler {
 
         } catch (DataAccessException ex){
             //  Something wrong on our end
+            exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR,0);
             ExchangeUtilities.handleInternalError(ex,exchange);
 
             logger.severe(ex.getMessage());
@@ -82,6 +84,13 @@ public class EventHandler implements HttpHandler {
         } catch (HttpRequestException ex) {
             //  Something was wrong with the request
             ExchangeUtilities.handleRequestError(ex, exchange);
+
+            logger.severe(ex.getMessage());
+
+        } catch (HttpRequestParseException ex) {
+            //  Something wrong in request data
+            exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST,0);
+            ExchangeUtilities.handleRequestError(ex,exchange);
 
             logger.severe(ex.getMessage());
         }

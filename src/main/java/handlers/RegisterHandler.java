@@ -7,10 +7,15 @@ import database_access.DataAccessException;
 
 import requests.RegisterRequest;
 import responses.RegisterResponse;
+import responses.Response;
 import services.HttpRequestException;
+import services.HttpRequestParseException;
 import services.RegisterService;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.util.logging.Logger;
 
@@ -27,27 +32,17 @@ public class RegisterHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
+        logger.info("Recieved request");
         try{
-
-
             //  Expect a POST request
             if(exchange.getRequestMethod().toUpperCase().equals("POST")){
 
                 RegisterRequest req = ExchangeUtilities.generateRequest(exchange,RegisterRequest.class);
 
-                //  Parse request
-                if( req.getUserName() == null ||
-                        req.getPassword() == null ||
-                        req.getEmail()    == null ||
-                        req.getFirstName()== null ||
-                        req.getLastName() == null ||
-                        req.getGender()   == null)  {
-
-                    throw new HttpRequestException("Invalid request to /register : missing data");
-                }
-
+                logger.entering("RegisterService","handle");
                 RegisterResponse res = registerService.serveResponse(req);
-
+                logger.exiting("RegisterService","handle");
+                logger.info("Successful RegisterService");
                 exchange.sendResponseHeaders(200,0);
                 ExchangeUtilities.writeResponseToHttpExchange(res,exchange);
 
@@ -66,11 +61,28 @@ public class RegisterHandler implements HttpHandler {
 
         } catch (DataAccessException ex){
             //  Something went wrong server-side
+            exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR,0);
             ExchangeUtilities.handleInternalError(ex,exchange);
-            logger.severe(ex.getMessage());
+            exchange.getResponseBody().close();
+            logger.info("DataAccess"+ex.getMessage());
+
+
+        } catch (HttpRequestParseException ex) {
+            //  The request was missing some data
+            exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+
+            ExchangeUtilities.handleRequestError(ex, exchange);
+            exchange.getResponseBody().close();
+            logger.info("HERE "+ex.getMessage());
+
+        } catch (Exception ex){
+            ex.printStackTrace();
+            logger.info(ex.getMessage());
+            throw ex;
+        } finally {
+            //  And after everything,
+            logger.info("End of RegisterHandler");
         }
 
-        //  And after everything,
-        exchange.close();
     }
 }

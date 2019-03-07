@@ -2,10 +2,13 @@ package domain;
 
 import java.util.Objects;
 
+
 /**
  * Represents a person
  */
 public class Person {
+
+
 
     public String getPersonID() {
         return personID;
@@ -83,7 +86,8 @@ public class Person {
      * @param motherID id
      * @param spouseID id
      */
-    public Person(String personID, String descendant, String firstName, String lastName, String gender, String fatherID, String motherID, String spouseID) {
+    public Person(String personID, String descendant, String firstName, String lastName, String gender, String fatherID, String motherID, String spouseID) throws GenderException {
+        if (!gender.matches("m|f")) throw new GenderException();
         this.personID = personID;
         this.descendant = descendant;
         this.firstName = firstName;
@@ -92,6 +96,18 @@ public class Person {
         this.fatherID = fatherID;
         this.motherID = motherID;
         this.spouseID = spouseID;
+    }
+
+    /**
+     * Assigns id at the same time
+     * @param user
+     */
+    public Person(User user){
+
+        this.descendant = user.userName;
+        this.firstName = user.firstName;
+        this.lastName = user.lastName;
+        this.gender = user.gender;
     }
 
     /**
@@ -104,7 +120,8 @@ public class Person {
      * @param motherID id
      * @param spouseID id
      */
-    public Person(String descendant, String firstName, String lastName, String gender, String fatherID, String motherID, String spouseID) {
+    public Person(String descendant, String firstName, String lastName, String gender, String fatherID, String motherID, String spouseID) throws GenderException {
+        if (!gender.matches("m|f")) throw new GenderException();
         this.descendant = descendant;
         this.firstName = firstName;
         this.lastName = lastName;

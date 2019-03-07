@@ -10,6 +10,7 @@ import responses.RegisterResponse;
 
 import java.io.FileNotFoundException;
 import java.sql.Connection;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 /**
@@ -29,12 +30,27 @@ public class RegisterService implements Service<RegisterRequest,RegisterResponse
      *
      */
     @Override
-    public RegisterResponse serveResponse(RegisterRequest req) throws DataAccessException{
+    public RegisterResponse serveResponse(RegisterRequest req) throws DataAccessException, HttpRequestParseException {
+        logger.info("Servicing RegisterRequest");
+        //  Parse request
+        if( req.getUserName() == null ||
+                req.getPassword() == null ||
+                req.getEmail()    == null ||
+                req.getFirstName()== null ||
+                req.getLastName() == null ||
+                req.getGender()   == null)  {
+            logger.severe("Parse Error in RegisterResponse");
+            throw new HttpRequestParseException("Invalid request to /register : missing data");
+        }
+
+
         Database db = new Database();
         try{
             //  Spin up Database connection
             Connection conn = db.openConnection();
 
+
+            String personID = UUID.randomUUID().toString();
             //  Create new User account
             User user = new User(
                     req.getUserName(),
@@ -42,14 +58,13 @@ public class RegisterService implements Service<RegisterRequest,RegisterResponse
                     req.getEmail(),
                     req.getFirstName(),
                     req.getLastName(),
-                    req.getGender());
-
-            //  Add the User
-            UserDao userDao = new UserDao(conn);
-            userDao.add(user);
-
+                    req.getGender(),
+                    personID
+                    );
             //  Create accompanying Person data
+
             Person userPerson = new Person(
+                    personID,
                     req.getUserName(),
                     req.getFirstName(),
                     req.getLastName(),
@@ -58,23 +73,28 @@ public class RegisterService implements Service<RegisterRequest,RegisterResponse
                     null,
                     null
             );
+            logger.info("User and Person objects created");
 
-            //  Add the Person data
-            PersonDao personDao = new PersonDao(conn);
-            personDao.add(userPerson);
+            //  Add the User
+            UserDao userDao = new UserDao(conn);
+            userDao.add(user);
 
-
+            logger.info("User data added to database.");
             //  Generate 4 generations of data
-            new Generator(conn).generateGenerations(userPerson, 4);
+            Generator generator = new Generator(conn);
+            generator.generateGenerations(userPerson, 4);
 
+            logger.info("Generations generated.");
             //  Log user in
             AuthToken authToken = new AuthToken(user);
             AuthTokenDao authTokenDao = new AuthTokenDao(conn);
             authTokenDao.add(authToken);
 
+            logger.info("User Logged in.");
             //  Close and save changes
             db.closeConnection(true);
 
+            logger.info("Creating RegisterResponse");
             //  Return new authToken
             return new RegisterResponse(authToken.authToken,user.userName,userPerson.personID);
 
@@ -92,6 +112,9 @@ public class RegisterService implements Service<RegisterRequest,RegisterResponse
             logger.severe(ex.getMessage());
 
             throw new DataAccessException("Error generating ancestor data.");
+        } finally {
+            //  Always close connection
+            db.closeConnection(false);
         }
     }
 }

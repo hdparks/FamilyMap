@@ -6,19 +6,23 @@ import responses.Response;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.nio.file.Files;
+import java.util.logging.Logger;
 
 public class ExchangeUtilities {
+
+    private static Logger logger = Logger.getLogger("ExchangeUtilities");
 
     public static <T> void writeResponseToHttpExchange(T res, HttpExchange exchange) throws IOException {
         //  JSONify the response object
         String jsonRes = JSONUtilities.generateResponseJSON(res);
-
+        logger.info("Writing: "+jsonRes);
         //  Write the JSON to the response body
         OutputStream responseBody = exchange.getResponseBody();
         writeStringToOutputStream(jsonRes, responseBody);
     }
 
     public static void writeStringToOutputStream(String str, OutputStream os) throws IOException {
+
         OutputStreamWriter sw = new OutputStreamWriter(os);
         BufferedWriter bw = new BufferedWriter(sw);
         bw.write(str);

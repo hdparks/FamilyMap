@@ -82,7 +82,7 @@ public class PersonDaoTest {
 
         PersonDao pDao = new PersonDao(db.openConnection());
 
-        String personID = pDao.add(person);
+        pDao.add(person);
 
         result = pDao.getPersonByID(person.personID);
 

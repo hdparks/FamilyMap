@@ -16,7 +16,7 @@ public class ClearHandler implements HttpHandler {
 
     private static Logger logger = Logger.getLogger("ClearHandler");
 
-    ClearService clearService;
+    private ClearService clearService;
 
     public ClearHandler() {
         clearService = new ClearService();

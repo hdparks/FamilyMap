@@ -1,6 +1,5 @@
 package database_access;
 
-import domain.Generator;
 import domain.Person;
 
 import java.sql.*;
@@ -55,7 +54,7 @@ public class PersonDao {
         }
 
 
-        String sql = "INSERT INTO persons (descendant, firstName, lastName, gender, fatherID, motherID, spouseID, personID)" +
+        String sql = "INSERT INTO persons (descendant, firstName, lastName, gender, fatherID, motherID, spouseID, personID) " +
                 "VALUES (?,?,?,?,?,?,?,?)";
 
 
@@ -84,7 +83,7 @@ public class PersonDao {
 
     public void updateRelationships(Person child, Person mother, Person father) throws DataAccessException{
         try {
-            String childUpdate = "UPDATE persons SET (motherID, fatherID) VALUES (?,?) WHERE personID = ?";
+            String childUpdate = "UPDATE persons SET motherID = ?, fatherID = ? WHERE personID = ?";
             PreparedStatement stmt = conn.prepareStatement(childUpdate);
             stmt.setString(1,mother.personID);
             stmt.setString(2,father.personID);

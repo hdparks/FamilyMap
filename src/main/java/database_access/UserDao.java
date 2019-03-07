@@ -2,7 +2,6 @@ package database_access;
 
 import domain.User;
 
-import javax.xml.crypto.Data;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -116,9 +115,9 @@ public class UserDao {
         return user;
     }
 
-    public boolean userPasswordMatchInTable(String userName, String password) throws DataAccessException{
+    public User getUserByNameAndPassword(String userName, String password) throws DataAccessException{
         String sql = "SELECT * FROM users WHERE (userName, password) = (?,?)";
-
+        User user = null;
         try {
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1,userName);
@@ -127,12 +126,15 @@ public class UserDao {
             ResultSet rs = stmt.executeQuery();
 
             //  If anything comes up in result set, we are good!
-            return rs.next();
+            if (rs.next()){
+                user = getUserByName(userName);
+            }
+
+            return user;
 
         } catch (SQLException ex){
             logger.severe(ex.getMessage());
             throw new DataAccessException("Error in verifying userName/password combination");
         }
     }
-
 }

@@ -4,9 +4,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import database_access.DataAccessException;
 import requests.LoadRequest;
-import requests.PersonRequest;
 import responses.LoadResponse;
-import responses.PersonResponse;
 import services.HttpRequestException;
 import services.LoadService;
 

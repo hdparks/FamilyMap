@@ -1,8 +1,8 @@
 package domain;
 
 import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
 import database_access.DataAccessException;
-import database_access.Database;
 import database_access.EventDao;
 import database_access.PersonDao;
 
@@ -18,28 +18,71 @@ public class Generator {
     private static Logger logger = Logger.getLogger("Generator");
 
     private static final int CURRENT_YEAR = 2019;
-    private static final char[] AVAILABLE_CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_".toCharArray();
-
+    public int eventsAdded;
+    public int personsAdded;
 
     private Gson gson;
+    @SerializedName("data")
     private String[] fnames;
+
+    @SerializedName("data")
     private String[] mnames;
+
+    @SerializedName("data")
     private String[] snames;
-    private String[] locations;
+
+    @SerializedName("data")
+    private Location[] locations;
+
     private Connection conn;
+
+
+    private class StringWrapper{
+        String[] data;
+    }
+
+    private class LocationWrapper{
+        Location[] data;
+    }
 
     /**
      * Generic constructor
      * @throws FileNotFoundException if the operation fails
      */
     public Generator(Connection conn) throws FileNotFoundException {
+        logger.info("Creating Generator object...");
         this.gson = new Gson();
 
-        this.fnames  = gson.fromJson(new FileReader(new File("familymapserver/json/fnames.json")),String[].class);
-        this.mnames = gson.fromJson(new FileReader(new File("familymapserver/json/mnames.json")),String[].class);
-        this.snames = gson.fromJson(new FileReader(new File("familymapserver/json/snames.json")),String[].class);
-        this.locations = gson.fromJson(new FileReader(new File("familymapserver/json/locations.json")),String[].class);
+        try {
+
+            StringWrapper f = gson.fromJson(new FileReader(new File("familymapserver"+File.separator+"json"+File.separator+"fnames.json")), StringWrapper.class);
+            this.fnames = f.data;
+            logger.info("fnames loaded");
+
+            StringWrapper m = gson.fromJson(new FileReader(new File("familymapserver"+File.separator+"json"+File.separator+"mnames.json")), StringWrapper.class);
+            this.mnames = m.data;
+            logger.info("mnames loaded");
+
+            StringWrapper s = gson.fromJson(new FileReader(new File("familymapserver"+File.separator+"json"+File.separator+"snames.json")), StringWrapper.class);
+            this.snames = s.data;
+            logger.info("snmaes loaded");
+
+            LocationWrapper l = gson.fromJson(new FileReader(new File("familymapserver"+File.separator+"json"+File.separator+"locations.json")), LocationWrapper.class);
+            this.locations = l.data;
+            logger.info("locations loaded");
+
+        } catch (Exception ex){
+            logger.severe(ex.getMessage());
+            throw ex;
+        }
+
+
         this.conn = conn;
+
+        this.eventsAdded = 0;
+        this.personsAdded = 0;
+
+        logger.info("Generator object created");
     }
 
     /**
@@ -75,7 +118,7 @@ public class Generator {
      */
     private Location getLocation(){
         Random random = new Random();
-        return gson.fromJson(locations[random.nextInt(locations.length)],Location.class);
+        return this.locations[random.nextInt(this.locations.length)];
     }
 
 
@@ -84,8 +127,7 @@ public class Generator {
      * @param event the Event to be loaded
      */
     private void loadLocation(Event event){
-        Random random = new Random();
-        Location location = gson.fromJson(locations[random.nextInt(locations.length)],Location.class);
+        Location location = getLocation();
         event.city = location.city;
         event.country = location.country;
         event.latitude = location.latitude;
@@ -121,7 +163,7 @@ public class Generator {
      * @param person the child
      * @return a female Person object with matching descendant to person
      */
-    private Person generateParent(Person person, String lastName,String gender){
+    private Person generateParent(Person person, String lastName,String gender) throws DataAccessException{
         String firstName = (gender.equals("m")) ?
                 getmName():
                 getfName();
@@ -167,17 +209,21 @@ public class Generator {
      * @param generations the number of generations to generate
      */
     public void generateGenerations(Person userPerson, int generations) throws DataAccessException{
-
+        logger.info("Generating generations...");
         try{
             //  Spin up Database driver, PersonDao and EventDao
             PersonDao personDao = new PersonDao(conn);
             EventDao eventDao = new EventDao(conn);
 
+            //  Add the user to the database
+            personDao.add(userPerson);
+            this.personsAdded++;
+
             //  Make user Birthday event, save it
             int userBirthYear = 2000;
             Event userBirthday = generateEvent(userPerson, userBirthYear,"Birthday" );
             eventDao.add(userBirthday);
-
+            this.eventsAdded++;
             //  generate specified number of generations
             generateNextGeneration(userPerson,userBirthYear,personDao,eventDao,generations);
 
@@ -200,6 +246,7 @@ public class Generator {
      * @throws DataAccessException should operation fail
      */
     private void generateNextGeneration(Person child, int childBirthYear, PersonDao personDao, EventDao eventDao, int generations) throws DataAccessException {
+        logger.entering("Generator","NextGeneration");
         if ( generations <= 0 ){
             //  We are done
             return;
@@ -214,10 +261,11 @@ public class Generator {
         //  Generate mother and father Person objects
         Person mother = generateParent(child, lastName,"f");
         personDao.add(mother);
+        this.personsAdded++;
 
         Person father = generateParent(child, lastName, "m");
         personDao.add(father);
-
+        this.personsAdded++;
 
         //  Set everyone's id's to one another
         personDao.updateRelationships(child, mother, father);
@@ -237,7 +285,7 @@ public class Generator {
 
         eventDao.add(motherMarriage);
         eventDao.add(fatherMarriage);
-
+        this.eventsAdded += 2;
 
         //  Birth:
         int fatherBirthYear = getBirthYearFromMarriageYear(parentMarriageYear);
@@ -248,6 +296,7 @@ public class Generator {
 
         eventDao.add(motherBirth);
         eventDao.add(fatherBirth);
+        this.eventsAdded += 2;
 
         //  Death:
         int fatherDeathYear = getDeathYearFromBirthYear(fatherBirthYear);
@@ -269,7 +318,7 @@ public class Generator {
 
         eventDao.add(fatherDeath);
         eventDao.add(motherDeath);
-
+        this.eventsAdded += 2;
 
         //  Recurse on both parents
         generateNextGeneration(mother, motherBirthYear, personDao, eventDao,generations - 1);

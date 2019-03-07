@@ -6,6 +6,7 @@ import com.sun.net.httpserver.HttpHandler;
 import database_access.AuthTokenDao;
 import database_access.DataAccessException;
 import database_access.Database;
+import database_access.UserDao;
 
 
 public class AuthUtilities {
@@ -32,10 +33,16 @@ public class AuthUtilities {
         }
 
         Database db = new Database();
+
         AuthTokenDao authTokenDao = new AuthTokenDao(db.openConnection());
 
         //  If a non-null userName is returned, the authToken was valid.
-        return authTokenDao.getUsernameByAuthToken(authToken) != null;
+        boolean valid = authTokenDao.getUsernameByAuthToken(authToken) != null;
+
+        db.closeConnection(false);
+
+        return valid;
+
     }
 
     /**
@@ -45,6 +52,22 @@ public class AuthUtilities {
      * @throws DataAccessException if the operation fails
      */
     public static boolean isValidAuthentication(HttpExchange exchange) throws DataAccessException {
+
         return authTokenIsValid(getAuthToken(exchange));
+
+    }
+
+    public static boolean isValidUsername(String userName) throws DataAccessException {
+
+        Database db = new Database();
+
+        UserDao userDao = new UserDao(db.openConnection());
+
+        //  GetUserByName returns null if no such user is found.
+        boolean valid = userDao.getUserByName(userName) != null;
+
+        db.closeConnection(false);
+
+        return valid;
     }
 }

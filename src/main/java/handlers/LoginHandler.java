@@ -6,6 +6,7 @@ import database_access.DataAccessException;
 import requests.LoginRequest;
 import responses.LoginResponse;
 import services.HttpRequestException;
+import services.HttpRequestParseException;
 import services.LoginService;
 
 import java.io.IOException;
@@ -49,6 +50,7 @@ public class LoginHandler implements HttpHandler {
            }
 
         } catch (HttpRequestException e) {
+            //  Handles any request errors
             ExchangeUtilities.handleRequestError(e,exchange);
             logger.severe(e.getMessage());
 
@@ -57,6 +59,12 @@ public class LoginHandler implements HttpHandler {
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR,0);
             ExchangeUtilities.handleInternalError(e,exchange);
             logger.severe(e.getMessage());
+
+        } catch (HttpRequestParseException ex) {
+            //  Handles parse errors
+            exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST,0);
+            ExchangeUtilities.handleRequestError(ex,exchange);
+            logger.severe(ex.getMessage());
         }
 
         //  And after everything,

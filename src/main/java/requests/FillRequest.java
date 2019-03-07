@@ -4,24 +4,26 @@ package requests;
  * Represents a requests made to the /fill API endpoint
  */
 public class FillRequest implements IRequest {
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
     /**
      * The username of the User whose generations are to be filled
      */
-    String userName;
-
-    /**
-     * The number of generations to be filled
-     */
-    int generations;
+    private String path;
 
     /**
      * Create a FillRequest
-     * @param userName the userName to fill
-     * @param generations the number of generations to be filled
+     * @param path the userName to fill
      */
-    public FillRequest(String userName, int generations){
-        this.userName = userName;
-        this.generations = generations;
+    public FillRequest(String path){
+        this.path = path;
     }
 
 }

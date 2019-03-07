@@ -6,6 +6,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 /**
  * a class which represents the Database itself.
@@ -14,10 +15,11 @@ import java.util.Scanner;
  */
 public class Database {
 
+    private static Logger logger = Logger.getLogger("Database");
     /**
      * A Connection object
      */
-    private Connection conn;
+    private static Connection conn;
 
     static {
         try{
@@ -43,7 +45,9 @@ public class Database {
      * @throws DataAccessException if operation fails
      */
     public Connection openConnection() throws DataAccessException{
+        logger.fine("Opening connection...");
         if (hasOpenConnection()){
+            closeConnection(false);
             throw new DataAccessException("A previous connection has not been closed. Close previous connection.");
         }
         try {
@@ -58,6 +62,7 @@ public class Database {
             ex.printStackTrace();
             throw new DataAccessException("Unable to open connection to database");
         }
+        logger.fine("Connection opened.");
         return conn;
     }
 
@@ -67,6 +72,10 @@ public class Database {
      * @throws DataAccessException if operation fails
      */
     public void closeConnection(boolean commit) throws DataAccessException{
+        //  If already closed, do nothing.
+        if(!hasOpenConnection()) return;
+
+        logger.fine("Closing connection...");
         try {
             if(commit){
                 // commit the changes to the database
@@ -79,6 +88,7 @@ public class Database {
 
             conn.close();
             conn = null;
+            logger.fine("Connection closed.");
         } catch (SQLException ex){
             ex.printStackTrace();
             throw new DataAccessException("Unable to close database connection");
@@ -112,13 +122,14 @@ public class Database {
             for (String s : sql){
                 PreparedStatement stmt = this.conn.prepareStatement(s);
                 stmt.executeUpdate();
-                stmt.close();
             }
 
             // Commit the successful operation
             closeConnection(true);
 
         } catch (SQLException ex){
+            ex.printStackTrace();
+            logger.severe(ex.getMessage());
             throw new DataAccessException("SQL Error encountered while creating tables");
         } catch (DataAccessException ex){
             ex.printStackTrace();
@@ -236,9 +247,20 @@ public class Database {
             System.out.println("Number of authTokens: "+ i);
 
             db.closeConnection(false);
+
+
+
+
+            //  Toggle clear database
+            if(true){
+                db.createTables();
+            }
+
+
         } catch (DataAccessException | SQLException ex){
             ex.printStackTrace();
         }
+
 
 
 

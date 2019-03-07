@@ -60,6 +60,15 @@ public class DatabaseTest {
     }
 
     @Test
+    public void closeClosedConnection() throws Exception {
+        Connection conn = db.openConnection();
+        db.closeConnection(false);
+        db.closeConnection(false);
+        assert(conn.isClosed());
+        conn = null;
+    }
+
+    @Test
     public void createTables() throws Exception {
         db.createTables();
         Connection conn = db.openConnection();
