@@ -116,4 +116,23 @@ public class UserDao {
         return user;
     }
 
+    public boolean userPasswordMatchInTable(String userName, String password) throws DataAccessException{
+        String sql = "SELECT * FROM users WHERE (userName, password) = (?,?)";
+
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1,userName);
+            stmt.setString(2,password);
+
+            ResultSet rs = stmt.executeQuery();
+
+            //  If anything comes up in result set, we are good!
+            return rs.next();
+
+        } catch (SQLException ex){
+            logger.severe(ex.getMessage());
+            throw new DataAccessException("Error in verifying userName/password combination");
+        }
+    }
+
 }

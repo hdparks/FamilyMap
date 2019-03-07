@@ -18,6 +18,8 @@ public class Generator {
     private static Logger logger = Logger.getLogger("Generator");
 
     private static final int CURRENT_YEAR = 2019;
+    private static final char[] AVAILABLE_CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_".toCharArray();
+
 
     private Gson gson;
     private String[] fnames;

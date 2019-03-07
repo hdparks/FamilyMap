@@ -17,13 +17,6 @@ import java.sql.Connection;
  */
 public class PersonService implements Service<PersonRequest, PersonResponse> {
 
-    Database db;
-
-    public PersonService(){
-        db = new Database();
-    }
-
-
     /**
      * Returns a responses instance with the info of a person (or persons)
      * @param req a valid PersonRequest object
@@ -32,9 +25,11 @@ public class PersonService implements Service<PersonRequest, PersonResponse> {
     @Override
     public PersonResponse serveResponse(PersonRequest req) throws DataAccessException {
         //  Spin up database connection
-        Connection conn = db.openConnection();
+        Database db = new Database();
 
         try{
+            Connection conn = db.openConnection();
+
             //  Get authString from request
             String authString = req.authToken;
 

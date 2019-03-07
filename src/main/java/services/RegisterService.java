@@ -8,7 +8,6 @@ import domain.User;
 import requests.RegisterRequest;
 import responses.RegisterResponse;
 
-import javax.xml.crypto.Data;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.util.logging.Logger;
@@ -60,6 +59,7 @@ public class RegisterService implements Service<RegisterRequest,RegisterResponse
             UserDao userDao = new UserDao(conn);
             userDao.add(user);
 
+            //  Create accompanying Person data
             Person userPerson = new Person(
                     req.getUserName(),
                     req.getFirstName(),
@@ -70,6 +70,7 @@ public class RegisterService implements Service<RegisterRequest,RegisterResponse
                     null
             );
 
+            //  Add the Person data
             PersonDao personDao = new PersonDao(conn);
             personDao.add(userPerson);
 

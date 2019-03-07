@@ -1,10 +1,12 @@
 package database_access;
 
+import domain.Generator;
 import domain.Person;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -47,9 +49,17 @@ public class PersonDao {
      * @throws DataAccessException if operation fails
      */
     public Person add(Person person) throws DataAccessException{
-        String sql = "INSERT INTO persons (descendant, firstName, lastName, gender, fatherID, motherID, spouseID)" +
-                "VALUES (?,?,?,?,?,?,?)";
-        try{
+        //  If the Person object has no personID, add one
+        if (person.personID == null){
+            person.personID = UUID.randomUUID().toString();
+        }
+
+
+        String sql = "INSERT INTO persons (descendant, firstName, lastName, gender, fatherID, motherID, spouseID, personID)" +
+                "VALUES (?,?,?,?,?,?,?,?)";
+
+
+        try {
 
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, person.descendant);
@@ -59,14 +69,13 @@ public class PersonDao {
             stmt.setString(5, person.fatherID);
             stmt.setString(6, person.motherID);
             stmt.setString(7, person.spouseID);
+            stmt.setString(8, person.personID);
 
             stmt.executeUpdate();
 
-            //  Get last autoincrement id, add it as the ID of the person
-            person.personID = Database.getLastAutoincrementID(conn);
             return person;
 
-         } catch(SQLException ex){
+        } catch(SQLException ex){
             logger.log(Level.SEVERE,ex.getMessage());
             throw new DataAccessException("Error while adding Person data");
         }

@@ -1,6 +1,7 @@
 package database_access;
 
 import domain.Event;
+import domain.Generator;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 /**
@@ -45,6 +47,11 @@ public class EventDao {
      * @throws DataAccessException if the operation fails
      */
     public Event add(Event event) throws DataAccessException{
+        //  If no eventID supplied, generates one
+        if(event.eventID == null){
+            event.eventID = UUID.randomUUID().toString();
+        }
+
         String sql = "INSERT INTO events (eventID, descendant, personID, latitude, longitude, country, city, eventType, year) "+
                 "VALUES (?,?,?,?,?,?,?,?,?)";
         try {
@@ -61,7 +68,6 @@ public class EventDao {
 
             stmt.executeUpdate();
 
-            event.eventID = Database.getLastAutoincrementID(conn);
             return event;
 
         } catch (SQLException ex) {

@@ -49,5 +49,9 @@ public class ExchangeUtilities {
         ExchangeUtilities.writeResponseToHttpExchange(res,exchange);
     }
 
+    public static <T> T generateRequest(HttpExchange exchange, Class<T> tClass) throws IOException{
+        return JSONUtilities.createRequestInstance(exchange.getRequestBody(),tClass);
+    }
+
 
 }
