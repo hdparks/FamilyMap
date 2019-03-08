@@ -8,11 +8,8 @@ import requests.EventRequest;
 import responses.Response;
 import services.EventIDService;
 import services.EventService;
-import services.HttpRequestException;
-import services.HttpRequestParseException;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.util.logging.Logger;
 
 public class EventHandler implements HttpHandler {

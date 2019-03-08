@@ -5,10 +5,9 @@ import com.sun.net.httpserver.HttpHandler;
 
 import database_access.DataAccessException;
 
+import handlers.HttpExceptions.HttpBadRequestException;
 import requests.RegisterRequest;
 import responses.RegisterResponse;
-import services.HttpRequestException;
-import services.HttpRequestParseException;
 import services.RegisterService;
 
 import java.io.IOException;
@@ -34,17 +33,14 @@ public class RegisterHandler implements HttpHandler {
 
                 RegisterRequest req = ExchangeUtilities.generateRequest(exchange,RegisterRequest.class);
 
-                logger.entering("RegisterService","handle");
                 RegisterResponse res = registerService.serveResponse(req);
-                logger.exiting("RegisterService","handle");
-                logger.info("Successful RegisterService");
+
                 exchange.sendResponseHeaders(200,0);
                 ExchangeUtilities.writeResponseToHttpExchange(res,exchange);
 
             } else{
                 //  Expected POST request
-                exchange.sendResponseHeaders(400,0);
-                throw new HttpRequestException("Invalid request method");
+                throw new HttpBadRequestException("Invalid request method");
             }
 
 
@@ -62,7 +58,7 @@ public class RegisterHandler implements HttpHandler {
             logger.info(ex.getMessage());
 
 
-        } catch (HttpRequestParseException ex) {
+        } catch (HttpBadRequestException ex) {
             //  The request was missing some data
             exchange.sendResponseHeaders(400, 0);
 

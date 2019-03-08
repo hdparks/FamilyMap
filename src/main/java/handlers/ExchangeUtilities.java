@@ -47,10 +47,16 @@ public class ExchangeUtilities {
     public static void handleInternalError(Exception ex, HttpExchange exchange) throws IOException {
         //  Anything wrong in the actual operation bubbles here.
         //  Send an "Internal Error" header
-        exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR,0);
 
-        Response res = new Response("Internal Error: " + ex.getMessage(),false);
-        ExchangeUtilities.writeResponseToHttpExchange(res,exchange);
+        try {
+            exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR,0);
+
+            Response res = new Response("Internal Error: " + ex.getMessage(),false);
+            ExchangeUtilities.writeResponseToHttpExchange(res,exchange);
+        } catch (Exception ex2){
+            ex2.printStackTrace();
+            logger.severe("Unchecked exception");
+        }
     }
 
     public static <T> T generateRequest(HttpExchange exchange, Class<T> tClass) throws IOException{

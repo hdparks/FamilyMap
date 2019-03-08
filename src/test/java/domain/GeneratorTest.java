@@ -20,7 +20,6 @@ public class GeneratorTest {
     public void constructor() throws Exception {
         Generator generator = new Generator(db.openConnection());
 
-
     }
 
 }

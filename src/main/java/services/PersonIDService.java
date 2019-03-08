@@ -9,6 +9,7 @@ import requests.PersonIDRequest;
 import responses.PersonIDResponse;
 import responses.PersonResponse;
 
+import javax.xml.ws.http.HTTPException;
 import java.sql.Connection;
 import java.util.logging.Logger;
 
@@ -39,15 +40,24 @@ public class PersonIDService implements Service<PersonIDRequest, PersonIDRespons
             //  Get requested Person from personID
             Person person = new PersonDao(conn).getPersonByID(req.getPersonID());
 
-            if (person == null){
+            if (null == person){
                 //  No such person exists.
                 throw new HttpRequestParseException("No such person found");
             }
 
             //  Ensure person belongs to user
-            if( new AuthTokenDao(conn).getUsernameByAuthToken(req.getAuthToken())
-                    .equals(person.descendant)){
+            AuthTokenDao authTokenDao = new AuthTokenDao(conn);
+            String username = authTokenDao.getUsernameByAuthToken(req.getAuthToken());
+            //  Ensure valid username
+            if (null == username){
+                throw new HttpRequestParseException("Invalid Authentication");
+            }
 
+            logger.info("does "+person.descendant+" = " + username+ "?");
+
+            if( person.descendant.equals(username)){
+
+                //  It worked!
                 db.closeConnection(true);
                 return new PersonIDResponse(person);
 

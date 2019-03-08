@@ -1,6 +1,7 @@
 package services;
 
 import database_access.*;
+import domain.User;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,6 +15,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 public class RegisterServiceTest {
+
+    class RegisterServiceException extends Exception{
+
+    }
 
     Database db = new Database();
 
@@ -45,13 +50,17 @@ public class RegisterServiceTest {
 
 
         RegisterService service = new RegisterService();
-
+        RegisterResponse res;
         try{
-            service.serveResponse(req);
+            res = service.serveResponse(req);
         } catch (Exception ex){
             //  Should not throw an exception for a valid request.
             fail();
+            return;
         }
+
+        assert(res.success);
+        assert(res.userName.equals("username"));
 
         //  Ensure that the User, Person, Event, and AuthTokens
         //  Were created: 1 User, 31 Persons, 91 Events, 1 AuthTokens
@@ -72,5 +81,67 @@ public class RegisterServiceTest {
         assertEquals(personCount, 31);
         assertEquals(eventCount,91);
         assertEquals(authCount, 1);
+    }
+
+    @Test(expected = RegisterServiceException.class)
+    public void serveResponseMissingProperFieldsFails() throws Exception {
+        //  Set up an invalid RegisterRequest object
+        RegisterRequest req = new RegisterRequest("username","password","email",null,null,"f");
+
+        RegisterService service = new RegisterService();
+
+        try{
+            service.serveResponse(req);
+        } catch (HttpRequestParseException ex){
+            //  This is the exception we expect it to throw
+            throw new RegisterServiceException();
+        }
+    }
+
+
+    @Test(expected = RegisterServiceException.class)
+    public void serveResponseIncorrectUserGender() throws Exception {
+        //  Set up an invalid RegisterRequest object
+        RegisterRequest req = new RegisterRequest("username","password","email","firstName","lastName","something new");
+
+        RegisterService service = new RegisterService();
+
+        try{
+            service.serveResponse(req);
+        } catch (HttpRequestParseException ex){
+
+            if (ex.getMessage().contains("Gender")){
+                //  This is the exception we expect it to throw
+                throw new RegisterServiceException();
+            }
+
+        }
+    }
+
+    @Test(expected = RegisterServiceException.class)
+    public void userNameAlreadyTaken() throws Exception{
+        //  Set up a valid RegisterRequest object
+        RegisterRequest req = new RegisterRequest("username","password","email","firstName","lastName","f");
+
+        RegisterService service = new RegisterService();
+
+        //  Put a User in the database
+        User user = new User("username","password","email","firstName","lastName","f","personID");
+        Connection conn = db.openConnection();
+        UserDao userDao = new UserDao(conn);
+        userDao.add(user);
+        db.closeConnection(true );
+
+
+        //  Try adding the same user into the database.
+        try{
+            service.serveResponse(req);
+        } catch (DataAccessException ex){
+
+            if (ex.getMessage().contains("User")){
+                //  This is the exception we expect it to throw
+                throw new RegisterServiceException();
+            }
+        }
     }
 }

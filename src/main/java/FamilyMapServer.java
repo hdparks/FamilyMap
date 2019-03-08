@@ -3,7 +3,6 @@ import handlers.*;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
 public class FamilyMapServer {

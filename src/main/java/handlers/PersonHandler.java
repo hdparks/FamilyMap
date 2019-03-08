@@ -4,14 +4,12 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import java.net.HttpURLConnection;
 
-import services.HttpRequestException;
 import database_access.DataAccessException;
 
 import requests.PersonIDRequest;
 import requests.PersonRequest;
 import responses.Response;
 
-import services.HttpRequestParseException;
 import services.PersonIDService;
 import services.PersonService;
 

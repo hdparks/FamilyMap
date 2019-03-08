@@ -20,6 +20,6 @@ public class ClearService implements Service<ClearRequest, ClearResponse>{
     public ClearResponse serveResponse(ClearRequest req) throws DataAccessException {
         Database db = new Database();
         db.clearTables();
-        return new ClearResponse(true);
+        return new ClearResponse("Clear succeeded.",true);
     }
 }

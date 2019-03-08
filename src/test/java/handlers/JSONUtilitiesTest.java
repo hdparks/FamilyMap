@@ -41,20 +41,17 @@ public class JSONUtilitiesTest {
         //  Test on EventIDResponse cast as Response object,
         //  with nested Event field
 
-        expected = "{\n" +
-                "  \"event\": {\n" +
-                "    \"eventID\": \"eventId\",\n" +
-                "    \"descendant\": \"descendant\",\n" +
-                "    \"personID\": \"personID\",\n" +
-                "    \"latitude\": \"latitude\",\n" +
-                "    \"longitude\": \"longitude\",\n" +
-                "    \"country\": \"country\",\n" +
-                "    \"city\": \"city\",\n" +
-                "    \"eventType\": \"eventType\",\n" +
-                "    \"year\": 2000\n" +
-                "  },\n" +
-                "  \"success\": true\n" +
-                "}";
+        expected = "{\n"+
+            "  \"descendant\": \"descendant\",\n"
+                    +"  \"eventID\": \"eventId\",\n"
+                    +"  \"personID\": \"personID\",\n"
+                    +"  \"latitude\": \"latitude\",\n"
+                    +"  \"longitude\": \"longitude\",\n"
+                    +"  \"country\": \"country\",\n"
+                    +"  \"city\": \"city\",\n"
+                    +"  \"year\": 2000,\n"
+                    +"  \"success\": true\n"+
+        "}";
 
         res = new EventIDResponse(new Event("eventId","descendant","personID","latitude","longitude","country","city","eventType",2000));
         actual = JSONUtilities.generateResponseJSON(res);

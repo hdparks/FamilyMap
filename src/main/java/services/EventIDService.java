@@ -5,6 +5,7 @@ import database_access.DataAccessException;
 import database_access.Database;
 import database_access.EventDao;
 import domain.Event;
+import handlers.AuthUtilities;
 import requests.EventIDRequest;
 import responses.EventIDResponse;
 
@@ -26,6 +27,10 @@ public class EventIDService implements Service<EventIDRequest, EventIDResponse> 
         //  Parse request
         if (req.getAuthToken() == null || req.getEventID() == null){
             throw new HttpRequestParseException("Invalid parameters: missing data");
+        }
+
+        if (!AuthUtilities.authTokenIsValid(req.getAuthToken())){
+            throw new HttpRequestParseException("Authentication failed");
         }
 
         Database db = new Database();

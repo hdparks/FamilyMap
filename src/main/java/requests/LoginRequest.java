@@ -20,7 +20,7 @@ public class LoginRequest implements IRequest {
      * @param userName the userName of the user logging in
      * @param password the password of the user logging in
      */
-    LoginRequest(String userName, String password){
+    public LoginRequest(String userName, String password){
         this.userName = userName;
         this.password = password;
     }

@@ -6,10 +6,8 @@ import database_access.DataAccessException;
 import requests.ClearRequest;
 import responses.ClearResponse;
 import services.ClearService;
-import services.HttpRequestException;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.util.logging.Logger;
 
 public class ClearHandler implements HttpHandler {

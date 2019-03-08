@@ -4,8 +4,14 @@ INSERT INTO users (userName, password, email, firstName, lastName, gender, perso
 INSERT INTO persons (personID, descendant, firstName, lastName, gender, fatherID, motherID, spouseID)
             VALUES ('100', 'user', 'first','last','f',null,null,null);
 
+INSERT INTO persons (personID, descendant, firstName, lastName, gender, fatherID, motherID, spouseID)
+            VALUES ('200', 'NotUser', 'first','last','f',null,null,null);
+
 INSERT INTO events (eventID, descendant, personID, latitude, longitude, country, city, eventType, year)
             VALUES ('1','user','100',10,10,'USA','Provo','Birthday',2000);
+
+INSERT INTO events (eventID, descendant, personID, latitude, longitude, country, city, eventType, year)
+            VALUES ('2','user2','1300',10,10,'USA','Provo','Birthday',2000);
 
 INSERT INTO authTokens (userName, authToken)
             VALUES ('user','1101010');

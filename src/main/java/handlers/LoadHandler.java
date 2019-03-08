@@ -5,7 +5,6 @@ import com.sun.net.httpserver.HttpHandler;
 import database_access.DataAccessException;
 import requests.LoadRequest;
 import responses.LoadResponse;
-import services.HttpRequestException;
 import services.LoadService;
 
 import java.io.IOException;

@@ -24,7 +24,15 @@ public class LoadService implements Service<LoadRequest, LoadResponse>{
      * @return res successful Response success, failing Response object on failure
      */
     @Override
-    public LoadResponse serveResponse(LoadRequest req) throws DataAccessException {
+    public LoadResponse serveResponse(LoadRequest req) throws DataAccessException, HttpRequestParseException {
+        //  Parse request
+        if (    req.getEvents()  == null ||
+                req.getPersons() == null ||
+                req.getUsers()   == null){
+            throw new HttpRequestParseException("Invalid parameters: missing data");
+        }
+
+
         Database db = new Database();
         try {
             //  Spin up database connection

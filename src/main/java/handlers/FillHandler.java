@@ -8,9 +8,6 @@ import requests.FillRequest;
 import responses.FillResponse;
 import services.FillService;
 
-import services.HttpRequestException;
-import services.HttpRequestParseException;
-
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.logging.Logger;

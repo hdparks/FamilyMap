@@ -2,7 +2,6 @@ package handlers;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import services.HttpRequestException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,15 +19,17 @@ public class FileRequestHandler implements HttpHandler {
 
             if (exchange.getRequestMethod().toUpperCase().equals("GET")){
                 //  Parse path
-                String path = exchange.getHttpContext().getPath();
+                String path = exchange.getRequestURI().toString();
 
                 //  empty path defaults to /index.html
                 if (path.equals("/")) path = "/index.html";
 
+                logger.info(path);
+
                 //  Try to get the requested file
                 File requestedFile = new File("familymapserver/web" + path);
 
-                if (requestedFile.exists()){
+                if (requestedFile.isFile()){
                     //  Good to go!
                     exchange.sendResponseHeaders(200,0);
                     ExchangeUtilities.writeFileToOutputStream(requestedFile,exchange.getResponseBody());
@@ -37,7 +38,7 @@ public class FileRequestHandler implements HttpHandler {
 
                 } else {
                     //  Throw FileNotFound
-                    throw new FileNotFoundException();
+                    throw new FileNotFoundException("File not found");
                 }
 
 

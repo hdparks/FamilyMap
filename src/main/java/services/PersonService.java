@@ -45,7 +45,7 @@ public class PersonService implements Service<PersonRequest, PersonResponse> {
             String username = new AuthTokenDao(conn).getUsernameByAuthToken(authString);
 
             //  If username is null, authToken did not match
-            if (username.isEmpty()){
+            if (null == username){
                 throw new HttpRequestParseException("Authentication token not recognized");
             }
 

@@ -1,7 +1,5 @@
 package domain;
 
-import services.HttpRequestParseException;
-
 import java.util.Objects;
 
 /**

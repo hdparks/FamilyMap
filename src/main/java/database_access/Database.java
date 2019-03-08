@@ -16,10 +16,15 @@ import java.util.logging.Logger;
 public class Database {
 
     private static Logger logger = Logger.getLogger("Database");
+
+
+
     /**
      * A Connection object
      */
     private static Connection conn;
+
+
 
     static {
         try{
@@ -30,6 +35,9 @@ public class Database {
             e.printStackTrace();
         }
     }
+
+
+
 
     /**
      *
@@ -66,6 +74,10 @@ public class Database {
         return conn;
     }
 
+
+
+
+
     /**
      * Closes the current Connection object, with option to commit or rollback the connection
      * @param commit Whether or not to commit (vs rollback) the effects of the connection
@@ -94,6 +106,9 @@ public class Database {
             throw new DataAccessException("Unable to close database connection");
         }
     }
+
+
+
 
     /**
      * Reads in the table data from db/dbschema.txt file, populates Database with given data
@@ -138,6 +153,9 @@ public class Database {
         }
     }
 
+
+
+
     /**
      * Clears all data from all tables
      * @throws DataAccessException if operation fails
@@ -162,6 +180,9 @@ public class Database {
             throw new DataAccessException("SQL error in clearing tables: \n" + ex.getMessage());
         }
     }
+
+
+
 
     /**
      * Fills Database with data defined in db/dbfiller.txt file
@@ -205,13 +226,10 @@ public class Database {
         }
 
 
+
     }
 
-    public static String getLastAutoincrementID(Connection conn) throws SQLException {
-        ResultSet rs = conn.createStatement().executeQuery("SELECT last_insert_rowid()");
-        rs.next();
-        return rs.getString(1);
-    }
+
 
     public static void main(String[] args){
         // Show me everything in the database

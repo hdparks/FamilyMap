@@ -42,7 +42,7 @@ public class RegisterService implements Service<RegisterRequest,RegisterResponse
 
         //  Parse gender
         if (!req.getGender().equals("m") && !req.getGender().equals("f")){
-            throw new HttpRequestParseException("Gender must be \"m\" or \"f\"");
+            throw new HttpRequestParseException("Gender must be m or f");
         }
 
 
@@ -103,7 +103,7 @@ public class RegisterService implements Service<RegisterRequest,RegisterResponse
             //  Undo any changes
             db.closeConnection(false);
 
-            logger.severe(ex.getMessage());
+            logger.severe("Data access exception: " + ex.getMessage());
 
             throw ex;
 
@@ -113,7 +113,13 @@ public class RegisterService implements Service<RegisterRequest,RegisterResponse
             logger.severe(ex.getMessage());
 
             throw new DataAccessException("Error generating ancestor data.");
-        } finally {
+        } catch (Exception ex){
+            ex.printStackTrace();
+            logger.severe("Uncaught exception");
+            throw ex;
+        }
+
+        finally {
             //  finally
             //  Always close connection
             db.closeConnection(false);

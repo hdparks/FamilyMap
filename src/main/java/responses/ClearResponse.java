@@ -5,7 +5,7 @@ package responses;
  */
 public class ClearResponse extends Response {
 
-    public ClearResponse(boolean success) {
-        super(true);
+    public ClearResponse(String message, boolean success) {
+        super(message,true);
     }
 }

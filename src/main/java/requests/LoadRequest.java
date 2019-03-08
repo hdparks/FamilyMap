@@ -23,6 +23,8 @@ public class LoadRequest implements IRequest {
      */
     private Event[] events;
 
+
+
     public User[] getUsers() {
         return users;
     }

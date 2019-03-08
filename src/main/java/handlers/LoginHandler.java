@@ -5,8 +5,6 @@ import com.sun.net.httpserver.HttpHandler;
 import database_access.DataAccessException;
 import requests.LoginRequest;
 import responses.LoginResponse;
-import services.HttpRequestException;
-import services.HttpRequestParseException;
 import services.LoginService;
 
 import java.io.IOException;
