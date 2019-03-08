@@ -51,6 +51,7 @@ public class LoginService implements Service<LoginRequest,LoginResponse>{
             AuthTokenDao authTokenDao = new AuthTokenDao(conn);
             authTokenDao.add(authToken);
 
+            db.closeConnection(true);
             return new LoginResponse(authToken.authToken, authToken.userName, user.personID);
 
         }catch (DataAccessException ex){

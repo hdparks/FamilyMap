@@ -19,13 +19,20 @@ public class ClearService implements Service<ClearRequest, ClearResponse>{
      */
     @Override
     public ClearResponse serveResponse(ClearRequest req) throws HttpInternalServerError {
+        Database db = new Database();
         try {
-            Database db = new Database();
+
             db.clearTables();
             return new ClearResponse("Clear succeeded.", true);
 
         } catch (DataAccessException ex){
+
             throw new HttpInternalServerError(ex.getMessage());
+
+        } finally {
+
+            db.hardClose();
+
         }
     }
 }

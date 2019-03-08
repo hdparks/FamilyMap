@@ -8,6 +8,7 @@ import database_access.DataAccessException;
 import database_access.Database;
 import database_access.UserDao;
 
+import java.sql.Connection;
 import java.util.logging.Logger;
 
 
@@ -17,10 +18,11 @@ public class AuthUtilities {
 
     public static String getAuthToken(HttpExchange exchange){
         Headers headers = exchange.getRequestHeaders();
+
         if (headers.containsKey("Authorization")){
             return headers.getFirst("Authorization");
         }
-        logger.severe("Authentication token not found");
+
         return null;
     }
 
@@ -31,20 +33,11 @@ public class AuthUtilities {
      * @return whether the token is valid or not
      * @throws DataAccessException if operation fails
      */
-    public static boolean authTokenIsValid(String authToken) throws DataAccessException {
-        //  If there is no authToken string, we fail to authenticate
-        if(authToken == null){
-            return false;
-        }
+    public static boolean authTokenIsValid(String authToken, Connection conn) throws DataAccessException {
 
-        Database db = new Database();
+        AuthTokenDao authTokenDao = new AuthTokenDao(conn);
 
-        AuthTokenDao authTokenDao = new AuthTokenDao(db.openConnection());
-
-        //  If a non-null userName is returned, the authToken was valid.
         boolean valid = (authTokenDao.getUsernameByAuthToken(authToken) != null);
-
-        db.closeConnection(true);
 
         if (!valid) logger.severe("Authentication failed");
 
@@ -52,28 +45,11 @@ public class AuthUtilities {
 
     }
 
-    /**
-     * Chains authentication methods into one method, for quick and easy use
-     * @param exchange an HttpExchange object
-     * @return whether the authentication was valid or not
-     * @throws DataAccessException if the operation fails
-     */
-    public static boolean isValidAuthentication(HttpExchange exchange) throws DataAccessException {
+    public static boolean isValidUsername(String userName, Connection conn) throws DataAccessException {
 
-        return authTokenIsValid(getAuthToken(exchange));
+        UserDao userDao = new UserDao(conn);
 
-    }
-
-    public static boolean isValidUsername(String userName) throws DataAccessException {
-
-        Database db = new Database();
-
-        UserDao userDao = new UserDao(db.openConnection());
-
-        //  GetUserByName returns null if no such user is found.
         boolean valid = userDao.getUserByName(userName) != null;
-
-        db.closeConnection(false);
 
         return valid;
     }

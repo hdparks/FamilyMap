@@ -53,9 +53,11 @@ public class FillService implements Service<FillRequest, FillResponse> {
 
         Database db = new Database();
         try {
+            //  Spin up database connection
+            Connection conn = db.openConnection();
 
             //  Parse username
-            if (!AuthUtilities.isValidUsername(username)){
+            if (!AuthUtilities.isValidUsername(username, conn)){
                 throw new HttpBadRequestException("Invalid parameter: username");
             }
 
@@ -65,8 +67,6 @@ public class FillService implements Service<FillRequest, FillResponse> {
             }
 
 
-            //  Spin up database connection
-            Connection conn = db.openConnection();
 
             //  Delete user ancestry data
             PersonDao personDao = new PersonDao(conn);

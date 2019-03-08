@@ -34,13 +34,13 @@ public class EventIDService implements Service<EventIDRequest, EventIDResponse> 
 
         Database db = new Database();
         try {
+            Connection conn = db.openConnection();
             //  Authenticate
-            if (!AuthUtilities.authTokenIsValid(req.getAuthToken())){
+            if (!AuthUtilities.authTokenIsValid(req.getAuthToken(), conn)){
                 throw new HttpAuthorizationException("Authentication failed");
             }
 
 
-            Connection conn = db.openConnection();
             Event event = new EventDao(conn).getEventByEventID(req.getEventID());
 
             if (event == null) throw new HttpBadRequestException("Invalid parameters: eventID not found");

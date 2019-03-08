@@ -54,6 +54,11 @@ public class FillHandler implements HttpHandler {
             exchange.sendResponseHeaders(500,0);
             ExchangeUtilities.sendErrorBody(ex, exchange);
 
+        }  catch (Exception ex){
+            ex.printStackTrace();
+            exchange.sendResponseHeaders(500,0);
+            ExchangeUtilities.sendErrorBody(ex,exchange);
+
         } finally{
 
             exchange.close();

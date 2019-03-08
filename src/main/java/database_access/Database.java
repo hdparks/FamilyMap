@@ -61,6 +61,7 @@ public class Database {
             closeConnection(false);
             throw new DataAccessException("A previous connection has not been closed. Close previous connection.");
         }
+
         try {
             final String CONNECTION_URL = "jdbc:sqlite:db" + File.separator + "familymapdatabase.sqlite";
 
@@ -73,7 +74,6 @@ public class Database {
             ex.printStackTrace();
             throw new DataAccessException("Unable to open connection to database");
         }
-        logger.fine("Connection opened.");
         return conn;
     }
 
@@ -234,9 +234,13 @@ public class Database {
 
     public void hardClose() throws HttpInternalServerError{
         try {
+
             closeConnection(false);
+
         } catch (DataAccessException ex){
+
             throw new HttpInternalServerError(ex.getMessage());
+
         }
     }
 

@@ -109,6 +109,8 @@ public class RegisterService implements Service<RegisterRequest,RegisterResponse
         } catch (DataAccessException | FileNotFoundException ex){
 
             throw new HttpInternalServerError(ex.getMessage());
+        } finally {
+            db.hardClose();
         }
     }
 }

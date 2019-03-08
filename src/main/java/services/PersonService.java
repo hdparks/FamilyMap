@@ -5,6 +5,7 @@ import database_access.DataAccessException;
 import database_access.Database;
 import database_access.PersonDao;
 import domain.Person;
+import handlers.AuthUtilities;
 import handlers.HttpExceptions.HttpAuthorizationException;
 import handlers.HttpExceptions.HttpBadRequestException;
 import handlers.HttpExceptions.HttpInternalServerError;
@@ -33,18 +34,24 @@ public class PersonService implements Service<PersonRequest, PersonResponse> {
     public PersonResponse serveResponse(PersonRequest req) throws HttpInternalServerError, HttpBadRequestException, HttpAuthorizationException {
         //  Parse request
         if (req.getAuthToken() == null){
-            throw new HttpBadRequestException("Invalid parameters");
+            throw new HttpBadRequestException("Invalid parameters: missing data");
         }
 
         //  Spin up database connection
         Database db = new Database();
 
         try {
-
             //  Authenticate
             Connection conn = db.openConnection();
+
+
+            if (!AuthUtilities.authTokenIsValid(req.getAuthToken(), conn)){
+                throw new HttpAuthorizationException("Authentication failed.");
+            }
+
             String authString = req.getAuthToken();
             String username = new AuthTokenDao(conn).getUsernameByAuthToken(authString);
+
 
             //  If username is null, authToken did not match any user
             if (null == username) {
@@ -53,6 +60,8 @@ public class PersonService implements Service<PersonRequest, PersonResponse> {
 
             //  Get person list
             Person[] personList = new PersonDao(conn).getPersonListByUser(username);
+
+
             db.closeConnection(true);
             return new PersonResponse(personList);
 

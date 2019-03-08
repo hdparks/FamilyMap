@@ -38,18 +38,19 @@ public class EventService implements Service<EventRequest, EventResponse> {
 
         Database db = new Database();
         try {
+            Connection conn = db.openConnection();
+
             //  Authenticate
-            if (!AuthUtilities.authTokenIsValid(req.getAuthToken())){
+            if (!AuthUtilities.authTokenIsValid(req.getAuthToken(),conn)){
                 throw new HttpAuthorizationException("Authentication failed.");
             }
 
             //  Spin up a database connection
-            Connection conn = db.openConnection();
             String userName = new AuthTokenDao(conn).getUsernameByAuthToken(req.getAuthToken());
             User user = new UserDao(conn).getUserByName(userName);
 
             //  Parse user
-            if (user == null) {
+            if (null == user) {
                 throw new HttpBadRequestException("No user found");
             }
 
