@@ -3,6 +3,9 @@ package handlers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import database_access.DataAccessException;
+import handlers.HttpExceptions.HttpAuthorizationException;
+import handlers.HttpExceptions.HttpBadRequestException;
+import handlers.HttpExceptions.HttpInternalServerError;
 import requests.LoadRequest;
 import responses.LoadResponse;
 import services.LoadService;
@@ -23,39 +26,33 @@ public class LoadHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        logger.info("Handling /load");
         try {
             //  Expect POST request
-            if (exchange.getRequestMethod().toUpperCase().equals("POST")){
-
-                LoadRequest req = ExchangeUtilities.generateRequest(exchange,LoadRequest.class);
-                logger.info("Request has "+req.getEvents().length+ " events, "+req.getPersons().length+" persons, "+req.getUsers().length+" users");
-                //  Service parses the request, so we go ahead
-                LoadResponse res = loadService.serveResponse(req);
-
-                //  Send successful response
-                exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK,0);
-                ExchangeUtilities.writeResponseToHttpExchange(res,exchange);
-
-            } else {
-                exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST,0);
-                throw new HttpRequestException("Invalid request method");
+            if (!exchange.getRequestMethod().toUpperCase().equals("POST")) {
+                throw new HttpBadRequestException("Invalid request method");
             }
 
-        } catch (HttpRequestException ex) {
-            ExchangeUtilities.handleRequestError(ex,exchange);
-            logger.severe(ex.getMessage());
+            LoadRequest req = ExchangeUtilities.generateRequest(exchange, LoadRequest.class);
 
-        } catch (DataAccessException ex) {
-            exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR,0);
-            ExchangeUtilities.handleInternalError(ex,exchange);
-            logger.severe(ex.getMessage());
-        } catch (Exception ex){
-            ex.printStackTrace();
-            logger.severe("Unhandled Exception");
+            LoadResponse res = loadService.serveResponse(req);
+
+            exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+            ExchangeUtilities.writeResponseToHttpExchange(res, exchange);
+
+
+        } catch (HttpBadRequestException ex) {
+
+            exchange.sendResponseHeaders(400, 0);
+            ExchangeUtilities.sendErrorBody(ex, exchange);
+
+        } catch (HttpInternalServerError ex) {
+
+            exchange.sendResponseHeaders(500, 0);
+            ExchangeUtilities.sendErrorBody(ex, exchange);
+
+        } finally{
+            exchange.close();
+
         }
-        exchange.close();
-        logger.severe("/load handled");
-
     }
 }

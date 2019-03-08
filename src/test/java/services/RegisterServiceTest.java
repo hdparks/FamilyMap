@@ -2,6 +2,8 @@ package services;
 
 import database_access.*;
 import domain.User;
+import handlers.HttpExceptions.HttpBadRequestException;
+import handlers.HttpExceptions.HttpInternalServerError;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -92,7 +94,7 @@ public class RegisterServiceTest {
 
         try{
             service.serveResponse(req);
-        } catch (HttpRequestParseException ex){
+        } catch (HttpBadRequestException ex){
             //  This is the exception we expect it to throw
             throw new RegisterServiceException();
         }
@@ -108,7 +110,7 @@ public class RegisterServiceTest {
 
         try{
             service.serveResponse(req);
-        } catch (HttpRequestParseException ex){
+        } catch (HttpBadRequestException ex){
 
             if (ex.getMessage().contains("Gender")){
                 //  This is the exception we expect it to throw
@@ -136,7 +138,7 @@ public class RegisterServiceTest {
         //  Try adding the same user into the database.
         try{
             service.serveResponse(req);
-        } catch (DataAccessException ex){
+        } catch (HttpInternalServerError ex){
 
             if (ex.getMessage().contains("User")){
                 //  This is the exception we expect it to throw

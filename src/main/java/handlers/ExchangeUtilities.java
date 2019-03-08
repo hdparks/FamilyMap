@@ -33,33 +33,13 @@ public class ExchangeUtilities {
         Files.copy(file.toPath(), os);
     }
 
-    public static void handleRequestError(Exception ex, HttpExchange exchange) throws IOException{
+    public static void sendErrorBody(Exception ex, HttpExchange exchange) throws IOException{
         //  Anything wrong with the request bubbles here
         Response res = new Response(ex.getMessage(),false);
         ExchangeUtilities.writeResponseToHttpExchange(res,exchange);
     }
 
-    /**
-     * Handles an internal error ex, formatting the response object correctly
-     * @param ex the exception
-     * @param exchange the HttpExchange object to be acted upon.
-     */
-    public static void handleInternalError(Exception ex, HttpExchange exchange) throws IOException {
-        //  Anything wrong in the actual operation bubbles here.
-        //  Send an "Internal Error" header
-
-        try {
-            exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR,0);
-
-            Response res = new Response("Internal Error: " + ex.getMessage(),false);
-            ExchangeUtilities.writeResponseToHttpExchange(res,exchange);
-        } catch (Exception ex2){
-            ex2.printStackTrace();
-            logger.severe("Unchecked exception");
-        }
-    }
-
-    public static <T> T generateRequest(HttpExchange exchange, Class<T> tClass) throws IOException{
+    public static <T> T generateRequest(HttpExchange exchange, Class<T> tClass) {
         T tObj = JSONUtilities.createRequestInstance(exchange.getRequestBody(),tClass);
         if (tObj == null) logger.severe("Null object here");
         return tObj;

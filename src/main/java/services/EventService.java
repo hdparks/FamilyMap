@@ -3,9 +3,14 @@ package services;
 import database_access.*;
 import domain.Event;
 import domain.User;
+import handlers.AuthUtilities;
+import handlers.HttpExceptions.HttpAuthorizationException;
+import handlers.HttpExceptions.HttpBadRequestException;
+import handlers.HttpExceptions.HttpInternalServerError;
 import requests.EventRequest;
 import responses.EventResponse;
 
+import javax.xml.crypto.Data;
 import java.sql.Connection;
 import java.util.logging.Logger;
 
@@ -24,22 +29,28 @@ public class EventService implements Service<EventRequest, EventResponse> {
      * @return a valid EventResponse object if successful, a failing one if not.
      */
     @Override
-    public EventResponse serveResponse(EventRequest req) throws DataAccessException, HttpRequestParseException {
+    public EventResponse serveResponse(EventRequest req) throws HttpBadRequestException, HttpInternalServerError, HttpAuthorizationException {
         //  Parse request
         if (req.getAuthToken() == null){
-            throw new HttpRequestParseException("Invalid parameters: missing data");
+            throw new HttpBadRequestException("Invalid parameters: missing data");
         }
+
 
         Database db = new Database();
         try {
+            //  Authenticate
+            if (!AuthUtilities.authTokenIsValid(req.getAuthToken())){
+                throw new HttpAuthorizationException("Authentication failed.");
+            }
+
             //  Spin up a database connection
             Connection conn = db.openConnection();
             String userName = new AuthTokenDao(conn).getUsernameByAuthToken(req.getAuthToken());
             User user = new UserDao(conn).getUserByName(userName);
 
             //  Parse user
-            if (user == null){
-                throw new HttpRequestParseException("Authentication failed");
+            if (user == null) {
+                throw new HttpBadRequestException("No user found");
             }
 
             Event[] events = new EventDao(conn).getEventsByDescendant(user.userName);
@@ -47,8 +58,12 @@ public class EventService implements Service<EventRequest, EventResponse> {
             db.closeConnection(true);
             return new EventResponse(events);
 
+        }catch (DataAccessException ex){
+
+            throw new HttpInternalServerError(ex.getMessage());
+
         } finally {
-            db.closeConnection(false);
+            db.hardClose();
         }
     }
 }

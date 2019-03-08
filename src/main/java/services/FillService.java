@@ -5,9 +5,13 @@ import domain.Generator;
 import domain.Person;
 import domain.User;
 import handlers.AuthUtilities;
+import handlers.HttpExceptions.HttpAuthorizationException;
+import handlers.HttpExceptions.HttpBadRequestException;
+import handlers.HttpExceptions.HttpInternalServerError;
 import requests.FillRequest;
 import responses.FillResponse;
 
+import javax.xml.crypto.Data;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.util.logging.Logger;
@@ -30,51 +34,37 @@ public class FillService implements Service<FillRequest, FillResponse> {
      * @return a valid FillResponse if successful, a generic error Response if not
      */
     @Override
-    public FillResponse serveResponse(FillRequest req) throws DataAccessException, HttpRequestParseException {
-        //  Get username
+    public FillResponse serveResponse(FillRequest req) throws HttpInternalServerError, HttpBadRequestException {
+
+
         String username;
         int generations = 4;
-
-        String uri = req.getPath();
-
-        uri = uri.substring("/fill/".length());
+        String uri = req.getPath().substring("/fill/".length());
 
         //  Parse path to get correct username/generations
         if(uri.contains("/")){
 
             String[] pathSplit = uri.split("/");
-
             username = pathSplit[0];
+            generations = Integer.parseInt(pathSplit[1]);
 
-            try{
-                generations = Integer.parseInt(pathSplit[1]);
-            } catch (NumberFormatException ex){
-                logger.info("Invalid generations parameter");
-                throw new HttpRequestParseException("Invalid parameter: generations");
-            }
+        } else { username = uri; }
 
-
-        } else {
-
-            username = uri;
-
-        }
-
-        logger.info("validating username "+username);
-        //  Parse username
-        if (!AuthUtilities.isValidUsername(username)){
-            throw new HttpRequestParseException("Invalid parameter: username");
-        }
-
-        //  Parse generations
-        if (generations < 1){
-            throw new HttpRequestParseException("Invalid parameter: generations");
-        }
-
-        logger.fine("/fill endpoint with user: "+username+", generations: "+generations);
 
         Database db = new Database();
         try {
+
+            //  Parse username
+            if (!AuthUtilities.isValidUsername(username)){
+                throw new HttpBadRequestException("Invalid parameter: username");
+            }
+
+            //  Parse generations
+            if (generations < 1){
+                throw new HttpBadRequestException("Invalid parameter: generations");
+            }
+
+
             //  Spin up database connection
             Connection conn = db.openConnection();
 
@@ -92,23 +82,23 @@ public class FillService implements Service<FillRequest, FillResponse> {
 
             //  Generate lots of things:
             Generator generator = new Generator(conn);
-            generator.generateGenerations(person,generations);
+            generator.generateGenerations(person, generations);
 
             db.closeConnection(true);
 
-            String responseMessage = "Successfully added "+generator.personsAdded+" persons and "+generator.eventsAdded+" events to the database.";
+            String responseMessage = "Successfully added " + generator.personsAdded + " persons and " + generator.eventsAdded + " events to the database.";
             return new FillResponse(responseMessage, true);
 
-        } catch (FileNotFoundException ex){
-            logger.severe(ex.getMessage());
-            throw new DataAccessException("Family generator file not found");
+        } catch (DataAccessException | FileNotFoundException ex){
 
-        } catch (Exception ex){
-            ex.printStackTrace();
-            throw ex;
-        }
-                finally {
-            db.closeConnection(false);
+            throw new HttpInternalServerError(ex.getMessage());
+
+        }catch (NumberFormatException ex){
+
+            throw new HttpBadRequestException(ex.getMessage());
+
+        } finally {
+            db.hardClose();
         }
     }
 }

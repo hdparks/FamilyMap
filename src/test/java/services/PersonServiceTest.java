@@ -5,6 +5,8 @@ import database_access.DataAccessException;
 import database_access.Database;
 import domain.AuthToken;
 import domain.Person;
+import handlers.HttpExceptions.HttpAuthorizationException;
+import handlers.HttpExceptions.HttpBadRequestException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -70,7 +72,7 @@ public class PersonServiceTest {
         try {
             PersonResponse res = service.serveResponse(req);
 
-        } catch (HttpRequestParseException ex){
+        } catch (HttpAuthorizationException ex){
             if (ex.getMessage().contains("Auth")){
                 //  This is the exception we expect for faulty authToken
                 throw new PersonServiceException();

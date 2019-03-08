@@ -3,9 +3,8 @@ package handlers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
-import database_access.DataAccessException;
-
 import handlers.HttpExceptions.HttpBadRequestException;
+import handlers.HttpExceptions.HttpInternalServerError;
 import requests.RegisterRequest;
 import responses.RegisterResponse;
 import services.RegisterService;
@@ -28,7 +27,9 @@ public class RegisterHandler implements HttpHandler {
     public void handle(HttpExchange exchange) throws IOException {
         logger.info("handling /register");
         try{
+
             //  Expect a POST request
+
             if(exchange.getRequestMethod().toUpperCase().equals("POST")){
 
                 RegisterRequest req = ExchangeUtilities.generateRequest(exchange,RegisterRequest.class);
@@ -38,42 +39,26 @@ public class RegisterHandler implements HttpHandler {
                 exchange.sendResponseHeaders(200,0);
                 ExchangeUtilities.writeResponseToHttpExchange(res,exchange);
 
+
             } else{
                 //  Expected POST request
                 throw new HttpBadRequestException("Invalid request method");
             }
 
+        } catch (HttpBadRequestException ex){
+            exchange.sendResponseHeaders(400,0);
+            ExchangeUtilities.sendErrorBody(ex,exchange);
 
-        } catch (HttpRequestException ex){
-            //  Something went wrong with the request
-            ExchangeUtilities.handleRequestError(ex,exchange);
-            logger.severe(ex.getMessage());
-
-
-        } catch (DataAccessException ex){
-            //  Something went wrong server-side
+        } catch (HttpInternalServerError ex){
             exchange.sendResponseHeaders(500,0);
-            ExchangeUtilities.handleInternalError(ex,exchange);
-            exchange.getResponseBody().close();
-            logger.info(ex.getMessage());
-
-
-        } catch (HttpBadRequestException ex) {
-            //  The request was missing some data
-            exchange.sendResponseHeaders(400, 0);
-
-            ExchangeUtilities.handleRequestError(ex, exchange);
-            exchange.getResponseBody().close();
-            logger.info(ex.getMessage());
+            ExchangeUtilities.sendErrorBody(ex,exchange);
 
         } catch (Exception ex){
             ex.printStackTrace();
-            logger.info(ex.getMessage());
-            throw ex;
+
         } finally {
-            //  And after everything,
             exchange.close();
-            logger.info("End of RegisterHandler");
+
         }
 
     }

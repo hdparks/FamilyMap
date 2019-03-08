@@ -1,6 +1,7 @@
 package services;
 
 import database_access.Database;
+import handlers.HttpExceptions.HttpBadRequestException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -60,7 +61,7 @@ public class PersonIDServiceTest {
         try {
             service.serveResponse(req);
 
-        } catch (HttpRequestParseException ex){
+        } catch (HttpBadRequestException ex){
             ex.printStackTrace();
             if (ex.getMessage().contains("Auth")){
                 //  This is the error we hoped for
@@ -80,7 +81,7 @@ public class PersonIDServiceTest {
         try {
             service.serveResponse(req);
 
-        } catch (HttpRequestParseException ex){
+        } catch (HttpBadRequestException ex){
             if (ex.getMessage().contains("No such person found")){
                 //  This is the error we hoped for
                 throw new PersonIDServiceException();
@@ -99,7 +100,7 @@ public class PersonIDServiceTest {
         try {
             service.serveResponse(req);
 
-        } catch (HttpRequestParseException ex){
+        } catch (HttpBadRequestException ex){
             ex.printStackTrace();
             if (ex.getMessage().contains("Person does not belong to current User")){
                 //  This is the error we hoped for

@@ -4,6 +4,8 @@ import database_access.*;
 import domain.Event;
 import domain.Person;
 import domain.User;
+import handlers.HttpExceptions.HttpBadRequestException;
+import handlers.HttpExceptions.HttpInternalServerError;
 import requests.LoadRequest;
 import responses.LoadResponse;
 
@@ -24,12 +26,13 @@ public class LoadService implements Service<LoadRequest, LoadResponse>{
      * @return res successful Response success, failing Response object on failure
      */
     @Override
-    public LoadResponse serveResponse(LoadRequest req) throws DataAccessException, HttpRequestParseException {
+    public LoadResponse serveResponse(LoadRequest req) throws HttpBadRequestException, HttpInternalServerError {
+
         //  Parse request
         if (    req.getEvents()  == null ||
                 req.getPersons() == null ||
                 req.getUsers()   == null){
-            throw new HttpRequestParseException("Invalid parameters: missing data");
+            throw new HttpBadRequestException("Invalid parameters: missing data");
         }
 
 
@@ -74,18 +77,15 @@ public class LoadService implements Service<LoadRequest, LoadResponse>{
             String resMessage = "Successfully added "+usersAdded+" users, "
                     + personsAdded + " persons, and " + eventsAdded + " events to the database.";
 
-            logger.fine(resMessage);
 
             return new LoadResponse(resMessage, true);
 
         } catch (DataAccessException ex){
-            db.closeConnection(false);
-            logger.severe(ex.getMessage());
-            throw ex;
+
+            throw new HttpInternalServerError(ex.getMessage());
 
         } finally {
-            //  Close connection just to be sure
-            db.closeConnection(false);
+            db.hardClose();
         }
     }
 }

@@ -3,6 +3,9 @@ package handlers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import database_access.DataAccessException;
+import handlers.HttpExceptions.HttpAuthorizationException;
+import handlers.HttpExceptions.HttpBadRequestException;
+import handlers.HttpExceptions.HttpInternalServerError;
 import requests.LoginRequest;
 import responses.LoginResponse;
 import services.LoginService;
@@ -25,47 +28,37 @@ public class LoginHandler implements HttpHandler {
     public void handle(HttpExchange exchange) throws IOException {
         try{
            //   Expect POST request
-           if (exchange.getRequestMethod().toUpperCase().equals("POST")){
-
-               LoginRequest req = ExchangeUtilities.generateRequest(exchange, LoginRequest.class);
-
-               //   Parse LoginRequest
-               if(  req.getPassword() == null ||
-                    req.getUserName() == null){
-
-                   throw new HttpRequestException("Invalid request to /login : missing data");
-               }
-
-               LoginResponse res = loginService.serveResponse(req);
-
-               exchange.sendResponseHeaders(200,0);
-               ExchangeUtilities.writeResponseToHttpExchange(res,exchange);
-
-           } else {
-               //   Expected POST request
-               exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST,0);
-               throw new HttpRequestException("Invalid response method");
+           if (!exchange.getRequestMethod().toUpperCase().equals("POST")){
+               throw new HttpBadRequestException("Invalid response method");
            }
 
-        } catch (HttpRequestException e) {
-            //  Handles any request errors
-            ExchangeUtilities.handleRequestError(e,exchange);
-            logger.severe(e.getMessage());
+           LoginRequest req = ExchangeUtilities.generateRequest(exchange, LoginRequest.class);
 
-        } catch (DataAccessException e) {
-            //  Handles any bubbling internal errors
-            exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR,0);
-            ExchangeUtilities.handleInternalError(e,exchange);
-            logger.severe(e.getMessage());
+           LoginResponse res = loginService.serveResponse(req);
 
-        } catch (HttpRequestParseException ex) {
-            //  Handles parse errors
-            exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST,0);
-            ExchangeUtilities.handleRequestError(ex,exchange);
-            logger.severe(ex.getMessage());
+           exchange.sendResponseHeaders(200,0);
+           ExchangeUtilities.writeResponseToHttpExchange(res,exchange);
+
+
+        } catch (HttpBadRequestException ex) {
+
+            exchange.sendResponseHeaders(400, 0);
+            ExchangeUtilities.sendErrorBody(ex, exchange);
+
+        } catch (HttpInternalServerError ex){
+
+            exchange.sendResponseHeaders(500,0);
+            ExchangeUtilities.sendErrorBody(ex, exchange);
+
+        } catch (HttpAuthorizationException ex){
+
+            exchange.sendResponseHeaders(401,0);
+            ExchangeUtilities.sendErrorBody(ex, exchange);
         }
 
-        //  And after everything,
-        exchange.close();
+            finally{
+            exchange.close();
+
+        }
     }
 }

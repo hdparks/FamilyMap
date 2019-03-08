@@ -6,6 +6,9 @@ import java.net.HttpURLConnection;
 
 import database_access.DataAccessException;
 
+import handlers.HttpExceptions.HttpAuthorizationException;
+import handlers.HttpExceptions.HttpBadRequestException;
+import handlers.HttpExceptions.HttpInternalServerError;
 import requests.PersonIDRequest;
 import requests.PersonRequest;
 import responses.Response;
@@ -36,84 +39,59 @@ public class PersonHandler implements HttpHandler {
 
 
             //  Expect a GET request
-            if (exchange.getRequestMethod().toUpperCase().equals("GET")) {
+            if (!exchange.getRequestMethod().toUpperCase().equals("GET")) {
+
+                throw new HttpBadRequestException("Invalid request method");
+            }
+
+            //  Pass the authToken into the PersonRequest
+            String authString = exchange.getRequestHeaders().getFirst("Authorization");
+            String uri = exchange.getRequestURI().toString();
+            Response res;
+
+            if (uri.equals("/person") || uri.equals("/person/")) {
+                //  PersonService
 
 
-                //  Authentication
-                if (AuthUtilities.isValidAuthentication(exchange)) {
+                PersonRequest req = new PersonRequest(authString);
 
-
-                    String authString = exchange.getRequestHeaders().getFirst("Authorization");
-                    String uri = exchange.getRequestURI().toString();
-                    Response res;
-                    if (uri.equals("/person") || uri.equals("/person/")) {
-                        logger.info("Person Service");
-                        //  PersonService
-
-
-                        PersonRequest req = new PersonRequest(authString);
-
-                        res = personService.serveResponse(req);
-
-
-                    } else {
-                        logger.info("PersonID Service");
-                        //  PersonIDService
-
-
-                        //  Parse path after "/person/"
-                        String personID = uri.substring("/person/".length());
-                        PersonIDRequest req = new PersonIDRequest(authString, personID);
-
-                        res = personIDService.serveResponse(req);
-                    }
-
-                    //  Success!
-                    //  Write to the response object
-                    exchange.sendResponseHeaders(200,0);
-                    ExchangeUtilities.writeResponseToHttpExchange(res, exchange);
-                    logger.info("Successful operation");
-
-                } else {
-                    //  Expected valid authentication
-
-                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_UNAUTHORIZED, 0);
-                    throw new HttpRequestException("Authentication failed");
-                }
+                res = personService.serveResponse(req);
 
 
             } else {
-                //  Expected a GET request
-                exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
-                throw new HttpRequestException("Invalid request method");
+                //  PersonIDService
+
+
+                String personID = uri.substring("/person/".length());
+
+                PersonIDRequest req = new PersonIDRequest(authString, personID);
+
+                res = personIDService.serveResponse(req);
             }
 
+            //  Success!
+            //  Write to the response object
+            exchange.sendResponseHeaders(200,0);
+            ExchangeUtilities.writeResponseToHttpExchange(res, exchange);
 
-        } catch (HttpRequestException ex) {
-            //  Something was wrong with the request
-            ExchangeUtilities.handleRequestError(ex, exchange);
-            logger.severe(ex.getMessage());
+        } catch (HttpBadRequestException ex) {
 
-        } catch (DataAccessException ex){
-            //  Something went wrong server side
-            exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR,0);
-            ExchangeUtilities.handleInternalError(ex, exchange);
-            logger.severe(ex.getMessage());
+            exchange.sendResponseHeaders(400, 0);
+            ExchangeUtilities.sendErrorBody(ex, exchange);
 
-        } catch (HttpRequestParseException e) {
-            //  Something was missing from the request
-            exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST,0);
-            ExchangeUtilities.handleRequestError(e,exchange);
-            logger.severe(e.getMessage());
+        } catch (HttpInternalServerError ex){
 
-        } catch (Exception ex){
-            ex.printStackTrace();
-            logger.severe("Unchecked exception");
-            throw ex;
+            exchange.sendResponseHeaders(500,0);
+            ExchangeUtilities.sendErrorBody(ex, exchange);
+
+        } catch (HttpAuthorizationException ex){
+
+            exchange.sendResponseHeaders(401,0);
+            ExchangeUtilities.sendErrorBody(ex, exchange);
+
+        } finally{
+            exchange.close();
+
         }
-
-        //  And after everything,
-        exchange.close();
-        logger.info("/person handled");
     }
 }

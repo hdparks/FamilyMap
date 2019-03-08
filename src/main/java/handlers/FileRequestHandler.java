@@ -2,6 +2,7 @@ package handlers;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import handlers.HttpExceptions.HttpBadRequestException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,51 +18,37 @@ public class FileRequestHandler implements HttpHandler {
     public void handle(HttpExchange exchange) throws IOException {
         try {
 
-            if (exchange.getRequestMethod().toUpperCase().equals("GET")){
-                //  Parse path
-                String path = exchange.getRequestURI().toString();
-
-                //  empty path defaults to /index.html
-                if (path.equals("/")) path = "/index.html";
-
-                logger.info(path);
-
-                //  Try to get the requested file
-                File requestedFile = new File("familymapserver/web" + path);
-
-                if (requestedFile.isFile()){
-                    //  Good to go!
-                    exchange.sendResponseHeaders(200,0);
-                    ExchangeUtilities.writeFileToOutputStream(requestedFile,exchange.getResponseBody());
-
-                    logger.info(requestedFile.getPath()+ " delivered");
-
-                } else {
-                    //  Throw FileNotFound
-                    throw new FileNotFoundException("File not found");
-                }
-
-
-            } else{
-                //  Expected "GET" request
-                throw new HttpRequestException("Invalid request method");
+            if (!exchange.getRequestMethod().toUpperCase().equals("GET")) {
+                throw new HttpBadRequestException("Invalid request method");
             }
 
-        } catch (FileNotFoundException ex){
-            //  Return a 404 message
-            exchange.sendResponseHeaders(HttpURLConnection.HTTP_NOT_FOUND,0);
+            String path = exchange.getRequestURI().toString();
+            if (path.equals("/")) path = "/index.html";
 
-            //  Return the 404 page
+
+            File requestedFile = new File("familymapserver/web" + path);
+            if (requestedFile.isFile()){
+
+                //  Good to go!
+                exchange.sendResponseHeaders(200,0);
+                ExchangeUtilities.writeFileToOutputStream(requestedFile,exchange.getResponseBody());
+
+            } else {
+                //  Throw FileNotFound
+                throw new FileNotFoundException("File not found");
+            }
+
+
+        } catch (FileNotFoundException ex){
+            exchange.sendResponseHeaders(HttpURLConnection.HTTP_NOT_FOUND,0);
             ExchangeUtilities.writeFileToOutputStream(
                     new File("familymapserver/web/HTML/404.html"),
                     exchange.getResponseBody());
 
-            logger.severe(ex.getMessage());
 
-        } catch (HttpRequestException ex){
-            ExchangeUtilities.handleRequestError(ex,exchange);
-
-            logger.severe(ex.getMessage());
+        } catch (HttpBadRequestException ex){
+            exchange.sendResponseHeaders(400,0);
+            ExchangeUtilities.sendErrorBody(ex,exchange);
 
         }
 

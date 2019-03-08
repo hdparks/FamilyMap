@@ -2,6 +2,7 @@ package services;
 
 import database_access.DataAccessException;
 import database_access.Database;
+import handlers.HttpExceptions.HttpInternalServerError;
 import requests.ClearRequest;
 import responses.ClearResponse;
 
@@ -17,9 +18,14 @@ public class ClearService implements Service<ClearRequest, ClearResponse>{
      * @throws DataAccessException
      */
     @Override
-    public ClearResponse serveResponse(ClearRequest req) throws DataAccessException {
-        Database db = new Database();
-        db.clearTables();
-        return new ClearResponse("Clear succeeded.",true);
+    public ClearResponse serveResponse(ClearRequest req) throws HttpInternalServerError {
+        try {
+            Database db = new Database();
+            db.clearTables();
+            return new ClearResponse("Clear succeeded.", true);
+
+        } catch (DataAccessException ex){
+            throw new HttpInternalServerError(ex.getMessage());
+        }
     }
 }

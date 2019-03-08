@@ -1,5 +1,7 @@
 package database_access;
 
+import handlers.HttpExceptions.HttpInternalServerError;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.*;
@@ -35,6 +37,7 @@ public class Database {
             e.printStackTrace();
         }
     }
+
 
 
 
@@ -229,6 +232,13 @@ public class Database {
 
     }
 
+    public void hardClose() throws HttpInternalServerError{
+        try {
+            closeConnection(false);
+        } catch (DataAccessException ex){
+            throw new HttpInternalServerError(ex.getMessage());
+        }
+    }
 
 
     public static void main(String[] args){
@@ -278,9 +288,6 @@ public class Database {
         } catch (DataAccessException | SQLException ex){
             ex.printStackTrace();
         }
-
-
-
 
     }
 }

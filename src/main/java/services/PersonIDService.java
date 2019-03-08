@@ -5,6 +5,9 @@ import database_access.DataAccessException;
 import database_access.Database;
 import database_access.PersonDao;
 import domain.Person;
+import handlers.HttpExceptions.HttpAuthorizationException;
+import handlers.HttpExceptions.HttpBadRequestException;
+import handlers.HttpExceptions.HttpInternalServerError;
 import requests.PersonIDRequest;
 import responses.PersonIDResponse;
 import responses.PersonResponse;
@@ -26,56 +29,48 @@ public class PersonIDService implements Service<PersonIDRequest, PersonIDRespons
      * @return res a valid PersonIDResponse object if successful, a failing Response object if services fails
      */
     @Override
-    public PersonIDResponse serveResponse(PersonIDRequest req) throws DataAccessException, HttpRequestParseException{
+    public PersonIDResponse serveResponse(PersonIDRequest req) throws HttpAuthorizationException,HttpInternalServerError,HttpBadRequestException{
         //  Parse request
         if (req.getAuthToken() == null ||
             req.getPersonID()  == null){
-            throw new HttpRequestParseException("Invalid request parameters");
+            throw new HttpBadRequestException("Invalid request parameters");
         }
 
         Database db = new Database();
 
         try{
             Connection conn = db.openConnection();
-            //  Get requested Person from personID
-            Person person = new PersonDao(conn).getPersonByID(req.getPersonID());
 
-            if (null == person){
-                //  No such person exists.
-                throw new HttpRequestParseException("No such person found");
-            }
-
-            //  Ensure person belongs to user
+            //  Get username from authString
             AuthTokenDao authTokenDao = new AuthTokenDao(conn);
             String username = authTokenDao.getUsernameByAuthToken(req.getAuthToken());
-            //  Ensure valid username
             if (null == username){
-                throw new HttpRequestParseException("Invalid Authentication");
+                throw new HttpBadRequestException("Invalid Authentication");
             }
 
-            logger.info("does "+person.descendant+" = " + username+ "?");
 
-            if( person.descendant.equals(username)){
-
-                //  It worked!
-                db.closeConnection(true);
-                return new PersonIDResponse(person);
-
-            } else{
-                //  Person does not belong to user
-                throw new HttpRequestParseException("Person does not belong to current User");
+            //  Get requested Person from personID
+            Person person = new PersonDao(conn).getPersonByID(req.getPersonID());
+            if (null == person){
+                throw new HttpBadRequestException("No such person found");
             }
 
-        } catch (DataAccessException | HttpRequestParseException ex){
-            db.closeConnection(false);
+            if( !person.descendant.equals(username)) {
+                throw new HttpBadRequestException("Person does not belong to current User");
+            }
 
-            logger.severe(ex.getMessage());
+            //  It worked!
+            db.closeConnection(true);
+            return new PersonIDResponse(person);
 
-            throw ex;
+        } catch (DataAccessException ex){
+
+            throw new HttpInternalServerError(ex.getMessage());
 
         } finally {
-            //  Roll everything back just in case
-            db.closeConnection(false);
+
+            db.hardClose();
         }
+
     }
 }

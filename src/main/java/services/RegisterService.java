@@ -2,6 +2,8 @@ package services;
 
 import database_access.*;
 import domain.*;
+import handlers.HttpExceptions.HttpBadRequestException;
+import handlers.HttpExceptions.HttpInternalServerError;
 import requests.RegisterRequest;
 import responses.RegisterResponse;
 
@@ -27,7 +29,7 @@ public class RegisterService implements Service<RegisterRequest,RegisterResponse
      *
      */
     @Override
-    public RegisterResponse serveResponse(RegisterRequest req) throws DataAccessException, HttpRequestParseException {
+    public RegisterResponse serveResponse(RegisterRequest req) throws HttpInternalServerError, HttpBadRequestException {
         logger.info("Servicing RegisterRequest");
         //  Parse request
         if( req.getUserName() == null ||
@@ -37,12 +39,12 @@ public class RegisterService implements Service<RegisterRequest,RegisterResponse
                 req.getLastName() == null ||
                 req.getGender()   == null)  {
             logger.severe("Parse Error in RegisterResponse");
-            throw new HttpRequestParseException("Invalid request to /register : missing data");
+            throw new HttpBadRequestException("Invalid request to /register : missing data");
         }
 
         //  Parse gender
         if (!req.getGender().equals("m") && !req.getGender().equals("f")){
-            throw new HttpRequestParseException("Gender must be m or f");
+            throw new HttpBadRequestException("Gender must be m or f");
         }
 
 
@@ -75,54 +77,38 @@ public class RegisterService implements Service<RegisterRequest,RegisterResponse
                     null,
                     null
             );
-            logger.info("User and Person objects created");
 
             //  Add the User
             UserDao userDao = new UserDao(conn);
             userDao.add(user);
 
-            logger.info("User data added to database.");
-            //  Generate 4 generations of data
+
+           //  Generate 4 generations of data
             Generator generator = new Generator(conn);
             generator.generateGenerations(userPerson, 4);
-            logger.info("Generations generated.");
-            //  Log user in
+
+
+           //  Log user in
             AuthToken authToken = new AuthToken(user);
             AuthTokenDao authTokenDao = new AuthTokenDao(conn);
             authTokenDao.add(authToken);
 
-            logger.info("User Logged in.");
-            //  Close and save changes
+
+           //  Close and save changes
             db.closeConnection(true);
 
-            logger.info("Creating RegisterResponse");
+
             //  Return new authToken
             return new RegisterResponse(authToken.authToken,user.userName,userPerson.personID);
 
-        } catch (DataAccessException ex){
-            //  Undo any changes
-            db.closeConnection(false);
 
-            logger.severe("Data access exception: " + ex.getMessage());
+        } catch (GenderException ex){
 
-            throw ex;
+            throw new HttpBadRequestException(ex.getMessage());
 
-        } catch (FileNotFoundException ex){
-            //  Undo any changes
-            db.closeConnection(false);
-            logger.severe(ex.getMessage());
+        } catch (DataAccessException | FileNotFoundException ex){
 
-            throw new DataAccessException("Error generating ancestor data.");
-        } catch (Exception ex){
-            ex.printStackTrace();
-            logger.severe("Uncaught exception");
-            throw ex;
-        }
-
-        finally {
-            //  finally
-            //  Always close connection
-            db.closeConnection(false);
+            throw new HttpInternalServerError(ex.getMessage());
         }
     }
 }

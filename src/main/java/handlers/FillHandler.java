@@ -4,6 +4,9 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import database_access.DataAccessException;
 
+import handlers.HttpExceptions.HttpAuthorizationException;
+import handlers.HttpExceptions.HttpBadRequestException;
+import handlers.HttpExceptions.HttpInternalServerError;
 import requests.FillRequest;
 import responses.FillResponse;
 import services.FillService;
@@ -24,45 +27,37 @@ public class FillHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        logger.info("Handling /fill/[]");
+
+
         try{
             //  Expect a POST
-            if( exchange.getRequestMethod().toUpperCase().equals("POST") ){
-
-                //  Get the userName from the request URI.
-                String uri = exchange.getRequestURI().toString();
-                FillRequest req = new FillRequest(uri);
-
-                FillResponse res = fillService.serveResponse(req);
-
-                //  Send "OK" header and fill the response body with JSON
-                exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK,0);
-                ExchangeUtilities.writeResponseToHttpExchange(res,exchange);
-
-            } else {
-                //  Expected a POST request
-                exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST,0);
-                throw new HttpRequestException("Invalid request method");
+            if( !exchange.getRequestMethod().toUpperCase().equals("POST") ) {
+                throw new HttpBadRequestException("Invalid request method");
             }
+            String uri = exchange.getRequestURI().toString();
 
-        } catch (DataAccessException ex){
-            //  Something went wrong server side
-            exchange.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR,0);
-            ExchangeUtilities.handleInternalError(ex, exchange);
-            logger.severe(ex.getMessage());
+            FillRequest req = new FillRequest(uri);
 
-        } catch (HttpRequestException ex) {
-            //  Something was wrong with the request
-            ExchangeUtilities.handleRequestError(ex, exchange);
-            logger.severe(ex.getMessage());
+            FillResponse res = fillService.serveResponse(req);
 
-        } catch (HttpRequestParseException ex) {
-            exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST,0);
-            ExchangeUtilities.handleRequestError(ex, exchange);
-            logger.severe(ex.getMessage());
+            exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK,0);
+
+            ExchangeUtilities.writeResponseToHttpExchange(res,exchange);
+
+        } catch (HttpBadRequestException ex) {
+
+            exchange.sendResponseHeaders(400, 0);
+            ExchangeUtilities.sendErrorBody(ex, exchange);
+
+        } catch (HttpInternalServerError ex){
+
+            exchange.sendResponseHeaders(500,0);
+            ExchangeUtilities.sendErrorBody(ex, exchange);
+
+        } finally{
+
+            exchange.close();
+
         }
-        //  Close the exchange explicitly
-        exchange.close();
-        logger.info("/fill/[] handled");
     }
 }

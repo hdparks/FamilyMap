@@ -1,6 +1,8 @@
 package services;
 
 import database_access.Database;
+import handlers.HttpExceptions.HttpAuthorizationException;
+import handlers.HttpExceptions.HttpBadRequestException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -58,7 +60,7 @@ public class LoginServiceTest {
         try {
             service.serveResponse(req);
 
-        } catch (HttpRequestParseException ex){
+        } catch (HttpBadRequestException ex){
 //            ex.printStackTrace();
             if (ex.getMessage().contains("Invalid parameters")){
                 //  This is the error we hoped for
@@ -78,9 +80,10 @@ public class LoginServiceTest {
         try {
             service.serveResponse(req);
 
-        } catch (HttpRequestParseException ex){
+        } catch (HttpAuthorizationException ex){
             ex.printStackTrace();
-            if (ex.getMessage().contains("userName/password not recognized")){
+
+            if (ex.getMessage().contains("Login failed, userName/password not recognized")){
                 //  This is the error we hoped for
                 throw new LoginServiceException();
             }
