@@ -221,7 +221,7 @@ public class Generator {
 
             //  Make user Birthday event, save it
             int userBirthYear = 2000;
-            Event userBirthday = generateEvent(userPerson, userBirthYear,"Birthday" );
+            Event userBirthday = generateEvent(userPerson, userBirthYear,"Birth" );
             eventDao.add(userBirthday);
             this.eventsAdded++;
             //  generate specified number of generations
