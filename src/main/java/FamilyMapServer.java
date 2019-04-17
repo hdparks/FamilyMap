@@ -47,6 +47,7 @@ public class FamilyMapServer {
         registerHandlers(server);
         server.start();
         System.out.println("FamilyMapServer listening on port " + port);
+        System.out.println("Version 2.0!");
     }
 
     private void registerHandlers(HttpServer server){

@@ -1,7 +1,11 @@
 package handlers;
 
+import com.google.gson.Gson;
+
 import domain.Event;
 import org.junit.Test;
+
+import domain.Person;
 import requests.PersonRequest;
 import responses.EventIDResponse;
 import responses.Response;
@@ -12,6 +16,24 @@ import java.io.IOException;
 import static org.junit.Assert.*;
 
 public class JSONUtilitiesTest {
+    @Test
+    public void testGSONtest() throws Exception {
+        String info =
+                "{\n"
+                        +" \"firstName\": \"Sheila\","
+                        +"\"lastName\": \"Parker\","
+                        +"\"gender\": \"f\","
+                        +"                \"personID\": \"Sheila_Parker\","
+                        +"                \"father\": \"Patrick_Spencer\","
+                        +"\"mother\": \"Im_really_good_at_names\","
+                        +"\"descendant\": \"sheila\""
+                        +"}";
+
+        Gson gson = new Gson();
+        Person person = gson.fromJson(info,Person.class);
+        System.out.println(person.toString());
+        assert(true);
+    }
 
     @Test
     public void createRequestInstance() throws IOException {
@@ -57,5 +79,8 @@ public class JSONUtilitiesTest {
         actual = JSONUtilities.generateResponseJSON(res);
 
         assertEquals(expected,actual);
+
+
     }
+
 }

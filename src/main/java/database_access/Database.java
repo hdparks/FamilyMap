@@ -249,6 +249,11 @@ public class Database {
         // Show me everything in the database
         Database db = new Database();
         try {
+            //  Toggle clear database
+            if(true){
+                db.createTables();
+                System.out.print("Created tables");
+            }
             Connection conn = db.openConnection();
             ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM users");
             int i = 0;
@@ -283,10 +288,6 @@ public class Database {
 
 
 
-            //  Toggle clear database
-            if(false){
-                db.createTables();
-            }
 
 
         } catch (DataAccessException | SQLException ex){

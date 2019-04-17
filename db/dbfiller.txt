@@ -1,10 +1,10 @@
 INSERT INTO users (userName, password, email, firstName, lastName, gender, personID)
             VALUES ('user', 'pass', 'email', 'first', 'last', 'f','100');
 
-INSERT INTO persons (personID, descendant, firstName, lastName, gender, fatherID, motherID, spouseID)
+INSERT INTO persons (personID, descendant, firstName, lastName, gender, father, mother, spouse)
             VALUES ('100', 'user', 'first','last','f',null,null,null);
 
-INSERT INTO persons (personID, descendant, firstName, lastName, gender, fatherID, motherID, spouseID)
+INSERT INTO persons (personID, descendant, firstName, lastName, gender, father, mother, spouse)
             VALUES ('200', 'NotUser', 'first','last','f',null,null,null);
 
 INSERT INTO events (eventID, descendant, personID, latitude, longitude, country, city, eventType, year)

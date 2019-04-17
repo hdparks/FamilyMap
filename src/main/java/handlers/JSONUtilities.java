@@ -25,6 +25,7 @@ public class JSONUtilities {
         Reader reader = new InputStreamReader(inputStream);
         Gson gson = new Gson();
         T tObj = gson.fromJson(reader,tClass);
+        logger.info("Recieved this request instance:\n"+tObj.toString());
         return tObj;
 
 
@@ -32,6 +33,10 @@ public class JSONUtilities {
 
     public static <T> String generateResponseJSON(T obj){
         return new GsonBuilder().setPrettyPrinting().create().toJson(obj);
+    }
+
+    public void GSONtest(){
+        return;
     }
 
 }

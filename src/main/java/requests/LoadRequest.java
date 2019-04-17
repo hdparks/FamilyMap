@@ -1,5 +1,7 @@
 package requests;
 
+import java.util.Arrays;
+
 import domain.Event;
 import domain.Person;
 import domain.User;
@@ -47,6 +49,15 @@ public class LoadRequest implements IRequest {
 
     public void setEvents(Event[] events) {
         this.events = events;
+    }
+
+    @Override
+    public String toString() {
+        return "LoadRequest{" +
+                "users=" + Arrays.toString(users) +
+                ", persons=" + Arrays.toString(persons) +
+                ", events=" + Arrays.toString(events) +
+                '}';
     }
 }
 

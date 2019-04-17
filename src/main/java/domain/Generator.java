@@ -254,7 +254,7 @@ public class Generator {
 
 
         //  If child is female and married, choose random last name for parents
-        String lastName = (child.gender.equals("f") && child.spouseID != null)
+        String lastName = (child.gender.equals("f") && child.spouse != null)
                 ? getsName()
                 : child.lastName;
 

@@ -163,7 +163,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../domain/Person.html#fatherID">fatherID</a></span></code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../domain/Person.html#father">father</a></span></code></th>
 <td class="colLast">
 <div class="block">ID of person’s father (possibly null)</div>
 </td>
@@ -198,7 +198,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../domain/Person.html#motherID">motherID</a></span></code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../domain/Person.html#mother">mother</a></span></code></th>
 <td class="colLast">
 <div class="block">ID of person’s mother (possibly null)</div>
 </td>
@@ -212,7 +212,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../domain/Person.html#spouseID">spouseID</a></span></code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../domain/Person.html#spouse">spouse</a></span></code></th>
 <td class="colLast">
 <div class="block">ID of person’s spouse (possibly null)</div>
 </td>
@@ -238,9 +238,9 @@ extends java.lang.Object</pre>
       java.lang.String&nbsp;firstName,
       java.lang.String&nbsp;lastName,
       java.lang.String&nbsp;gender,
-      java.lang.String&nbsp;fatherID,
-      java.lang.String&nbsp;motherID,
-      java.lang.String&nbsp;spouseID)</code></th>
+      java.lang.String&nbsp;father,
+      java.lang.String&nbsp;mother,
+      java.lang.String&nbsp;spouse)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -323,7 +323,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../domain/Person.html#setFatherID-java.lang.String-">setFatherID</a></span>&#8203;(java.lang.String&nbsp;fatherID)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../domain/Person.html#setFatherID-java.lang.String-">setFatherID</a></span>&#8203;(java.lang.String&nbsp;father)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
@@ -343,7 +343,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../domain/Person.html#setMotherID-java.lang.String-">setMotherID</a></span>&#8203;(java.lang.String&nbsp;motherID)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../domain/Person.html#setMotherID-java.lang.String-">setMotherID</a></span>&#8203;(java.lang.String&nbsp;mother)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i17" class="rowColor">
@@ -353,7 +353,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i18" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../domain/Person.html#setSpouseID-java.lang.String-">setSpouseID</a></span>&#8203;(java.lang.String&nbsp;spouseID)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../domain/Person.html#setSpouseID-java.lang.String-">setSpouseID</a></span>&#8203;(java.lang.String&nbsp;spouse)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -438,33 +438,33 @@ extends java.lang.Object</pre>
 <div class="block">Person’s gender (string: "f" or "m")</div>
 </li>
 </ul>
-<a name="fatherID">
+<a name="father">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>fatherID</h4>
-<pre>public&nbsp;java.lang.String fatherID</pre>
+<h4>father</h4>
+<pre>public&nbsp;java.lang.String father</pre>
 <div class="block">ID of person’s father (possibly null)</div>
 </li>
 </ul>
-<a name="motherID">
+<a name="mother">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>motherID</h4>
-<pre>public&nbsp;java.lang.String motherID</pre>
+<h4>mother</h4>
+<pre>public&nbsp;java.lang.String mother</pre>
 <div class="block">ID of person’s mother (possibly null)</div>
 </li>
 </ul>
-<a name="spouseID">
+<a name="spouse">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>spouseID</h4>
-<pre>public&nbsp;java.lang.String spouseID</pre>
+<h4>spouse</h4>
+<pre>public&nbsp;java.lang.String spouse</pre>
 <div class="block">ID of person’s spouse (possibly null)</div>
 </li>
 </ul>
@@ -487,9 +487,9 @@ extends java.lang.Object</pre>
               java.lang.String&nbsp;firstName,
               java.lang.String&nbsp;lastName,
               java.lang.String&nbsp;gender,
-              java.lang.String&nbsp;fatherID,
-              java.lang.String&nbsp;motherID,
-              java.lang.String&nbsp;spouseID)</pre>
+              java.lang.String&nbsp;father,
+              java.lang.String&nbsp;mother,
+              java.lang.String&nbsp;spouse)</pre>
 </li>
 </ul>
 </li>
@@ -619,7 +619,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>setFatherID</h4>
-<pre>public&nbsp;void&nbsp;setFatherID&#8203;(java.lang.String&nbsp;fatherID)</pre>
+<pre>public&nbsp;void&nbsp;setFatherID&#8203;(java.lang.String&nbsp;father)</pre>
 </li>
 </ul>
 <a name="getMotherID--">
@@ -637,7 +637,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>setMotherID</h4>
-<pre>public&nbsp;void&nbsp;setMotherID&#8203;(java.lang.String&nbsp;motherID)</pre>
+<pre>public&nbsp;void&nbsp;setMotherID&#8203;(java.lang.String&nbsp;mother)</pre>
 </li>
 </ul>
 <a name="getSpouseID--">
@@ -655,7 +655,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>setSpouseID</h4>
-<pre>public&nbsp;void&nbsp;setSpouseID&#8203;(java.lang.String&nbsp;spouseID)</pre>
+<pre>public&nbsp;void&nbsp;setSpouseID&#8203;(java.lang.String&nbsp;spouse)</pre>
 </li>
 </ul>
 <a name="equals-java.lang.Object-">

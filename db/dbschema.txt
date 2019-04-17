@@ -22,13 +22,13 @@ create table persons
     firstName varchar(255) not null,
     lastName varchar(255) not null,
     gender char(1) check(gender in ("f","m")),
-    fatherID varchar(255),
-    motherID varchar(255),
-    spouseID varchar(255),
+    father varchar(255),
+    mother varchar(255),
+    spouse varchar(255),
     foreign key(descendant) references users(username),
-    foreign key(fatherID) references persons(personID),
-    foreign key(motherID) references persons(personID),
-    foreign key(spouseID) references persons(personID)
+    foreign key(father) references persons(personID),
+    foreign key(mother) references persons(personID),
+    foreign key(spouse) references persons(personID)
 );
 
 create table events

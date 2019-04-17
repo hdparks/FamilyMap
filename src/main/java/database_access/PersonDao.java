@@ -54,7 +54,7 @@ public class PersonDao {
         }
 
 
-        String sql = "INSERT INTO persons (descendant, firstName, lastName, gender, fatherID, motherID, spouseID, personID) " +
+        String sql = "INSERT INTO persons (descendant, firstName, lastName, gender, father, mother, spouse, personID) " +
                 "VALUES (?,?,?,?,?,?,?,?)";
 
 
@@ -65,9 +65,9 @@ public class PersonDao {
             stmt.setString(2, person.firstName);
             stmt.setString(3, person.lastName);
             stmt.setString(4, person.gender);
-            stmt.setString(5, person.fatherID);
-            stmt.setString(6, person.motherID);
-            stmt.setString(7, person.spouseID);
+            stmt.setString(5, person.father);
+            stmt.setString(6, person.mother);
+            stmt.setString(7, person.spouse);
             stmt.setString(8, person.personID);
 
             stmt.executeUpdate();
@@ -83,20 +83,20 @@ public class PersonDao {
 
     public void updateRelationships(Person child, Person mother, Person father) throws DataAccessException{
         try {
-            String childUpdate = "UPDATE persons SET motherID = ?, fatherID = ? WHERE personID = ?";
+            String childUpdate = "UPDATE persons SET mother = ?, father = ? WHERE personID = ?";
             PreparedStatement stmt = conn.prepareStatement(childUpdate);
             stmt.setString(1,mother.personID);
             stmt.setString(2,father.personID);
             stmt.setString(3,child.personID);
             stmt.executeUpdate();
 
-            String motherUpdate = "UPDATE persons SET spouseID = ? WHERE personID = ?";
+            String motherUpdate = "UPDATE persons SET spouse = ? WHERE personID = ?";
             stmt = conn.prepareStatement(motherUpdate);
             stmt.setString(1,father.personID);
             stmt.setString(2,mother.personID);
             stmt.executeUpdate();
 
-            String fatherUpdate = "UPDATE persons SET spouseID = ? WHERE personID = ?";
+            String fatherUpdate = "UPDATE persons SET spouse = ? WHERE personID = ?";
             stmt = conn.prepareStatement(fatherUpdate);
             stmt.setString(1,mother.personID);
             stmt.setString(2,father.personID);
@@ -181,7 +181,7 @@ public class PersonDao {
     public Person[] getPersonListByUser(String username) throws DataAccessException{
 
         List<Person> list = new ArrayList<>();
-        String sql = "SELECT personID, descendant, firstName, lastName, gender, fatherID, motherID, spouseID FROM persons";
+        String sql = "SELECT personID, descendant, firstName, lastName, gender, father, mother, spouse FROM persons";
 
         try (PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()){

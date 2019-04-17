@@ -27,9 +27,9 @@ public class PersonIDResponse extends Response {
         this.firstName = person.firstName;
         this.lastName = person.lastName;
         this.gender = person.gender;
-        this.father = person.fatherID;
-        this.mother = person.motherID;
-        this.spouse = person.spouseID;
+        this.father = person.father;
+        this.mother = person.mother;
+        this.spouse = person.spouse;
     }
 
     /**
